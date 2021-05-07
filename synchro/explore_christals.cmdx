@@ -1,0 +1,105 @@
+! parse table
+if ( is_carbon==0 ) { ! protons
+  READTABLE, file="RampGen/TM_Protons.tfs", table=table_settings;
+} else {
+  if ( mMode==1 ) { ! carbon ions
+    ! RFKO
+    READTABLE, file="RampGen/KmachinephotoCarbRFKO.tfs", table=table_settings;
+  }else{
+    ! TM
+    READTABLE, file="RampGen/TM_Carbon.tfs", table=table_settings;
+  };
+};
+lunghezza=table(table_settings,tablelength);
+n=lunghezza;
+
+SETVARS, TABLE=table_settings, ROW=n;
+call, file="settings_from_rampGen_table.str";
+
+! overwrite settings read:
+K0MB=K0MB_ref;
+! hk_s0  = 0.0 ;
+! hk_s2  = 0.0 ;
+! hk_sc0 = 0.0 ;
+! hk_sc  = 0.0 ;
+! hk_se  = 0.0 ;
+! - injection bump
+! Ibumper=161.0; ! [A] (by LFalbo)
+
+! notify user where we are
+PRINTF, TEXT="at Ek = %g MeV/u- BP = %g mm - row = %.0f ...", VALUE= Ek,BP,n;
+
+exec, setRigidity();
+
+! set injection bumper k from the specified current
+exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];
+
+! set sextupole families from the specified current
+exec, I2K_sextupoles_S6_SR(); ! input: Is_SR[A],Brho[Tm];
+exec, I2K_sextupoles_S8_S1(); ! input: Is_SR[A],Brho[Tm];
+exec, I2K_sextupoles_S9_S0(); ! input: Is_SR[A],Brho[Tm];
+
+! insert crystal
+S2_017A_CRY: KICKER, L= 0.0, HKICK:=CRY_HK, VKICK:=CRY_VK;
+SEQEDIT, sequence=MUXL;
+Install, element=S2_017A_CRY, at=0.5*S2_013A_SVA->L+0.2, from=S2_013A_SVA;
+ENDEDIT;
+
+/*
+USE, sequence=MUXL;
+MATCH, sequence=MUXL;
+CONSTRAINT, SEQUENCE=MUXL, RANGE=SE_010A_ESP, X=-0.012, PX=-31.44E-6;
+CONSTRAINT, SEQUENCE=MUXL, RANGE=S0_016A_MSP, PX=1.395E-3;
+! CONSTRAINT, SEQUENCE=MUXL, RANGE=S2_008A_CSH, X=0.0, PX=0.0;
+CONSTRAINT, SEQUENCE=MUXL, RANGE=S6_014A_CSH, X=0.0, PX=0.0;
+CONSTRAINT, SEQUENCE=MUXL, RANGE=S2_017A_CRY, X=0.035, PX=0.0;
+VARY, NAME=HK_S0 , STEP=1E-5;
+VARY, NAME=HK_S2 , STEP=1E-5;
+VARY, NAME=HK_S4 , STEP=1E-5;
+VARY, NAME=HK_S6 , STEP=1E-5;
+VARY, NAME=HK_SC0, STEP=1E-5;
+VARY, NAME=HK_SC , STEP=1E-5;
+VARY, NAME=HK_SE , STEP=1E-5;
+LMDIF, CALLS=1000, TOLERANCE=1.0E-12;
+!JACOBIAN, CALLS=100, TOLERANCE=1.0E-6;
+ENDMATCH;
+
+! save betas at crystal
+USE, sequence=MUXL;
+SAVEBETA, LABEL=initial, PLACE=S2_017A_CRY, SEQUENCE=MUXL;
+Twiss;
+! reset some of the initial conditions
+initial->mux=0.0;
+initial->muy=0.0;
+initial->t=0.0;
+! show, initial;
+! stop;
+*/
+
+! start at crystal
+USE, sequence=MUXL;
+SEQEDIT, sequence=MUXL;
+FLATTEN;
+CYCLE, start=S2_017A_CRY;
+FLATTEN;
+ENDEDIT;
+
+/*
+! give the crystal a kick
+! CRY_HK=1E-3;
+is_open=1;
+USE, sequence=MUXL;
+MATCH, sequence=MUXL, beta0=initial;
+CONSTRAINT, SEQUENCE=MUXL, RANGE=SE_010A_ESP, X=0.035;
+VARY, NAME=CRY_HK, STEP=1E-5;
+LMDIF, CALLS=1000, TOLERANCE=1.0E-12;
+!JACOBIAN, CALLS=100, TOLERANCE=1.0E-6;
+ENDMATCH;
+*/
+
+use,sequence=MUXL;
+exec, saveOpticsTFS(extraction_carbon_270mm);
+exec, saveGeometryTFS(extraction_carbon_270mm);
+exec, save_strengths(extraction_carbon_270mm);
+is_open=0;
+

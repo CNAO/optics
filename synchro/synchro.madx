@@ -68,7 +68,7 @@ call, file="synchro.aper";
 ! ==============================================================================
 ! a simple example
 ! ==============================================================================
-
+/*
 ! set some additional beam properties
 exec, setRigidity();
 
@@ -89,6 +89,9 @@ exec, saveOpticsTFS(extraction);
 exec, saveGeometryTFS(extraction);
 ! save strengths
 exec, save_strengths(myOptics);
+*/
+
+call, file="explore_christals.cmdx";
 
 ! ==============================================================================
 ! specific tasks
