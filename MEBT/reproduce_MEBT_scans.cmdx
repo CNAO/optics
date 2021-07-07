@@ -1,0 +1,106 @@
+! ========================================================================
+! macro
+! ========================================================================
+
+makeScan(what,fileName): macro = {
+
+   REMOVEFILE, FILE=fileName;
+   
+   ! header to output file
+   assign, echo=fileName;
+   PRINT, TEXT="# Brho[Tm], BP[mm], xx[mm], px[mrad], yy[mm], py[mrad], X:M3_032A_PIB[m], Y:M3_032A_PIB[]";
+   assign, echo=terminal;
+   
+   what=minmin;
+   while (what<=maxmax+0.5*stepstep){
+   
+      ! convert conditions at ESI [mm/mrad] into currents [A] 
+      IH_M3_026A_CIB = ( 6.3936*xx -25.9520*px)*Brho ;         ! M16-C, P5-103C-LGEN
+      IH_M3_030B_CIB = (-6.3514*xx +33.1911*px)*Brho ;         ! M17-A, P5-104A-LGEN
+      IV_M3_026A_CIB = ( 3.3326*yy -19.3488*py)*Brho ;         ! M16-D, P5-103D-LGEN
+      IV_M3_030B_CIB = (-1.4107*yy +22.3919*py)*Brho ;         ! M17-B, P5-104B-LGEN
+      exec, I2K_MEBT_CIBH(M3_026A_CIB,Brho) ;
+      exec, I2K_MEBT_CIBH(M3_030B_CIB,Brho) ;
+      exec, I2K_MEBT_CIBV(M3_026A_CIB,Brho) ;
+      exec, I2K_MEBT_CIBV(M3_030B_CIB,Brho) ;
+      
+      ! debug
+      ! value, IH_M3_026A_CIB, IH_M3_030B_CIB, IV_M3_026A_CIB, IV_M3_030B_CIB;
+      ! value, Brho, HKICK_M3_026A_CIB, VKICK_M3_026A_CIB, HKICK_M3_030B_CIB, VKICK_M3_030B_CIB;
+      
+      ! compute optics
+      use,sequence=MUXL;
+      select,flag=twiss,clear;
+      twiss, beta0=initial, centre=true;
+      ! save data
+      assign, echo=fileName;
+      PRINTF, TEXT="% 19.12E,% 6.1f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
+                 VALUE=Brho, BP, xx, px, yy, py,
+                 table(twiss,M3_032A_PIB,x), table(twiss,M3_032A_PIB,y);
+      assign, echo=terminal;
+      ! debug
+      ! exec, saveOpticsTFS(example);
+      ! exec, saveGeometryTFS(example);
+      
+      ! restore original values of currents
+      IH_M3_026A_CIB = IH_M3_026A_CIB_orig ;            ! M16-C, P5-103C-LGEN
+      IH_M3_030B_CIB = IH_M3_030B_CIB_orig ;            ! M17-A, P5-104A-LGEN
+      IV_M3_026A_CIB = IV_M3_026A_CIB_orig ;            ! M16-D, P5-103D-LGEN
+      IV_M3_030B_CIB = IV_M3_030B_CIB_orig ;            ! M17-B, P5-104B-LGEN
+   
+      what=what+stepstep;
+   };
+};
+
+! ========================================================================
+! setting up cycle
+! ========================================================================
+
+FH_M3_026A_CIB = 1.0;
+FH_M3_030B_CIB = 1.0;
+FV_M3_026A_CIB = 1.0;
+FV_M3_030B_CIB = 1.0;
+
+! save original values of currents
+IH_M3_026A_CIB_orig = IH_M3_026A_CIB ;            ! M16-C, P5-103C-LGEN
+IH_M3_030B_CIB_orig = IH_M3_030B_CIB ;            ! M17-A, P5-104A-LGEN
+IV_M3_026A_CIB_orig = IV_M3_026A_CIB ;            ! M16-D, P5-103D-LGEN
+IV_M3_030B_CIB_orig = IV_M3_030B_CIB ;            ! M17-B, P5-104B-LGEN
+
+! ========================================================================
+! cycle here
+! ========================================================================
+
+! cycle conditions
+minmin=-0.5;
+maxmax= 0.5;
+stepstep=0.01;
+! start conditions at ESI
+xx= 0.0; ! [mm]
+px= 0.0; ! [mrad]
+yy= 0.0; ! [mm]
+py= 0.0; ! [mrad]
+! exec macro
+exec, makeScan(px,"ScanDivXfine.txt");
+
+/*
+! cycle conditions
+minmin=-2.0;
+maxmax= 2.0;
+stepstep=0.1;
+! start conditions at ESI
+xx= 0.0; ! [mm]
+px=-0.2; ! [mrad]
+! px=-0.1; ! [mrad]
+! px= 0.0; ! [mrad]
+! px= 0.1; ! [mrad]
+! px= 0.2; ! [mrad]
+yy= 0.0; ! [mm]
+py= 0.0; ! [mrad]
+! exec macro
+exec, makeScan(xx,"ScanPosXDivXm0p2.txt");
+! exec, makeScan(xx,"ScanPosXDivXm0p1.txt");
+! exec, makeScan(xx,"ScanPosXDivX_0p0.txt");
+! exec, makeScan(xx,"ScanPosXDivXp0p1.txt");
+! exec, makeScan(xx,"ScanPosXDivXp0p2.txt");
+*/
