@@ -4,13 +4,13 @@ pathToLibrary="..\MatLabTools";
 addpath(genpath(pathToLibrary));
 
 % user settings
-beamPart="CARBON"; % select beam particle: proton, carbon
-machine="synchro"; % select machine: synchro, LineZ/Sala1, LineU/Sala2H, LineV/Sala2V, and LineT/Sala3; LEBT and MEBT to come 
-config="tm"; % select configuration: TM, RFKO
+beamPart="PROTON"; % select beam particle: proton, carbon
+machine="LineT"; % select machine: synchro, LineZ/Sala1, LineU/Sala2H, LineV/Sala2V, and LineT/Sala3; LEBT and MEBT to come 
+config="RFKO"; % select configuration: TM, RFKO
 source="LGEN"; % source: RampGen or LGEN
 LGENsCheck=[]; % subset to check, otherwise all - eg [ "P6-006A-LGEN" "P6-007A-LGEN" "P6-008A-LGEN" "P6-009A-LGEN" ];
 filters=["NaN" "0"]; % filter PSs where all CyCo show "NaN" or "0"
-lCurrents=false; % advice: synchro=false, HEBT=true
+lCurrents=true; % advice: synchro=false, HEBT=true
 
 %% main
 switch upper(source)
@@ -40,7 +40,7 @@ switch upper(source)
                 error("no source of data available for %s %s %s %s",machine,source,beamPart,config);
         end % switch: machine
     case "LGEN"
-        [cyCodes,ranges,Eks,Brhos,currents,fields,kicks,psNames,FileNameCurrents]=AcquireTMValues(beamPart,machine,config,filters,LGENsCheck);
+        [cyCodes,ranges,Eks,Brhos,currents,fields,kicks,psNames,FileNameCurrents]=AcquireTMValues(beamPart,machine,config,filters);
         if ( length(cyCodes)==0 )
             error("no data loaded!");
         else
