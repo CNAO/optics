@@ -40,7 +40,7 @@ switch upper(source)
                 error("no source of data available for %s %s %s %s",machine,source,beamPart,config);
         end % switch: machine
     case "LGEN"
-        [cyCodes,ranges,Eks,Brhos,currents,fields,kicks,psNames,FileNameCurrents]=AcquireTMValues(beamPart,machine,config,filters);
+        [cyCodes,ranges,Eks,Brhos,currents,fields,kicks,psNames,FileNameCurrents]=AcquireLGENValues(beamPart,machine,config,filters);
         if ( length(cyCodes)==0 )
             error("no data loaded!");
         else
