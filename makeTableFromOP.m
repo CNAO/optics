@@ -4,13 +4,13 @@ pathToLibrary="..\MatLabTools";
 addpath(genpath(pathToLibrary));
 
 % user settings
-beamPart="PROTON"; % select beam particle: proton, carbon
-machine="LineT"; % select machine: synchro, LineZ/Sala1, LineU/Sala2H, LineV/Sala2V, and LineT/Sala3; LEBT and MEBT to come 
+beamPart="CARBON"; % select beam particle: proton, carbon
+machine="SYNCHRO"; % select machine: synchro, LineZ/Sala1, LineU/Sala2H, LineV/Sala2V, and LineT/Sala3; LEBT and MEBT to come 
 config="RFKO"; % select configuration: TM, RFKO
-source="LGEN"; % source: RampGen or LGEN
+source="RAMPGEN"; % source: RampGen or LGEN
 LGENsCheck=[]; % subset to check, otherwise all - eg [ "P6-006A-LGEN" "P6-007A-LGEN" "P6-008A-LGEN" "P6-009A-LGEN" ];
 filters=["NaN" "0"]; % filter PSs where all CyCo show "NaN" or "0"
-lCurrents=true; % advice: synchro=false, HEBT=true
+lCurrents=false; % advice: synchro=false, HEBT=true
 
 %% main
 switch upper(source)
@@ -27,8 +27,8 @@ switch upper(source)
                         RampGen2MADX(rampFileName,"synchro\RampGen\TM_Protons.tfs");
                     case "CARBON"
                         if ( strcmp(config,"RFKO") )
-                            rampFileName="S:\Accelerating-System\Accelerator-data\Area dati MD\00Rampe\MatlabRampGen2.8\INPUT\KmachinephotoCarbRFKO.xlsx";
-                            RampGen2MADX(rampFileName,"synchro\RampGen\KmachinephotoCarbRFKO.tfs","Foglio1");
+                            rampFileName="S:\Accelerating-System\Accelerator-data\Area dati MD\00Rampe\MatlabRampGen2.8\INPUT\CorrSest-MachinePhotoCarbRFKO.xlsx";
+                            RampGen2MADX(rampFileName,"synchro\RampGen\CorrSest-MachinePhotoCarbRFKO.tfs","Foglio1");
                         else
                             rampFileName="S:\Accelerating-System\Accelerator-data\Area dati MD\00Rampe\MatlabRampGen2.8\INPUT\CSV-TRATTAMENTI\Carbonio.csv"; 
                             RampGen2MADX(rampFileName,"synchro\RampGen\TM_Carbon.tfs");
