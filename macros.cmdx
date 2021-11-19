@@ -182,3 +182,38 @@ save_strengths(fileName): macro = {
    exec, save_strengths_particular();
    assign, echo=terminal;
 };
+
+compute_RM_allCurrents(myMagName,myKName,myIName,myFName,myProperty,myI2K,fileName): macro={
+   REMOVEFILE, FILE=fileName;
+   exec, writeRMHeader(fileName);
+   
+   ! loop through current values
+   currI=Imin;
+   while (currI<=Imax) {
+
+      myIName=currI;
+      myProperty_orig=myMagName->myProperty;
+      myFName=1.0;
+      exec, myI2K(myMagName,Brho);
+      ! value, myMagName->myProperty;
+      myMagName->myProperty=myKName;
+      ! value, myMagName->myProperty;
+      
+      use,sequence=MUXL;
+      select,flag=twiss,clear;
+      twiss, beta0=initial;
+
+      ! save data
+      kWrite=myKName;
+      exec, writeRMObservations(fileName);
+
+      ! reset kick to original value
+      ! value, myMagName->myProperty;
+      myMagName->myProperty=myProperty_orig;
+      ! value, myMagName->myProperty;
+
+      ! get ready for new point
+      currI=currI+Istep;
+      
+  };
+};
