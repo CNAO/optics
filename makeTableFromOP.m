@@ -4,7 +4,7 @@ pathToLibrary="..\MatLabTools";
 addpath(genpath(pathToLibrary));
 
 % user settings
-beamPart="CARBON"; % select beam particle: proton, carbon
+beamPart="PROTON"; % select beam particle: proton, carbon
 machine="SYNCHRO"; % select machine: synchro, LineZ/Sala1, LineU/Sala2H, LineV/Sala2V, and LineT/Sala3; LEBT and MEBT to come 
 config="RFKO"; % select configuration: TM, RFKO
 source="RAMPGEN"; % source: RampGen or LGEN
