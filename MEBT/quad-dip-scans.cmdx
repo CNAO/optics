@@ -1,0 +1,63 @@
+! define all observations
+writeObservations(fileName,QuadName,DipName,MonName): macro{
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E,% 6.1f,% 12.5E,% 12.5E,% 12.5E,% 12.5E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
+           VALUE=Brho, BP, I_DipName, I_QuadName, DipName->K0*IDB_LENGTH, QuadName->K1,
+           table(twiss,MonName,x), table(twiss,MonName,betx), table(twiss,MonName,dx),
+           table(twiss,MonName,y), table(twiss,MonName,bety), table(twiss,MonName,dy);
+   assign, echo=terminal;
+};
+! a useful header to file written by writeObservations(fileName,MonName) macro
+writeHeader(fileName,QuadName,DipName,MonName): macro{
+   assign, echo=fileName;
+   PRINT, TEXT=# Brho[Tm], BP[mm], I:DipName[A], I:QuadName[A], K0L:DipName[rad], K1:QuadName[m-2], X:MonName[m], BETX:MonName[m], DX:MonName[m], Y:MonName[m], BETY:MonName[m], DY:MonName[m];
+   assign, echo=terminal;
+};
+! the actual macro:
+compute_Scans(myQuaName,myDipName,myMonName,fileName): macro={
+   REMOVEFILE, FILE=fileName;
+   exec, writeHeader(fileName,myQuaName,myDipName,myMonName);
+   
+   ! loop through dipole current values
+   I_myDipName=IminD;
+   while (I_myDipName<=ImaxD) {
+      K0_orig=myDipName->K0;
+      F_myDipName=1.0;
+      exec, I2K_MEBT_DIPs_lin(myDipName,Brho);
+      myDipName->K0=K0L_myDipName/IDB_LENGTH;
+      
+      ! loop through quadrupole current values
+      K1_orig=K1_myQuaName;
+      I_myQuaName=IminQ;
+      while (I_myQuaName<=ImaxQ) {
+         ! get ready for this step
+          exec, I2K_MEBT_QUs_lin(myQuaName,Brho);
+         ! compute optics and save data
+         use,sequence=MUXL;
+         select,flag=twiss,clear;
+         twiss, beta0=initial, centre=true;
+         exec, writeObservations(fileName,myQuaName,myDipName,myMonName);
+         ! get ready for new step
+         I_myQuaName=I_myQuaName+IstpQ;   ! get ready for new point
+      };
+      K1_myQuaName=K1_orig;          ! reset kick to original value
+      myDipName->K0=K0_orig;         ! reset kick to original value
+      I_myDipName=I_myDipName+IstpD; ! get ready for new point
+  };
+};
+
+! first scan:
+! - quad: M1_016A_QIB
+! - dipole: M2_001A_IDB
+! - screen: M2_014A_PIB
+IminQ=-60.0 ; ImaxQ=-30.0 ; IstpQ=5.0; ! TM: -46.5 A
+IminD= 120.0; ImaxD= 130.0; IstpD=5.0; ! TM: ~125 A
+exec, compute_Scans(M1_016A_QIB,M2_001A_IDB,M2_014A_PIB,M2_scan.tfs);
+return;
+
+! second scan:
+! - quad: M2_009A_QIB
+! - dipole: M3_001A_IDB
+! - screen: M3_004A_PIB
+IminQ=-10.0; ImaxQ=10.0; IstpQ=1.0; ! TM: 25.0 A
+IminD=-10.0; ImaxD=10.0; IstpD=1.0; ! TM: ~125 A
