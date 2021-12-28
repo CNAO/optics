@@ -50,8 +50,8 @@ compute_Scans(myQuaName,myDipName,myMonName,fileName): macro={
 ! - quad: M1_016A_QIB
 ! - dipole: M2_001A_IDB
 ! - screen: M2_014A_PIB
-IminQ=-60.0 ; ImaxQ=-30.0 ; IstpQ=5.0; ! TM: -46.5 A
-IminD= 120.0; ImaxD= 130.0; IstpD=5.0; ! TM: ~125 A
+IminQ=-60.0 ; ImaxQ=-30.0 ; IstpQ=1.0; ! TM: -46.5 A
+IminD= 120.0; ImaxD= 130.0; IstpD=1.0; ! TM: ~125 A
 exec, compute_Scans(M1_016A_QIB,M2_001A_IDB,M2_014A_PIB,M2_scan.tfs);
 return;
 
