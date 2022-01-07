@@ -9,7 +9,7 @@ is_open=1;
 
 ! 0: protons
 ! 1: carbon ions
-is_carbon=1;
+is_carbon=0;
 
 ! 0: initial conditions at entrance of ESE
 ! 1: initial conditions at entrance of S0-016A-MSP (synchro seq)
@@ -20,7 +20,7 @@ start_cond=1;
 ! 2: LineU, Room 2H
 ! 3: LineV, Room 2V
 ! 4: LineZ, Room 1
-iLine=1;
+iLine=3;
 
 iMacro_I2K_QU=1; ! 1: linear; 5: fifth order;
 
@@ -84,3 +84,5 @@ exec, saveStrengths(example);
 ! compute response matrices
 ! call, file="compute_RM.cmdx";
 
+! compute quad-dip scans
+call, file="quad-dip-scans.cmdx";
