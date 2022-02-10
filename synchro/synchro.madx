@@ -12,7 +12,7 @@ is_thin=0;
 
 ! 0: proton optics
 ! 1: carbon optics
-is_carbon=1;
+is_carbon=0;
 
 ! 0: TM
 ! 1: RFKO
@@ -68,7 +68,7 @@ call, file="synchro.aper";
 ! ==============================================================================
 ! a simple example
 ! ==============================================================================
-
+/*
 ! set some additional beam properties
 exec, setRigidity();
 
@@ -89,7 +89,7 @@ exec, saveOpticsTFS(extraction);
 exec, saveGeometryTFS(extraction);
 ! save strengths
 exec, save_strengths(myOptics);
-
+*/
 ! ==============================================================================
 ! specific tasks
 ! NB: you can comment out all the part concerning the simple example
@@ -100,3 +100,6 @@ exec, save_strengths(myOptics);
 
 ! loop through .tfs file out of the repo with currents
 ! call, file="loopThroughLGENFile.cmdx";
+
+! vertical bump
+call, file="matchVBump.cmdx";
