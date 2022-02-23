@@ -1,0 +1,140 @@
+! ========================================================================
+! macro
+! ========================================================================
+
+! define all observations
+writeObservations(fileName,magName,monName): macro{
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E,% 6.1f,% 8.3f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
+         VALUE=Brho, BP, I_magName, 
+         table(twiss,monName,RE11), table(twiss,monName,RE12), table(twiss,monName,RE21), table(twiss,monName,RE22), table(twiss,monName,RE16), table(twiss,monName,RE26),
+         table(twiss,monName,RE33), table(twiss,monName,RE34), table(twiss,monName,RE43), table(twiss,monName,RE44), table(twiss,monName,RE36), table(twiss,monName,RE46),
+         table(twiss,monName,RE51), table(twiss,monName,RE52), table(twiss,monName,RE55), table(twiss,monName,RE56), table(twiss,monName,RE66);
+   assign, echo=terminal;
+};
+
+! a useful header to file written by writeObservations(fileName,magName,monName) macro
+writeHeader(fileName,magName,monName): macro{
+   assign, echo=fileName;
+   PRINT, TEXT=# Brho[Tm], BP[mm], I_magName[A], RE11:monName[], RE12:monName[m], RE21:monName[m-1], RE22:monName[], RE16:monName[m], RE26:monName[], RE33:monName[], RE34:monName[m], RE43:monName[m-1], RE44:monName[], RE36:monName[m], RE46:monName[], RE51:monName[s m-1], RE52:monName[s], RE55:monName[], RE56:monName[s], RE66:monName[m];
+   assign, echo=terminal;
+};
+
+! the actual macro:
+makeScan(fileName,magName,monName): macro = {
+
+   REMOVEFILE, FILE=fileName;
+   exec, writeHeader(fileName,magName,monName);
+
+   Icurr=IminQ;
+   while (Icurr<=ImaxQ+0.5*IstpQ){
+
+      ! save original current
+      I_magName_orig=I_magName;
+      K1_magName_orig=K1_magName;
+   
+      ! set quad strength
+      I_magName = Icurr ;
+      K1_magName = 0.0 ;
+      if ( iMacro_I2K_QU==1 ) {
+         ! use macro: linear
+         exec, I2K_HEBT_QUs_lin(magName,Brho);
+      } elseif ( iMacro_I2K_QU==5 ) {
+         ! use macro: fifth order polynomial
+         exec, I2K_HEBT_QUs_fifth(magName,Brho);
+      };
+      
+      ! debug
+      
+      ! compute optics
+      use,sequence=SHORTAPIC;
+      select,flag=twiss,clear;
+      twiss, beta0=initial, centre=true, rmatrix=true;
+      ! save data
+      exec, writeObservations(fileName,magName,monName);
+      ! debug
+      
+      ! restore original current
+      I_magName=I_magName_orig;
+      K1_magName=K1_magName_orig;
+   
+      Icurr=Icurr+IstpQ;
+   };
+};
+
+! ========================================================================
+! setting up cycle
+! ========================================================================
+
+! - parse table
+exec, parseTable();
+lunghezza=table(table_settings,tablelength);
+! - load proper line
+n=46; ! p, 90mm
+SETVARS, TABLE=table_settings, ROW=n;
+K0MB=K0MB_ref;
+call, file="settings_from_LGEN_table.str";
+! - notify user where we are
+PRINTF, TEXT="at Ek = %g MeV/u - BP = %g mm - row = %.0f ...", VALUE= Ek,BP,n;
+! use,sequence=APICLS009;
+! exec, saveOptics(example);
+
+! - insert marker upstream of scanning quad
+SEQEDIT, SEQUENCE=APICLS009;
+INSTALL, ELEMENT=MYINS, CLASS=MARKER, AT=-0.5*H5_009A_QUE->L, FROM=H5_009A_QUE;
+ENDEDIT;
+/*
+! - save optics functions at inserted marker
+use,sequence=APICLS009;
+SAVEBETA, LABEL=newInitial, PLACE=MYINS, SEQUENCE=APICLS009;
+TWISS, beta0=initial;
+*/
+! - extract concerned piece of line
+SEQEDIT, SEQUENCE=APICLS009;
+FLATTEN;
+if (iLine==1) { ! Line T, Sala 3
+   EXTRACT, SEQUENCE=APICLS009, FROM=MYINS, TO=T1_016B_SFH, NEWNAME=SHORTAPIC;
+}elseif(iLine==2) { ! Line U, Sala 2H
+   EXTRACT, SEQUENCE=APICLS009, FROM=MYINS, TO=U1_021B_SFH, NEWNAME=SHORTAPIC;
+! }elseif(iLine==3) { ! Line V, Sala 2V
+!    EXTRACT, SEQUENCE=APICLS009, FROM=MYINS, TO=T1_016B_SFH, NEWNAME=SHORTAPIC;
+}elseif(iLine==4) { ! Line Z, Sala 1
+   EXTRACT, SEQUENCE=APICLS009, FROM=MYINS, TO=Z1_016B_SFH, NEWNAME=SHORTAPIC;
+};
+ENDEDIT;
+! - flatten new sequence
+SEQEDIT, SEQUENCE=SHORTAPIC; FLATTEN; ENDEDIT;
+/*
+! - get again output files, to check
+exec, setBeam(SHORTAPIC);
+use,sequence=SHORTAPIC;
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,betx,alfx,bety,alfy,x,px,y,py,dx,dpx,dy,dpy,mux,muy;
+twiss, file=example_short_optics.tfs, beta0=newInitial;
+use,sequence=SHORTAPIC;
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,kick,hkick,vkick,angle,k0l,k1l,k2l,apertype,aper_1,aper_2,aper_3,aper_4,apoff_1,apoff_2;
+twiss, file=example_short_geometry.tfs, beta0=newInitial;
+*/
+
+! call, file=start-conditions_matlab.opt;
+
+! scan: H5_009A_QUE (F)
+Idelta=1.0;
+IminQ=5.5; ImaxQ=45.5; IstpQ=1.0;
+exec, setBeam(SHORTAPIC);
+
+if (iLine==1) { ! Line T, Sala 3
+   ! - screen: T1_007B_SFH
+   exec, makeScan(H5_009A_QUE_scan_T1_007B_SFH_ReMat.tfs,H5_009A_QUE,T1_007B_SFH);
+   ! - screen: T1_016B_SFH
+   exec, makeScan(H5_009A_QUE_scan_T1_016B_SFH_ReMat.tfs,H5_009A_QUE,T1_016B_SFH);
+}elseif(iLine==2) { ! Line U, Sala 2H
+   ! - screen: U1_005B_SFH
+   exec, makeScan(H5_009A_QUE_scan_U1_005B_SFH_ReMat.tfs,H5_009A_QUE,U1_005B_SFH);
+   ! - screen: U1_021B_SFH
+   exec, makeScan(H5_009A_QUE_scan_U1_021B_SFH_ReMat.tfs,H5_009A_QUE,U1_021B_SFH);
+}elseif(iLine==4) { ! Line Z, Sala 1
+   ! - screen: Z1_007B_SFH
+   exec, makeScan(H5_009A_QUE_scan_Z1_007B_SFH_ReMat.tfs,H5_009A_QUE,Z1_007B_SFH);
+};
