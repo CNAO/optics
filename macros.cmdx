@@ -182,3 +182,9 @@ save_strengths(fileName): macro = {
    exec, save_strengths_particular();
    assign, echo=terminal;
 };
+
+insertMarkerUpstreamOf(MyMarkerName,UpEleName,MySeqName): macro = {
+   SEQEDIT, SEQUENCE=MySeqName;
+   INSTALL, ELEMENT=MyMarkerName, CLASS=MARKER, AT=-0.5*UpEleName->L, FROM=UpEleName;
+   ENDEDIT;
+};
