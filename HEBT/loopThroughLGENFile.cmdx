@@ -19,7 +19,7 @@ K0MB=K0MB_ref;
 call, file="settings_from_LGEN_table.str";
 
 ! notify user where we are
-PRINTF, TEXT="at Ek = %g MeV/u - BP = %g mm - row = %.0f ...", VALUE= Ek,BP,n;
+PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Brho,Ek,BP,n;
 
 use,sequence=APICLS009;
 exec, saveOptics();
