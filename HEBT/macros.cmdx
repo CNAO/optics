@@ -168,7 +168,7 @@ compute_RM_allCurrents(myMagName,myProperty,myI2K,fileName): macro={
       
       ! notify user where we are
       PRINT, TEXT="==========================================================================================";
-      PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Brho,Ek,BP,n;
+      PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
       PRINT, TEXT="==========================================================================================";
 
       ! loop through current values
