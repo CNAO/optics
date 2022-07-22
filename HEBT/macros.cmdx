@@ -3,11 +3,11 @@ I2K_HEBT_QUs_fifth(MagName,biro) : macro {
   ! the macro expects IMagName, KMagName and FMagName to be defined
   ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
   K1_MagName = (-2.794551e-1
-                +9.32005e-2   *abs(IMagName)
-                -4.26890e-4   *abs(IMagName)^2
-                +3.498485e-6  *abs(IMagName)^3
-                -1.1996845e-8 *abs(IMagName)^4
-                +1.3348656E-11*abs(IMagName)^5) /biro *abs(F_MagName);
+                +9.32005e-2   *abs(I_MagName)
+                -4.26890e-4   *abs(I_MagName)^2
+                +3.498485e-6  *abs(I_MagName)^3
+                -1.1996845e-8 *abs(I_MagName)^4
+                +1.3348656E-11*abs(I_MagName)^5) /biro *abs(F_MagName);
   if (I_MagName<0){ K1_MagName=-K1_MagName; };
 };
 

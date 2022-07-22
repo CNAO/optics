@@ -188,3 +188,28 @@ insertMarkerUpstreamOf(MyMarkerName,UpEleName,MySeqName): macro = {
    INSTALL, ELEMENT=MyMarkerName, CLASS=MARKER, AT=-0.5*UpEleName->L, FROM=UpEleName;
    ENDEDIT;
 };
+
+! convert current into K, using a linear dependence
+I2K_QUs_lin(MagName,biro) : macro {
+  ! the macro expects IMagName, KMagName and FMagName to be defined
+  ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
+  ! ...as well as coefficients of the polynomial
+  ! eg. H2_012A_QUE -> a0_LIN_H2_012A_QUE and a1_LIN_H2_012A_QUE
+  K1_MagName := ( a0_LIN_MagName +a1_LIN_MagName*abs(I_MagName) ) /biro *abs(F_MagName);
+  if (I_MagName<0){ K1_MagName=-K1_MagName; };
+};
+
+! convert current into K, using a fifth order polynomial
+I2K_QUs_fifth(MagName,biro) : macro {
+  ! the macro expects IMagName, KMagName and FMagName to be defined
+  ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
+  ! ...as well as coefficients of the polynomial
+  ! eg. H2_012A_QUE -> a0_FIF_H2_012A_QUE, a1_FIF_H2_012A_QUE, ... and a5_FIF_H2_012A_QUE
+  K1_MagName = ( a0_FIF_MagName
+                +a1_FIF_MagName*abs(I_MagName)
+                +a2_FIF_MagName*abs(I_MagName)^2
+                +a3_FIF_MagName*abs(I_MagName)^3
+                +a4_FIF_MagName*abs(I_MagName)^4
+                +a5_FIF_MagName*abs(I_MagName)^5) /biro *abs(F_MagName);
+  if (I_MagName<0){ K1_MagName=-K1_MagName; };
+};

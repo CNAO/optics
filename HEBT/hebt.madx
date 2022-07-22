@@ -9,7 +9,7 @@ is_open=1;
 
 ! 0: protons
 ! 1: carbon ions
-is_carbon=0;
+is_carbon=1;
 
 ! 0: initial conditions at entrance of ESE
 ! 1: initial conditions at entrance of S0-016A-MSP (synchro seq)
@@ -20,9 +20,10 @@ start_cond=1;
 ! 2: LineU, Room 2H
 ! 3: LineV, Room 2V
 ! 4: LineZ, Room 1
-iLine=4;
+iLine=2;
 
-iMacro_I2K_QU=1; ! 1: linear; 5: fifth order;
+iMacro_I2K_QU=1;  ! 1: linear; 5: fifth order;
+iMacro_I2K_ded=1; ! 0: general one; 1: specific for each magnet;
 
 call, file=../macros.cmdx;
 call, file=macros.cmdx;
@@ -89,3 +90,4 @@ exec, saveStrengths(example);
 
 ! guess optics
 call, file="guessOptics.cmdx";
+! call, file="myGuessOptics.cmdx";
