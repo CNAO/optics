@@ -1,0 +1,128 @@
+! ========================================================================
+! macro
+! ========================================================================
+
+! define all observations
+writeObservations(fileName,monName): macro{
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E,% 6.1f,% 6.0f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 13.6E,% 13.6E,% 13.6E,% 13.6E,% 13.6E,% 13.6E",
+         VALUE=Brho, BP, myID, 
+         table(twiss,monName,RE11), table(twiss,monName,RE12), table(twiss,monName,RE21), table(twiss,monName,RE22), table(twiss,monName,RE16), table(twiss,monName,RE26),
+         table(twiss,monName,RE33), table(twiss,monName,RE34), table(twiss,monName,RE43), table(twiss,monName,RE44), table(twiss,monName,RE36), table(twiss,monName,RE46),
+         table(twiss,monName,RE51), table(twiss,monName,RE52), table(twiss,monName,RE55), table(twiss,monName,RE56), table(twiss,monName,RE66),
+		 U1_008A_QUE->K1, U1_014A_QUE->K1, U1_018A_QUE->K1, U2_006A_QUE->K1, U2_010A_QUE->K1, U2_016A_QUE->K1;
+   assign, echo=terminal;
+};
+
+! a useful header to file written by writeObservations(fileName,monName) macro
+writeHeader(fileName,monName): macro{
+   assign, echo=fileName;
+   PRINT, TEXT=# Brho[Tm], BP[mm], ID[], RE11:monName[], RE12:monName[m], RE21:monName[m-1], RE22:monName[], RE16:monName[m], RE26:monName[], RE33:monName[], RE34:monName[m], RE43:monName[m-1], RE44:monName[], RE36:monName[m], RE46:monName[], RE51:monName[s m-1], RE52:monName[s], RE55:monName[], RE56:monName[s], RE66:monName[m], U1_008A_QUE->K1[m-2], U1_014A_QUE->K1[m-2], U1_018A_QUE->K1[m-2], U2_006A_QUE->K1[m-2], U2_010A_QUE->K1[m-2], U2_016A_QUE->K1[m-2];
+   assign, echo=terminal;
+};
+
+! the actual macro:
+makeScanFromTable(fileName,tableName,monName): macro = {
+
+   ! create output file
+   REMOVEFILE, FILE=fileName;
+   exec, writeHeader(fileName,monName);
+
+   ! parse table
+   READTABLE, file=tableName, table=table_scan;
+   lunghezza=table(table_scan,tablelength);
+   
+   ! loop through table data
+   Nstart=1;
+   Nstop=lunghezza;
+
+   n=Nstart;
+   myID=1;
+   WHILE (n <= Nstop ) {
+
+      SETVARS, TABLE=table_scan, ROW=n;
+      K0MB=K0MB_ref;
+      call, file="settings_from_LGEN_table_U1-U2.str";
+
+      ! notify user where we are
+      PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
+
+      ! compute optics
+      use,sequence=SHORTAPIC;
+      select,flag=twiss,clear;
+      twiss, beta0=initial, centre=true, rmatrix=true;
+      ! save data
+      exec, writeObservations(fileName,monName);
+
+	  ! next step
+      n = n+1;
+	  myID=myID+1;
+   };
+};
+
+! ========================================================================
+! setting up cycle
+! ========================================================================
+
+! - parse LGEN table to get TM values
+exec, parseTable();
+lunghezza=table(table_settings,tablelength);
+! - load proper line
+n=lunghezza; ! C, 270mm
+SETVARS, TABLE=table_settings, ROW=n;
+K0MB=K0MB_ref;
+call, file="settings_from_LGEN_table.str";
+! - notify user where we are
+PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
+use,sequence=APICLS009;
+exec, saveOptics(TM);
+
+! - insert marker upstream of scanning quad
+exec, insertMarkerUpstreamOf(MYINS,U1_008A_QUE,APICLS009);
+! - move ISO upstream by 40cm
+SEQEDIT, SEQUENCE=APICLS009;
+INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=-0.4, FROM=U2_029A_MOB;
+! MOVE, ELEMENT=U2_029A_MOB, BY=-0.4;
+ENDEDIT;
+! - flatten sequence
+SEQEDIT, SEQUENCE=APICLS009; FLATTEN; ENDEDIT;
+
+! - save optics functions at inserted marker
+use,sequence=APICLS009;
+SAVEBETA, LABEL=newInitial, PLACE=MYINS, SEQUENCE=APICLS009;
+TWISS, beta0=initial;
+
+! - extract concerned piece of line
+SEQEDIT, SEQUENCE=APICLS009;
+FLATTEN;
+EXTRACT, SEQUENCE=APICLS009, FROM=MYINS, TO=MYEND, NEWNAME=SHORTAPIC;
+ENDEDIT;
+! - flatten new sequence
+SEQEDIT, SEQUENCE=SHORTAPIC; FLATTEN; ENDEDIT;
+
+! - get again output files, to check
+exec, setBeam(SHORTAPIC);
+use,sequence=SHORTAPIC;
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,betx,alfx,bety,alfy,x,px,y,py,dx,dpx,dy,dpy,mux,muy;
+twiss, file=TM_short_optics.tfs, beta0=newInitial;
+! twiss, file=TM_short_optics.tfs, beta0=initial;
+use,sequence=SHORTAPIC;
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,kick,hkick,vkick,angle,k0l,k1l,k2l,apertype,aper_1,aper_2,aper_3,aper_4,apoff_1,apoff_2;
+twiss, file=TM_short_geometry.tfs, beta0=newInitial;
+! twiss, file=TM_short_geometry.tfs, beta0=initial;
+use,sequence=SHORTAPIC;
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,re11,re12,re21,re22,re16,re26,re33,re34,re43,re44,re36,re46,re51,re52,re55,re56,re66;
+twiss, rmatrix=true, file=TM_short_Rmatrix.tfs, beta0=newInitial;
+! twiss, rmatrix=true, file=TM_short_Rmatrix.tfs, beta0=initial;
+! stop;
+
+! call, file=start-conditions_matlab.opt;
+
+! perform scan
+! exec, makeScanFromTable("U1-008A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("U1-008A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("U1-014A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
+exec, makeScanFromTable("U1-014A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
