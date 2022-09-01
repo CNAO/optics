@@ -89,5 +89,5 @@ exec, saveStrengths(example);
 ! call, file="quad-dip-scans.cmdx";
 
 ! guess optics
-call, file="guessOptics.cmdx";
-! call, file="myGuessOptics.cmdx";
+! call, file="guessOptics.cmdx";
+call, file="myGuessOptics.cmdx";
