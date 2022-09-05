@@ -28,18 +28,36 @@ F_Z2_018A_QUE := 1.0;
 
 if ( iMacro_I2K_QU==1 ) {
    ! use macro: linear
-   exec, I2K_HEBT_QUs_lin(Z1_004A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(Z1_013A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(Z1_019A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(Z2_005A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(Z2_012A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(Z2_018A_QUE,Brho);
+   if ( iMacro_I2K_ded==0 ) {
+      exec, I2K_HEBT_QUs_lin(Z1_004A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z1_013A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z1_019A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z2_005A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z2_012A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z2_018A_QUE,Brho);
+   }elseif ( iMacro_I2K_ded==1 ) {
+      exec, I2K_QUs_lin(Z1_004A_QUE,Brho);
+      exec, I2K_QUs_lin(Z1_013A_QUE,Brho);
+      exec, I2K_QUs_lin(Z1_019A_QUE,Brho);
+      exec, I2K_QUs_lin(Z2_005A_QUE,Brho);
+      exec, I2K_QUs_lin(Z2_012A_QUE,Brho);
+      exec, I2K_QUs_lin(Z2_018A_QUE,Brho);
+   };
 } elseif ( iMacro_I2K_QU==5 ) {
    ! use macro: fifth order polynomial
-   exec, I2K_HEBT_QUs_fifth(Z1_004A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(Z1_013A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(Z1_019A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(Z2_005A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(Z2_012A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(Z2_018A_QUE,Brho);
+   if ( iMacro_I2K_ded==0 ) {
+      exec, I2K_HEBT_QUs_fifth(Z1_004A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z1_013A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z1_019A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z2_005A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z2_012A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z2_018A_QUE,Brho);
+   }elseif ( iMacro_I2K_ded==1 ) {
+      exec, I2K_QUs_fifth(Z1_004A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z1_013A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z1_019A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z2_005A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z2_012A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z2_018A_QUE,Brho);
+   };
 };
