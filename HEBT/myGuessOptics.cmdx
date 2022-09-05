@@ -10,14 +10,20 @@ writeObservations(fileName,monName): macro{
          table(twiss,monName,RE11), table(twiss,monName,RE12), table(twiss,monName,RE21), table(twiss,monName,RE22), table(twiss,monName,RE16), table(twiss,monName,RE26),
          table(twiss,monName,RE33), table(twiss,monName,RE34), table(twiss,monName,RE43), table(twiss,monName,RE44), table(twiss,monName,RE36), table(twiss,monName,RE46),
          table(twiss,monName,RE51), table(twiss,monName,RE52), table(twiss,monName,RE55), table(twiss,monName,RE56), table(twiss,monName,RE66),
-		 U1_008A_QUE->K1, U1_014A_QUE->K1, U1_018A_QUE->K1, U2_006A_QUE->K1, U2_010A_QUE->K1, U2_016A_QUE->K1;
+		 Z1_004A_QUE->K1, Z1_013A_QUE->K1, Z1_019A_QUE->K1, Z2_005A_QUE->K1, Z2_012A_QUE->K1, Z2_018A_QUE->K1;
+! 		 U1_008A_QUE->K1, U1_014A_QUE->K1, U1_018A_QUE->K1, U2_006A_QUE->K1, U2_010A_QUE->K1, U2_016A_QUE->K1;
    assign, echo=terminal;
 };
 
 ! a useful header to file written by writeObservations(fileName,monName) macro
 writeHeader(fileName,monName): macro{
    assign, echo=fileName;
-   PRINT, TEXT=# Brho[Tm], BP[mm], ID[], RE11:monName[], RE12:monName[m], RE21:monName[m-1], RE22:monName[], RE16:monName[m], RE26:monName[], RE33:monName[], RE34:monName[m], RE43:monName[m-1], RE44:monName[], RE36:monName[m], RE46:monName[], RE51:monName[s m-1], RE52:monName[s], RE55:monName[], RE56:monName[s], RE66:monName[m], U1_008A_QUE->K1[m-2], U1_014A_QUE->K1[m-2], U1_018A_QUE->K1[m-2], U2_006A_QUE->K1[m-2], U2_010A_QUE->K1[m-2], U2_016A_QUE->K1[m-2];
+   PRINT, TEXT=# Brho[Tm], BP[mm], ID[],
+   RE11:monName[], RE12:monName[m], RE21:monName[m-1], RE22:monName[], RE16:monName[m], RE26:monName[],
+   RE33:monName[], RE34:monName[m], RE43:monName[m-1], RE44:monName[], RE36:monName[m], RE46:monName[], 
+   RE51:monName[s m-1], RE52:monName[s], RE55:monName[], RE56:monName[s], RE66:monName[m],
+   Z1_004A_QUE->K1[m-2], Z1_013A_QUE->K1[m-2], Z1_019A_QUE->K1[m-2], Z2_005A_QUE->K1[m-2], Z2_012A_QUE->K1[m-2], Z2_018A_QUE->K1[m-2];
+!    U1_008A_QUE->K1[m-2], U1_014A_QUE->K1[m-2], U1_018A_QUE->K1[m-2], U2_006A_QUE->K1[m-2], U2_010A_QUE->K1[m-2], U2_016A_QUE->K1[m-2];
    assign, echo=terminal;
 };
 
@@ -42,7 +48,8 @@ makeScanFromTable(fileName,tableName,monName): macro = {
 
       SETVARS, TABLE=table_scan, ROW=n;
       K0MB=K0MB_ref;
-      call, file="settings_from_LGEN_table_U1-U2.str";
+      call, file="settings_from_LGEN_table_Z1-Z2.str";
+!       call, file="settings_from_LGEN_table_U1-U2.str";
 
       ! notify user where we are
       PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
@@ -78,11 +85,15 @@ use,sequence=APICLS009;
 exec, saveOptics(TM);
 
 ! - insert marker upstream of scanning quad
-exec, insertMarkerUpstreamOf(MYINS,U1_008A_QUE,APICLS009);
-! - move ISO upstream by 40cm
+exec, insertMarkerUpstreamOf(MYINS,Z1_013A_QUE,APICLS009);
+! exec, insertMarkerUpstreamOf(MYINS,U1_008A_QUE,APICLS009);
+! ! - insert marker upstream of H5_018B_SFH
+! exec, insertMarkerUpstreamOf(MYINS,H5_018B_SFH,APICLS009);
+! - insert end marker
 SEQEDIT, SEQUENCE=APICLS009;
-INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=-0.4, FROM=U2_029A_MOB;
-! MOVE, ELEMENT=U2_029A_MOB, BY=-0.4;
+INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=0.0, FROM=Z2_032A_MOB;
+! INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=-0.4, FROM=U2_029A_MOB; ! move ISO upstream by 40cm
+! MOVE, ELEMENT=U2_029A_MOB, BY=-0.4; ! move ISO upstream by 40cm
 ENDEDIT;
 ! - flatten sequence
 SEQEDIT, SEQUENCE=APICLS009; FLATTEN; ENDEDIT;
@@ -122,29 +133,34 @@ twiss, rmatrix=true, file=TM_short_Rmatrix.tfs, beta0=newInitial;
 ! call, file=start-conditions_matlab.opt;
 
 ! perform scans
-! 2022-03-13, primo giro
-exec, makeScanFromTable("U1-008A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_primoGiro/U1-008A-QUE_C270_primoGiro_CAM.tfs",MYEND);
-exec, makeScanFromTable("U1-008A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_primoGiro/U1-008A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
-exec, makeScanFromTable("U1-014A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_primoGiro/U1-014A-QUE_C270_primoGiro_CAM.tfs",MYEND);
-exec, makeScanFromTable("U1-014A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_primoGiro/U1-014A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
-exec, makeScanFromTable("U1-018A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-018A-QUE_C270_primoGiro/U1-018A-QUE_C270_primoGiro_CAM.tfs",MYEND);
-exec, makeScanFromTable("U1-018A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-018A-QUE_C270_primoGiro/U1-018A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
-exec, makeScanFromTable("U2-006A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-006A-QUE_C270_primoGiro/U2-006A-QUE_C270_primoGiro_CAM.tfs",MYEND);
-exec, makeScanFromTable("U2-006A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-006A-QUE_C270_primoGiro/U2-006A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
-exec, makeScanFromTable("U2-010A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-010A-QUE_C270_primoGiro/U2-010A-QUE_C270_primoGiro_CAM.tfs",MYEND);
-exec, makeScanFromTable("U2-010A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-010A-QUE_C270_primoGiro/U2-010A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
-exec, makeScanFromTable("U2-016A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-016A-QUE_C270_primoGiro/U2-016A-QUE_C270_primoGiro_CAM.tfs",MYEND);
-exec, makeScanFromTable("U2-016A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-016A-QUE_C270_primoGiro/U2-016A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
+! 2021-09, C-270mm
+exec, makeScanFromTable("2021-09/Z2-012A-QUE_C270_CAM_ReMat.tfs","../../../2021-09/Z2-012A-QUE_C270/Z2-012A-QUE_C270_CAM.tfs",MYEND);
+exec, makeScanFromTable("2021-09/Z2-012A-QUE_C270_DDS_ReMat.tfs","../../../2021-09/Z2-012A-QUE_C270/Z2-012A-QUE_C270_DDS.tfs",Z2_030B_NZL);
+exec, makeScanFromTable("2021-09/Z2-018A-QUE_C270_CAM_ReMat.tfs","../../../2021-09/Z2-018A-QUE_C270/Z2-018A-QUE_C270_CAM.tfs",MYEND);
+exec, makeScanFromTable("2021-09/Z2-018A-QUE_C270_DDS_ReMat.tfs","../../../2021-09/Z2-018A-QUE_C270/Z2-018A-QUE_C270_DDS.tfs",Z2_030B_NZL);
+! ! 2022-03-13, primo giro
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-008A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_primoGiro/U1-008A-QUE_C270_primoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-008A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_primoGiro/U1-008A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-014A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_primoGiro/U1-014A-QUE_C270_primoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-014A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_primoGiro/U1-014A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-018A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-018A-QUE_C270_primoGiro/U1-018A-QUE_C270_primoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-018A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-018A-QUE_C270_primoGiro/U1-018A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-006A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-006A-QUE_C270_primoGiro/U2-006A-QUE_C270_primoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-006A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-006A-QUE_C270_primoGiro/U2-006A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-010A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-010A-QUE_C270_primoGiro/U2-010A-QUE_C270_primoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-010A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-010A-QUE_C270_primoGiro/U2-010A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-016A-QUE_C270_primoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-016A-QUE_C270_primoGiro/U2-016A-QUE_C270_primoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-016A-QUE_C270_primoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-016A-QUE_C270_primoGiro/U2-016A-QUE_C270_primoGiro_DDS.tfs",U2_027B_NZL);
 ! 2022-03-13, secondo giro
-! exec, makeScanFromTable("U1-008A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_secondoGiro/U1-008A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
-! exec, makeScanFromTable("U1-008A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_secondoGiro/U1-008A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
-! exec, makeScanFromTable("U1-014A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_secondoGiro/U1-014A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
-! exec, makeScanFromTable("U1-014A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_secondoGiro/U1-014A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
-! exec, makeScanFromTable("U1-018A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-018A-QUE_C270_secondoGiro/U1-018A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
-! exec, makeScanFromTable("U1-018A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-018A-QUE_C270_secondoGiro/U1-018A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
-! exec, makeScanFromTable("U2-006A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-006A-QUE_C270_secondoGiro/U2-006A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
-! exec, makeScanFromTable("U2-006A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-006A-QUE_C270_secondoGiro/U2-006A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
-! exec, makeScanFromTable("U2-010A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-010A-QUE_C270_secondoGiro/U2-010A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
-! exec, makeScanFromTable("U2-010A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-010A-QUE_C270_secondoGiro/U2-010A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
-! exec, makeScanFromTable("U2-016A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-016A-QUE_C270_secondoGiro/U2-016A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
-! exec, makeScanFromTable("U2-016A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-016A-QUE_C270_secondoGiro/U2-016A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-008A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_secondoGiro/U1-008A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-008A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-008A-QUE_C270_secondoGiro/U1-008A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-014A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_secondoGiro/U1-014A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-014A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-014A-QUE_C270_secondoGiro/U1-014A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-018A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U1-018A-QUE_C270_secondoGiro/U1-018A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U1-018A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U1-018A-QUE_C270_secondoGiro/U1-018A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-006A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-006A-QUE_C270_secondoGiro/U2-006A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-006A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-006A-QUE_C270_secondoGiro/U2-006A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-010A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-010A-QUE_C270_secondoGiro/U2-010A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-010A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-010A-QUE_C270_secondoGiro/U2-010A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-016A-QUE_C270_secondoGiro_CAM_ReMat.tfs","../../../2022-03-13/U2-016A-QUE_C270_secondoGiro/U2-016A-QUE_C270_secondoGiro_CAM.tfs",MYEND);
+! exec, makeScanFromTable("2022-03-13/H5_018B_SFH/U2-016A-QUE_C270_secondoGiro_DDS_ReMat.tfs","../../../2022-03-13/U2-016A-QUE_C270_secondoGiro/U2-016A-QUE_C270_secondoGiro_DDS.tfs",U2_027B_NZL);
