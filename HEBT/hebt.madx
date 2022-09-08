@@ -20,7 +20,7 @@ start_cond=1;
 ! 2: LineU, Room 2H
 ! 3: LineV, Room 2V
 ! 4: LineZ, Room 1
-iLine=4;
+iLine=1;
 
 iMacro_I2K_QU=5;  ! 1: linear; 5: fifth order;
 iMacro_I2K_ded=1; ! 0: general one; 1: specific for each magnet;

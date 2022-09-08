@@ -18,8 +18,9 @@ nMagnets=size(Bs,2);
 magNames=compose("%s#%02i",magFamily,1:nMagnets);
 
 %% plot all
+myNames=[ "T1_004A_QUE" "T1_013A_QUE" "T1_019A_QUE" "T2_005A_QUE" "T2_012A_QUE" "T2_018A_QUE" ];
 % myNames=[ "U1_008A_QUE" "U1_014A_QUE" "U1_018A_QUE" "U2_006A_QUE" "U2_010A_QUE" "U2_016A_QUE" ];
-myNames=[ "Z1_004A_QUE" "Z1_013A_QUE" "Z1_019A_QUE" "Z2_005A_QUE" "Z2_012A_QUE" "Z2_018A_QUE" ];
+% myNames=[ "Z1_004A_QUE" "Z1_013A_QUE" "Z1_019A_QUE" "Z2_005A_QUE" "Z2_012A_QUE" "Z2_018A_QUE" ];
 % myNames="U1_008A_QUE";
 myChoice=find(Names2IDs(myNames));
 ShowValues(Is(:,myChoice),Bs(:,myChoice),compose("%s - %s",[myNames' magNames(myChoice)'])',"g [T/m]",true);
