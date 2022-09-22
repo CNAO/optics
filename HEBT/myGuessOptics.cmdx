@@ -78,7 +78,8 @@ makeScanFromTable(fileName,tableName,monName): macro = {
 exec, parseTable();
 lunghezza=table(table_settings,tablelength);
 ! - load proper line
-n=lunghezza; ! C, 270mm
+! n=lunghezza; ! C, 270mm
+n=81; ! C, 190mm
 ! n=71; ! C, 170mm
 SETVARS, TABLE=table_settings, ROW=n;
 K0MB=K0MB_ref;
@@ -88,12 +89,12 @@ PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VA
 use,sequence=APICLS009;
 exec, saveOptics(TM);
 
-! - insert marker upstream of scanning quad
-exec, insertMarkerUpstreamOf(MYINS,T1_013A_QUE,APICLS009);
+! ! - insert marker upstream of scanning quad
+! exec, insertMarkerUpstreamOf(MYINS,T1_013A_QUE,APICLS009);
 ! exec, insertMarkerUpstreamOf(MYINS,U1_008A_QUE,APICLS009);
 ! exec, insertMarkerUpstreamOf(MYINS,Z1_013A_QUE,APICLS009);
-! ! - insert marker upstream of H5_018B_SFH
-! exec, insertMarkerUpstreamOf(MYINS,H5_018B_SFH,APICLS009);
+! - insert marker upstream of H5_018B_SFH
+exec, insertMarkerUpstreamOf(MYINS,H5_018B_SFH,APICLS009);
 ! - insert end marker
 SEQEDIT, SEQUENCE=APICLS009;
 INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=0.0, FROM=T2_032A_MOB;
@@ -139,7 +140,19 @@ twiss, rmatrix=true, file=TM_short_Rmatrix.tfs, beta0=newInitial;
 ! call, file=start-conditions_matlab.opt;
 
 ! perform scans
-! 2020-11, C-270mm
+! 2020-12, C-190mm
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-013A-QUE_C190_CAM_ReMat.tfs","../../../2020-12/T1-013A-QUE_C190/T1-013A-QUE_C190_CAM.tfs",MYEND);
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-013A-QUE_C190_DDS_ReMat.tfs","../../../2020-12/T1-013A-QUE_C190/T1-013A-QUE_C190_DDS.tfs",T2_030B_NZL);
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-019A-QUE_C190_CAM_ReMat.tfs","../../../2020-12/T1-019A-QUE_C190/T1-019A-QUE_C190_CAM.tfs",MYEND);
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-019A-QUE_C190_DDS_ReMat.tfs","../../../2020-12/T1-019A-QUE_C190/T1-019A-QUE_C190_DDS.tfs",T2_030B_NZL);
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-005A-QUE_C190_CAM_ReMat.tfs","../../../2020-12/T2-005A-QUE_C190/T2-005A-QUE_C190_CAM.tfs",MYEND);
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-005A-QUE_C190_DDS_ReMat.tfs","../../../2020-12/T2-005A-QUE_C190/T2-005A-QUE_C190_DDS.tfs",T2_030B_NZL);
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-012A-QUE_C190_CAM_ReMat.tfs","../../../2020-12/T2-012A-QUE_C190/T2-012A-QUE_C190_CAM.tfs",MYEND);
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-012A-QUE_C190_DDS_ReMat.tfs","../../../2020-12/T2-012A-QUE_C190/T2-012A-QUE_C190_DDS.tfs",T2_030B_NZL);
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-018A-QUE_C190_CAM_ReMat.tfs","../../../2020-12/T2-018A-QUE_C190/T2-018A-QUE_C190_CAM.tfs",MYEND);
+exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-018A-QUE_C190_DDS_ReMat.tfs","../../../2020-12/T2-018A-QUE_C190/T2-018A-QUE_C190_DDS.tfs",T2_030B_NZL);
+/*
+! 2020-12, C-270mm
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-013A-QUE_C270_CAM_ReMat.tfs","../../../2020-12/T1-013A-QUE_C270/T1-013A-QUE_C270_CAM.tfs",MYEND);
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-013A-QUE_C270_DDS_ReMat.tfs","../../../2020-12/T1-013A-QUE_C270/T1-013A-QUE_C270_DDS.tfs",T2_030B_NZL);
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-019A-QUE_C270_CAM_ReMat.tfs","../../../2020-12/T1-019A-QUE_C270/T1-019A-QUE_C270_CAM.tfs",MYEND);
@@ -150,6 +163,7 @@ exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-012A-QUE_C270_CAM_ReMat.tfs","..
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-012A-QUE_C270_DDS_ReMat.tfs","../../../2020-12/T2-012A-QUE_C270/T2-012A-QUE_C270_DDS.tfs",T2_030B_NZL);
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-018A-QUE_C270_CAM_ReMat.tfs","../../../2020-12/T2-018A-QUE_C270/T2-018A-QUE_C270_CAM.tfs",MYEND);
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-018A-QUE_C270_DDS_ReMat.tfs","../../../2020-12/T2-018A-QUE_C270/T2-018A-QUE_C270_DDS.tfs",T2_030B_NZL);
+*/
 /*
 ! 2020-11, C-270mm
 exec, makeScanFromTable("2020-11/H5_018B_SFH/Z2-005A-QUE_C270_CAM_ReMat.tfs","../../../2020-11/Z2-005A-QUE_C270/Z2-005A-QUE_C270_CAM.tfs",MYEND);
