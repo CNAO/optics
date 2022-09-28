@@ -34,10 +34,10 @@ call, file=../common_defs.madx;
 ! load desired HEBT
 if (iLine==1) {
    title, "HEBT CNAO - Line T - Sala 3";
-   call, file=LineT.seq;
+   call, file=Sala3.seq;
 }elseif(iLine==2) {
    title, "HEBT CNAO - Line U - Sala 2(H)";
-   call, file=LineU.seq;
+   call, file=Sala2H.seq;
 }elseif(iLine==3) {
    title, "HEBT CNAO - Line V - Sala 2(V)";
    call, file=LineV.seq;
@@ -45,6 +45,7 @@ if (iLine==1) {
    title, "HEBT CNAO - Line Z - Sala 1";
    call, file=LineZ.seq;
 };
+seqedit, sequence=apicls009; flatten; endedit;
 
 ! load initial conditions
 call, file=start-conditions.opt;
@@ -80,7 +81,7 @@ exec, saveStrengths(example);
 ! ==============================================================================
 
 ! loop through .tfs file out of the repo with currents
-! call, file="loopThroughLGENFile.cmdx";
+call, file="loopThroughLGENFile.cmdx";
 
 ! compute response matrices
 ! call, file="compute_RM.cmdx";
@@ -90,4 +91,4 @@ exec, saveStrengths(example);
 
 ! guess optics
 ! call, file="guessOptics.cmdx";
-call, file="myGuessOptics.cmdx";
+! call, file="myGuessOptics.cmdx";

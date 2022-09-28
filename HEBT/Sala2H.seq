@@ -1,0 +1,11 @@
+!
+! This is the description of HEBT 2H line
+! 
+
+call, file="LineH.seq";
+call, file="LineU.seq";
+
+apicls009: sequence, l=hLineL+uLineL, refer=entry;
+hLine, at=0;
+uLine, at=hLineL;
+endsequence;
