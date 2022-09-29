@@ -122,6 +122,15 @@ surroundKICKER(MagName,SeqName): macro={
 	Install, element=MagNameDOPO , at= 0.5*MagName->L, from=MagName;
 	ENDEDIT;
 };
+surroundMBEND(MagName,SeqName): macro={
+	MagName->ANGLE=0.0; MagName->K0=0.0;
+	MagNamePRIMA: KICKER, L= 0.0, HKICK := MagName_ANGLE/2;
+	MagNameDOPO:  KICKER, L= 0.0, HKICK := MagName_ANGLE/2;
+	SEQEDIT, sequence=SeqName;
+	Install, element=MagNamePRIMA, at=-0.5*MagName->L, from=MagName;
+	Install, element=MagNameDOPO , at= 0.5*MagName->L, from=MagName;
+	ENDEDIT;
+};
 
 ! set beam rigidity and other realtivistic quantities based on beam energy
 setRigidity(): macro = {

@@ -67,13 +67,11 @@ H1_032A_DRI: DRIFT, L= 0.033000012133;
 ! ---------------------------------------------------------------
 ! H2
 ! ---------------------------------------------------------------
-H2_001A_MSN: SBEND, L= 0.65, E1 = 0.0008573401, E2 = -0.0508573401, ANGLE = -0.05, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
+H2_001A_MSN: SBEND, L= 0.65, E1 = 0.0008573401, E2 = -0.0508573401, ANGLE = -0.05, K0= -0.05, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
 H2_002A_DRI: DRIFT, L= 0.5;
-H2_003A_MSW: SBEND, L= 1.0, E1 = -0.075, E2 = -0.075, ANGLE = -0.15, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
+H2_003A_MSW: SBEND, L= 1.0, E1 = -0.075, E2 = -0.075, ANGLE = -0.15, K0= -0.15, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
 H2_004A_DRI: DRIFT, L= 0.5;
-H2_005A_MSWPRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
-H2_005A_MSW: SBEND, L= 1.0, E1 = -0.075, E2 = -0.075, ANGLE = -0.15, K1 = 0, K2 = 0, HGAP = 0.02;
-H2_005A_MSWDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
+H2_005A_MSW: SBEND, L= 1.0, E1 = -0.075, E2 = -0.075, ANGLE = -0.15, K0= -0.15, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
 H2_006A_DRI: DRIFT, L= 0.3;
 H2_007A_CEB: KICKER, L= 0.52, HKICK := HKICK_H2_007A_CEB, VKICK := VKICK_H2_007A_CEB;
 H2_008A_DRI: DRIFT, L= 0.0839;
@@ -115,9 +113,7 @@ H2_026B_BSH: DRIFT, L= 0.0;
 H3_001A_CHD: KICKER, L= 0.35, HKICK := H3_001A_CHD_HKICK, VKICK := 0.0;
 H3_002A_DRI: DRIFT, L= 0.1389;
 H3_002B_DRI: DRIFT, L= 0.1818525103;
-H3_003A_SW2PRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H3_003A_SW2: SBEND, L=LMB, ANGLE = ANGLEMB, E1 = Es, E2 = Es, K0 := K0MB,  K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
-H3_003A_SW2DOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H3_004A_DRI: DRIFT, L= 0.1818525103;
 H3_004B_DRI: DRIFT, L= 0.1389;
 H3_005A_CHD: KICKER, L= 0.35, HKICK := H3_005A_CHD_HKICK, VKICK := 0.0;
@@ -126,9 +122,7 @@ H3_006B_BSH: DRIFT, L= 0.0;
 H3_007A_DRI: DRIFT, L= 0.389;
 H3_008A_DRI: DRIFT, L= 0.0;
 H3_008B_DRI: DRIFT, L= 0.1818525103;
-H3_009A_MBSPRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H3_009A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = Es, E2 = Es, K0 := K0MB,  K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
-H3_009A_MBSDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H3_010A_DRI: DRIFT, L= 0.1818525103;
 H3_010B_DRI: DRIFT, L= 0.1023;
 H3_010C_BSH: DRIFT, L= 0.0;
@@ -142,9 +136,7 @@ H3_013A_CHD: KICKER, L= 0.35, HKICK := H3_013A_CHD_HKICK, VKICK := 0.0;
 H3_014A_DRI: DRIFT, L= 0.1389;
 H3_014B_BSH: DRIFT, L= 0.0;
 H3_014C_DRI: DRIFT, L= 0.1818525103;
-H3_015A_MBSPRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H3_015A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = Es, E2 = Es, K0 := K0MB,  K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
-H3_015A_MBSDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H3_016A_DRI: DRIFT, L= 0.1818525103;
 H3_016B_DRI: DRIFT, L= 0.1389;
 H3_016C_BSH: DRIFT, L= 0.0;
@@ -244,9 +236,7 @@ if (iLine==3) {
     hLine: sequence, l=hLineL;
     h2_001a_msn, at = 0.325;
     h2_003a_msw, at = 1.65;
-    h2_005a_mswprima, at = 2.65; 
     h2_005a_msw, at = 3.15;
-    h2_005a_mswdopo, at = 3.65;
     h2_007a_ceb, at = 4.21;
     h2_009b_sfh, at = 4.9012;
     h2_012a_que, at = 5.485;
@@ -255,18 +245,12 @@ if (iLine==3) {
     h2_022a_que, at = 7.405;
     h2_025b_sfh, at = 7.9958;
     h3_001a_chd, at = 8.4843;
-    h3_003a_sw2PRIMA, at = 8.980053;
     h3_003a_sw2, at = 9.81865251;
-    h3_003a_sw2DOPO, at = 10.657253;
     h3_005a_chd, at = 11.15300502;
-    h3_009a_mbsPRIMA, at = 12.037358;
     h3_009a_mbs, at = 12.87595753;
-    h3_009a_mbsDOPO, at = 13.714558;
     h3_011b_qpm, at = 14.10621004;
     h3_013a_chd, at = 14.59891004;
-    h3_015a_mbsPRIMA, at = 15.094663;
     h3_015a_mbs, at = 15.93326255;
-    h3_015a_mbsDOPO, at = 16.771863;
     h3_017a_chd, at = 17.26761506;
     h4_003a_que, at = 17.93262256;
     h4_007a_que, at = 18.60262256;
@@ -281,9 +265,7 @@ if (iLine==3) {
     hLine: sequence, l=hLineL;
     h2_001a_msn, at = 0.325;
     h2_003a_msw, at = 1.65;
-    h2_005a_mswprima, at = 2.65; 
     h2_005a_msw, at = 3.15;
-    h2_005a_mswdopo, at = 3.65;
     h2_007a_ceb, at = 4.21;
     h2_009b_sfh, at = 4.9012;
     h2_012a_que, at = 5.485;
@@ -292,18 +274,12 @@ if (iLine==3) {
     h2_022a_que, at = 7.405;
     h2_025b_sfh, at = 7.9958;
     h3_001a_chd, at = 8.4843;
-    h3_003a_sw2PRIMA, at = 8.980053;
     h3_003a_sw2, at = 9.81865251;
-    h3_003a_sw2DOPO, at = 10.657253;
     h3_005a_chd, at = 11.15300502;
-    h3_009a_mbsPRIMA, at = 12.037358;
     h3_009a_mbs, at = 12.87595753;
-    h3_009a_mbsDOPO, at = 13.714558;
     h3_011b_qpm, at = 14.10621004;
     h3_013a_chd, at = 14.59891004;
-    h3_015a_mbsPRIMA, at = 15.094663;
     h3_015a_mbs, at = 15.93326255;
-    h3_015a_mbsDOPO, at = 16.771863;
     h3_017a_chd, at = 17.26761506;
     h4_003a_que, at = 17.93262256;
     h4_007a_que, at = 18.60262256;
@@ -332,3 +308,12 @@ exec, surroundKICKER(H3_005A_CHD,hLine);
 exec, surroundKICKER(H3_013A_CHD,hLine);
 exec, surroundKICKER(H3_017A_CHD,hLine);
 
+/*
+! distribute other kicks
+exec, surroundMBEND(H2_001A_MSN,hLine);
+exec, surroundMBEND(H2_003A_MSW,hLine);
+exec, surroundMBEND(H2_005A_MSW,hLine);
+exec, surroundMBEND(H3_003A_SW2,hLine);
+exec, surroundMBEND(H3_009A_MBS,hLine);
+exec, surroundMBEND(H3_015A_MBS,hLine);
+*/
