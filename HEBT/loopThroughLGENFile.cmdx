@@ -22,7 +22,7 @@ call, file="settings_from_LGEN_table.str";
 PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
 
 use,sequence=APICLS009;
-exec, saveOptics();
+exec, saveOptics(LGEN);
 
 n = n+1;
 };
