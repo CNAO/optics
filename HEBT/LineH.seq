@@ -196,97 +196,139 @@ H4_019H_DRI: DRIFT, L= 0.1818525103;
 ! ---------------------------------------------------------------
 ! H5
 ! ---------------------------------------------------------------
-H5_001A_DRI: DRIFT, L= 2.3907+0.0079474;
-H5_001B_CEB: KICKER, L= 0.52, HKICK := HKICK_H5_001B_CEB, VKICK := VKICK_H5_001B_CEB;
-H5_001C_DRI: DRIFT, L= 0.0156;
-H5_001D_BSH: DRIFT, L= 0.0;
-H5_002A_DRI: DRIFT, L= 0.175;
-H5_002B_SFH: MONITOR, L= 0.0;
-H5_002C_DRI: DRIFT, L= 0.175;
-H5_002D_SIP: DRIFT, L= 0.0;
-H5_003A_DRI: DRIFT, L= 0.0344;
-H5_003B_BSH: DRIFT, L= 0.0;  
-H5_004A_DRI: DRIFT, L= 0.1;
-H5_005A_QUE: QUADRUPOLE, L= 0.45, K1 := K1_H5_005A_QUE; 
-H5_006A_DRI: DRIFT, L= 0.1;
-H5_007A_DRI: DRIFT, L= 0.02;
-H5_008A_DRI: DRIFT, L= 0.1;
-H5_009A_QUE: QUADRUPOLE, L= 0.45, K1 := K1_H5_009A_QUE; 
-H5_010A_DRI: DRIFT, L= 0.1;
-H5_011A_DRI: DRIFT, L= 0.03;
-H5_012A_CEB: KICKER, L= 0.52, HKICK := HKICK_H5_012A_CEB, VKICK := VKICK_H5_012A_CEB;
-H5_013A_DRI: DRIFT, L= 0.06;
-H5_014A_DRI: DRIFT, L= 0.1;
-H5_015A_QUE: QUADRUPOLE, L= 0.45, K1 := K1_H5_015A_QUE; 
-H5_016A_DRI: DRIFT, L= 0.1;
-H5_017A_DRI: DRIFT, L= 0.2052;
-H5_017B_BSH: DRIFT, L= 0.0;
-H5_018A_DRI: DRIFT, L= 0.133;
-H5_018B_SFH: MONITOR, L= 0.0;
-H5_018C_DRI: DRIFT, L= 0.184;
-H5_018D_BOX: DRIFT, L= 0.0;
-H5_018E_DRI: DRIFT, L= 0.133;
-H5_018F_SIP: DRIFT, L= 0.0;
-H5_018G_MIG: DRIFT, L= 0.0;
-H5_019A_DRI: DRIFT, L= 0.1023;
-H5_019B_BSH: DRIFT, L= 0.0;
-H5_020A_DRI: DRIFT, L= 0.2398;
+if (iLine<>3) {
+	! H line for all other treatment rooms
+	H5_001A_DRI: DRIFT, L= 2.3907+0.0079474;
+	H5_001B_CEB: KICKER, L= 0.52, HKICK := HKICK_H5_001B_CEB, VKICK := VKICK_H5_001B_CEB;
+	H5_001C_DRI: DRIFT, L= 0.0156;
+	H5_001D_BSH: DRIFT, L= 0.0;
+	H5_002A_DRI: DRIFT, L= 0.175;
+	H5_002B_SFH: MONITOR, L= 0.0;
+	H5_002C_DRI: DRIFT, L= 0.175;
+	H5_002D_SIP: DRIFT, L= 0.0;
+	H5_003A_DRI: DRIFT, L= 0.0344;
+	H5_003B_BSH: DRIFT, L= 0.0;  
+	H5_004A_DRI: DRIFT, L= 0.1;
+	H5_005A_QUE: QUADRUPOLE, L= 0.45, K1 := K1_H5_005A_QUE; 
+	H5_006A_DRI: DRIFT, L= 0.1;
+	H5_007A_DRI: DRIFT, L= 0.02;
+	H5_008A_DRI: DRIFT, L= 0.1;
+	H5_009A_QUE: QUADRUPOLE, L= 0.45, K1 := K1_H5_009A_QUE; 
+	H5_010A_DRI: DRIFT, L= 0.1;
+	H5_011A_DRI: DRIFT, L= 0.03;
+	H5_012A_CEB: KICKER, L= 0.52, HKICK := HKICK_H5_012A_CEB, VKICK := VKICK_H5_012A_CEB;
+	H5_013A_DRI: DRIFT, L= 0.06;
+	H5_014A_DRI: DRIFT, L= 0.1;
+	H5_015A_QUE: QUADRUPOLE, L= 0.45, K1 := K1_H5_015A_QUE; 
+	H5_016A_DRI: DRIFT, L= 0.1;
+	H5_017A_DRI: DRIFT, L= 0.2052;
+	H5_017B_BSH: DRIFT, L= 0.0;
+	H5_018A_DRI: DRIFT, L= 0.133;
+	H5_018B_SFH: MONITOR, L= 0.0;
+	H5_018C_DRI: DRIFT, L= 0.184;
+	H5_018D_BOX: DRIFT, L= 0.0;
+	H5_018E_DRI: DRIFT, L= 0.133;
+	H5_018F_SIP: DRIFT, L= 0.0;
+	H5_018G_MIG: DRIFT, L= 0.0;
+	H5_019A_DRI: DRIFT, L= 0.1023;
+	H5_019B_BSH: DRIFT, L= 0.0;
+	H5_020A_DRI: DRIFT, L= 0.2398;
+};
 
 ! ===============================================================
 ! sequence definition
 ! ===============================================================
-
-hLineL=29.43592247;
-hLine: sequence, l=hLineL;
-h2_001a_msn, at = 0.325;
-h2_003a_msw, at = 1.65;
-h2_005a_mswprima, at = 2.65; 
-h2_005a_msw, at = 3.15;
-h2_005a_mswdopo, at = 3.65;
-h2_007a_ceb, at = 4.21;
-h2_009b_sfh, at = 4.9012;
-h2_012a_que, at = 5.485;
-h2_016a_que, at = 6.155;
-h2_019a_ceb, at = 6.78;
-h2_022a_que, at = 7.405;
-h2_025b_sfh, at = 7.9958;
-h3_001a_chd, at = 8.4843;
-h3_003a_sw2PRIMA, at = 8.980053;
-h3_003a_sw2, at = 9.81865251;
-h3_003a_sw2DOPO, at = 10.657253;
-h3_005a_chd, at = 11.15300502;
-h3_009a_mbsPRIMA, at = 12.037358;
-h3_009a_mbs, at = 12.87595753;
-h3_009a_mbsDOPO, at = 13.714558;
-h3_011b_qpm, at = 14.10621004;
-h3_013a_chd, at = 14.59891004;
-h3_015a_mbsPRIMA, at = 15.094663;
-h3_015a_mbs, at = 15.93326255;
-h3_015a_mbsDOPO, at = 16.771863;
-h3_017a_chd, at = 17.26761506;
-h4_003a_que, at = 17.93262256;
-h4_007a_que, at = 18.60262256;
-h4_010b_box, at = 19.16762256;
-h4_013a_que, at = 19.73262256;
-h4_016a_ceb, at = 20.35762256;
-h4_018b_sfh, at = 20.81562256;
-h5_001b_ceb, at = 25.19862247;
-h5_002b_sfh, at = 25.64922247;
-h5_005a_que, at = 26.18362247;
-h5_009a_que, at = 26.85362247;
-h5_012a_ceb, at = 27.46862247;
-h5_015a_que, at = 28.11362247;
-h5_018b_sfh, at = 28.77682247;
-endsequence;
+if (iLine==3) {
+	! H line for the vertical line of room 2
+	hLineL=22.53997507;
+    hLine: sequence, l=hLineL;
+    h2_001a_msn, at = 0.325;
+    h2_003a_msw, at = 1.65;
+    h2_005a_mswprima, at = 2.65; 
+    h2_005a_msw, at = 3.15;
+    h2_005a_mswdopo, at = 3.65;
+    h2_007a_ceb, at = 4.21;
+    h2_009b_sfh, at = 4.9012;
+    h2_012a_que, at = 5.485;
+    h2_016a_que, at = 6.155;
+    h2_019a_ceb, at = 6.78;
+    h2_022a_que, at = 7.405;
+    h2_025b_sfh, at = 7.9958;
+    h3_001a_chd, at = 8.4843;
+    h3_003a_sw2PRIMA, at = 8.980053;
+    h3_003a_sw2, at = 9.81865251;
+    h3_003a_sw2DOPO, at = 10.657253;
+    h3_005a_chd, at = 11.15300502;
+    h3_009a_mbsPRIMA, at = 12.037358;
+    h3_009a_mbs, at = 12.87595753;
+    h3_009a_mbsDOPO, at = 13.714558;
+    h3_011b_qpm, at = 14.10621004;
+    h3_013a_chd, at = 14.59891004;
+    h3_015a_mbsPRIMA, at = 15.094663;
+    h3_015a_mbs, at = 15.93326255;
+    h3_015a_mbsDOPO, at = 16.771863;
+    h3_017a_chd, at = 17.26761506;
+    h4_003a_que, at = 17.93262256;
+    h4_007a_que, at = 18.60262256;
+    h4_010b_box, at = 19.16762256;
+    h4_013a_que, at = 19.73262256;
+    h4_016a_ceb, at = 20.35762256;
+    h4_018b_sfh, at = 20.81562256;
+    endsequence;
+}else{
+	! H line for all other treatment rooms
+	hLineL=29.43592247;
+    hLine: sequence, l=hLineL;
+    h2_001a_msn, at = 0.325;
+    h2_003a_msw, at = 1.65;
+    h2_005a_mswprima, at = 2.65; 
+    h2_005a_msw, at = 3.15;
+    h2_005a_mswdopo, at = 3.65;
+    h2_007a_ceb, at = 4.21;
+    h2_009b_sfh, at = 4.9012;
+    h2_012a_que, at = 5.485;
+    h2_016a_que, at = 6.155;
+    h2_019a_ceb, at = 6.78;
+    h2_022a_que, at = 7.405;
+    h2_025b_sfh, at = 7.9958;
+    h3_001a_chd, at = 8.4843;
+    h3_003a_sw2PRIMA, at = 8.980053;
+    h3_003a_sw2, at = 9.81865251;
+    h3_003a_sw2DOPO, at = 10.657253;
+    h3_005a_chd, at = 11.15300502;
+    h3_009a_mbsPRIMA, at = 12.037358;
+    h3_009a_mbs, at = 12.87595753;
+    h3_009a_mbsDOPO, at = 13.714558;
+    h3_011b_qpm, at = 14.10621004;
+    h3_013a_chd, at = 14.59891004;
+    h3_015a_mbsPRIMA, at = 15.094663;
+    h3_015a_mbs, at = 15.93326255;
+    h3_015a_mbsDOPO, at = 16.771863;
+    h3_017a_chd, at = 17.26761506;
+    h4_003a_que, at = 17.93262256;
+    h4_007a_que, at = 18.60262256;
+    h4_010b_box, at = 19.16762256;
+    h4_013a_que, at = 19.73262256;
+    h4_016a_ceb, at = 20.35762256;
+    h4_018b_sfh, at = 20.81562256;
+    h5_001b_ceb, at = 25.19862247;
+    h5_002b_sfh, at = 25.64922247;
+    h5_005a_que, at = 26.18362247;
+    h5_009a_que, at = 26.85362247;
+    h5_012a_ceb, at = 27.46862247;
+    h5_015a_que, at = 28.11362247;
+    h5_018b_sfh, at = 28.77682247;
+    endsequence;
+};
 
 ! ===============================================================
 ! sequence manipulation
 ! ===============================================================
 
-/*
+
 ! distribute kick of chopper 
 exec, surroundKICKER(H3_001A_CHD,hLine);
 exec, surroundKICKER(H3_005A_CHD,hLine);
 exec, surroundKICKER(H3_013A_CHD,hLine);
 exec, surroundKICKER(H3_017A_CHD,hLine);
-*/
+
