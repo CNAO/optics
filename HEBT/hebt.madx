@@ -24,7 +24,7 @@ iChopper=0;
 ! 2: LineU, Room 2H
 ! 3: LineV, Room 2V
 ! 4: LineZ, Room 1
-iLine=3;
+iLine=4;
 
 iMacro_I2K_QU=5;  ! 1: linear; 5: fifth order;
 iMacro_I2K_ded=1; ! 0: general one; 1: specific for each magnet;
@@ -47,7 +47,7 @@ if (iLine==1) {
    call, file=Sala2V.seq;
 }elseif(iLine==4) {
    title, "HEBT CNAO - Line Z - Sala 1";
-   call, file=LineZ.seq;
+   call, file=Sala1.seq;
 };
 seqedit, sequence=apicls009; flatten; endedit;
 

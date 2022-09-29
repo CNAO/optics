@@ -1,5 +1,5 @@
 !
-! This is the description of HEBT 2V line
+! This is the description of Treatment Room 2 - V Beam Line
 ! 
 
 call, file="LineH.seq";
