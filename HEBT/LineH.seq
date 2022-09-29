@@ -1,7 +1,16 @@
 !
 ! This is the description of HEBT H line
 ! from LineU.seq
-! element definition merged from LineT.seq
+
+if ( iChopper==1 ) {
+	AH_CHOPPER=0.0106;
+} else {
+	AH_CHOPPER=0.0;
+};
+H3_001A_CHD_HKICK= AH_CHOPPER;
+H3_005A_CHD_HKICK=-AH_CHOPPER;
+H3_013A_CHD_HKICK=-AH_CHOPPER;
+H3_017A_CHD_HKICK= AH_CHOPPER;
 
 ! ===============================================================
 ! element definition
@@ -66,7 +75,7 @@ H2_005A_MSWPRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H2_005A_MSW: SBEND, L= 1.0, E1 = -0.075, E2 = -0.075, ANGLE = -0.15, K1 = 0, K2 = 0, HGAP = 0.02;
 H2_005A_MSWDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H2_006A_DRI: DRIFT, L= 0.3;
-H2_007A_CEB: KICKER, L= 0.52, HKICK = 0.0, VKICK = 0.0;
+H2_007A_CEB: KICKER, L= 0.52, HKICK := HKICK_H2_007A_CEB, VKICK := VKICK_H2_007A_CEB;
 H2_008A_DRI: DRIFT, L= 0.0839;
 H2_008B_VVH: DRIFT, L= 0.07;
 H2_008C_DRI: DRIFT, L= 0.1023;
@@ -103,9 +112,7 @@ H2_026B_BSH: DRIFT, L= 0.0;
 ! ---------------------------------------------------------------
 ! H3
 ! ---------------------------------------------------------------
-H3_001A_CHDPRIMA: KICKER, L= 0.0, HKICK = 0.0053, VKICK = 0.0;
-H3_001A_CHD: SBEND, L= 0.35, E1 = 0, E2 = 0, ANGLE = 0.0, K1 = 0, K2 = 0, HGAP = 0;
-H3_001A_CHDDOPO: KICKER, L= 0.0, HKICK = 0.0053, VKICK = 0.0;
+H3_001A_CHD: KICKER, L= 0.35, HKICK := H3_001A_CHD_HKICK, VKICK := 0.0;
 H3_002A_DRI: DRIFT, L= 0.1389;
 H3_002B_DRI: DRIFT, L= 0.1818525103;
 H3_003A_SW2PRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
@@ -113,9 +120,7 @@ H3_003A_SW2: SBEND, L=LMB, ANGLE = ANGLEMB, E1 = Es, E2 = Es, K0 := K0MB,  K1 = 
 H3_003A_SW2DOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H3_004A_DRI: DRIFT, L= 0.1818525103;
 H3_004B_DRI: DRIFT, L= 0.1389;
-H3_005A_CHDPRIMA: KICKER, L= 0.0, HKICK = -0.0053, VKICK = 0.0;
-H3_005A_CHD: SBEND, L= 0.35, E1 = 0, E2 = 0, ANGLE = 0.0, K1 = 0, K2 = 0, HGAP = 0;
-H3_005A_CHDDOPO: KICKER, L= 0.0, HKICK = -0.0053, VKICK = 0.0;
+H3_005A_CHD: KICKER, L= 0.35, HKICK := H3_005A_CHD_HKICK, VKICK := 0.0;
 H3_006A_DRI: DRIFT, L= 0.1385;
 H3_006B_BSH: DRIFT, L= 0.0;
 H3_007A_DRI: DRIFT, L= 0.389;
@@ -133,9 +138,7 @@ H3_011C_QIM: DRIFT, L= 0.0;
 H3_011D_DRI: DRIFT, L= 0.1775;
 H3_011E_SIP: DRIFT, L= 0.0;
 H3_012A_DPC: DRIFT, L= 0.1402;
-H3_013A_CHDPRIMA: KICKER, L= 0.0, HKICK = -0.0053, VKICK = 0.0;
-H3_013A_CHD: SBEND, L= 0.35, E1 = 0, E2 = 0, ANGLE = 0.0, K1 = 0, K2 = 0, HGAP = 0;
-H3_013A_CHDDOPO: KICKER, L= 0.0, HKICK = -0.0053, VKICK = 0.0;
+H3_013A_CHD: KICKER, L= 0.35, HKICK := H3_013A_CHD_HKICK, VKICK := 0.0;
 H3_014A_DRI: DRIFT, L= 0.1389;
 H3_014B_BSH: DRIFT, L= 0.0;
 H3_014C_DRI: DRIFT, L= 0.1818525103;
@@ -145,9 +148,7 @@ H3_015A_MBSDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 H3_016A_DRI: DRIFT, L= 0.1818525103;
 H3_016B_DRI: DRIFT, L= 0.1389;
 H3_016C_BSH: DRIFT, L= 0.0;
-H3_017A_CHDPRIMA: KICKER, L= 0.0, HKICK = 0.0053, VKICK = 0.0;
-H3_017A_CHD: SBEND, L= 0.35, E1 = 0, E2 = 0, ANGLE = 0.0, K1 = 0, K2 = 0, HGAP = 0;
-H3_017A_CHDDOPO: KICKER, L= 0.0, HKICK = 0.0053, VKICK = 0.0;
+H3_017A_CHD: KICKER, L= 0.35, HKICK := H3_017A_CHD_HKICK, VKICK := 0.0;
 
 ! ---------------------------------------------------------------
 ! H4
@@ -249,28 +250,20 @@ h2_016a_que, at = 6.155;
 h2_019a_ceb, at = 6.78;
 h2_022a_que, at = 7.405;
 h2_025b_sfh, at = 7.9958;
-H3_001A_CHDPRIMA, at = 8.3093;
 h3_001a_chd, at = 8.4843;
-H3_001A_CHDDOPO, at = 8.6593;
 h3_003a_sw2PRIMA, at = 8.980053;
 h3_003a_sw2, at = 9.81865251;
 h3_003a_sw2DOPO, at = 10.657253;
-h3_005a_chdPrima, at= 10.97800502;
 h3_005a_chd, at = 11.15300502;
-h3_005a_chdDopo, at = 11.32800502;
 h3_009a_mbsPRIMA, at = 12.037358;
 h3_009a_mbs, at = 12.87595753;
 h3_009a_mbsDOPO, at = 13.714558;
 h3_011b_qpm, at = 14.10621004;
-h3_013a_chdPrima, at = 14.42391004;
 h3_013a_chd, at = 14.59891004;
-h3_013a_chdDopo, at = 14.77391004;
 h3_015a_mbsPRIMA, at = 15.094663;
 h3_015a_mbs, at = 15.93326255;
 h3_015a_mbsDOPO, at = 16.771863;
-h3_017a_chdPrima, at = 17.09261506;
 h3_017a_chd, at = 17.26761506;
-h3_017a_chdDopo, at = 17.44261506;
 h4_003a_que, at = 17.93262256;
 h4_007a_que, at = 18.60262256;
 h4_010b_box, at = 19.16762256;
@@ -285,3 +278,15 @@ h5_012a_ceb, at = 27.46862247;
 h5_015a_que, at = 28.11362247;
 h5_018b_sfh, at = 28.77682247;
 endsequence;
+
+! ===============================================================
+! sequence manipulation
+! ===============================================================
+
+/*
+! distribute kick of chopper 
+exec, surroundKICKER(H3_001A_CHD,hLine);
+exec, surroundKICKER(H3_005A_CHD,hLine);
+exec, surroundKICKER(H3_013A_CHD,hLine);
+exec, surroundKICKER(H3_017A_CHD,hLine);
+*/

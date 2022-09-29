@@ -16,6 +16,10 @@ is_carbon=1;
 !    / H2-001A-MSN (HEBT seq)
 start_cond=1;
 
+! 0: chopper HEBT off
+! 1: chopper HEBT on
+iChopper=1;
+
 ! 1: LineT, Room 3
 ! 2: LineU, Room 2H
 ! 3: LineV, Room 2V

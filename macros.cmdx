@@ -112,6 +112,17 @@ saveAPIC(): macro = {
    };
 };
 
+! insert a thin kicker up/dostream of a specific element
+surroundKICKER(MagName,SeqName): macro={
+	MagName->HKICK=0.0; MagName->VKICK=0.0;
+	MagNamePRIMA: KICKER, L= 0.0, HKICK := MagName_HKICK/2, VKICK := MagName_VKICK/2;
+	MagNameDOPO:  KICKER, L= 0.0, HKICK := MagName_HKICK/2, VKICK := MagName_VKICK/2;
+	SEQEDIT, sequence=SeqName;
+	Install, element=MagNamePRIMA, at=-0.5*MagName->L, from=MagName;
+	Install, element=MagNameDOPO , at= 0.5*MagName->L, from=MagName;
+	ENDEDIT;
+};
+
 ! set beam rigidity and other realtivistic quantities based on beam energy
 setRigidity(): macro = {
    ! input:
