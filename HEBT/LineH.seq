@@ -280,6 +280,7 @@ if (iLine==3) {
 	h5Line, at=h2h4LineL;
 	endsequence;
 };
+seqedit, sequence=hLine; flatten; endedit;
 
 ! ===============================================================
 ! sequence manipulation
