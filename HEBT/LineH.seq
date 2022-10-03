@@ -1,6 +1,6 @@
 !
 ! This is the description of HEBT H line
-! from LineU.seq
+!
 
 if ( iChopper==1 ) {
 	AH_CHOPPER=0.0106;
@@ -11,6 +11,29 @@ H3_001A_CHD_HKICK= AH_CHOPPER;
 H3_005A_CHD_HKICK=-AH_CHOPPER;
 H3_013A_CHD_HKICK=-AH_CHOPPER;
 H3_017A_CHD_HKICK= AH_CHOPPER;
+
+! MSx ARCs and ANGLEs
+H2_001A_MSN_ANGLE=-0.05; H2_001A_MSN_L=0.65; ! [rad], [m]
+H2_003A_MSW_ANGLE=-0.15; H2_003A_MSW_L=1.00; ! [rad], [m]
+H2_005A_MSW_ANGLE=-0.15; H2_005A_MSW_L=1.00; ! [rad], [m]
+
+! H2_001A_MSN:
+H2_001A_MSN_RR=abs(H2_001A_MSN_L/H2_001A_MSN_ANGLE);           ! radius [m]
+H2_001A_MSN_LS=2*H2_001A_MSN_RR*sin(abs(H2_001A_MSN_ANGLE/2)); ! strainght length [m]
+H2_001A_MSN_TS=asin(H2_001A_MSN_LS/H2_001A_MSN_RR);            ! angle when starting parallel to synchro ref sys [rad]
+if ( H2_001A_MSN_ANGLE<0 ) {H2_001A_MSN_TS=-H2_001A_MSN_TS;};
+H2_001A_MSN_TD=H2_001A_MSN_TS-H2_001A_MSN_ANGLE;
+KINK_ANGLE_UP=-H2_001A_MSN_ANGLE/2; ! [rad]
+KINK_ANGLE_DW= (H2_001A_MSN_ANGLE+H2_001A_MSN_TD)/2; ! [rad]
+TRSL_DX=(1-cos(H2_001A_MSN_TS))*H2_001A_MSN_RR;                ! offset necessary to exit from MSN at centre of ref sys [m]
+
+! H2_003A_MSW:
+H2_003A_MSW_RR=abs(H2_003A_MSW_L/H2_003A_MSW_ANGLE);           ! radius [m]
+H2_003A_MSW_LS=2*H2_003A_MSW_RR*sin(abs(H2_003A_MSW_ANGLE/2)); ! strainght length [m]
+
+! H2_005A_MSW:
+H2_005A_MSW_RR=abs(H2_005A_MSW_L/H2_005A_MSW_ANGLE);           ! radius [m]
+H2_005A_MSW_LS=2*H2_005A_MSW_RR*sin(abs(H2_005A_MSW_ANGLE/2)); ! strainght length [m]
 
 ! ===============================================================
 ! element definition
@@ -67,18 +90,16 @@ H1_032A_DRI: DRIFT, L= 0.033000012133;
 ! ---------------------------------------------------------------
 ! H2
 ! ---------------------------------------------------------------
-! H2_001A_MSN: SBEND, L= 0.65, E1 = 0.0008573401, E2 = -0.0508573401, ANGLE = -0.05, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
-! H2_001A_MSN: SBEND, L= 0.65, ANGLE = -0.05, E1 = -0.05/2, E2 = -0.05/2, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
-H2_001A_MSN: SBEND, L= 0.65, E1=-0.05/2, E2=-0.05/2, ANGLE = -0.05, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
-KINK_ENTRY: YROTATION, ANGLE = -H2_001A_MSN->ANGLE/2;
-KINK_EXIT:  YROTATION, ANGLE =  H2_001A_MSN->ANGLE/2;
+H2_0010_KINK: YROTATION, ANGLE := KINK_ANGLE_UP;
+H2_0010_TRSL: TRANSLATION, DX :=TRSL_DX;
+H2_001A_MSN: RBEND, L= H2_001A_MSN_LS, ANGLE= H2_001A_MSN_ANGLE, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
+H2_001B_KINK:  YROTATION, ANGLE := KINK_ANGLE_DW;
 H2_002A_DRI: DRIFT, L= 0.5;
-H2_003A_MSW: SBEND, L= 1.0, E1 = -0.075, E2 = -0.075, ANGLE = -0.15, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
+H2_003A_MSW: RBEND, L= H2_003A_MSW_LS, ANGLE= H2_003A_MSW_ANGLE, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
 H2_004A_DRI: DRIFT, L= 0.5;
-H2_005A_MSW: SBEND, L= 1.0, E1 = -0.075, E2 = -0.075, ANGLE = -0.15, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
+H2_005A_MSW: RBEND, L= H2_005A_MSW_LS, ANGLE= H2_005A_MSW_ANGLE, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
 H2_006A_DRI: DRIFT, L= 0.3;
 H2_007A_CEB: KICKER, L= 0.52, HKICK := HKICK_H2_007A_CEB, VKICK := VKICK_H2_007A_CEB;
-! KINK: YROTATION, ANGLE = pi/4*1E-1;
 H2_008A_DRI: DRIFT, L= 0.0839;
 H2_008B_VVH: DRIFT, L= 0.07;
 H2_008C_DRI: DRIFT, L= 0.1023;
@@ -235,13 +256,13 @@ H5_020A_DRI: DRIFT, L= 0.2398;
 ! H2-H4
 h2h4LineL=22.53997507;
 h2h4Line: sequence, l=h2h4LineL;
-kink_entry,  at = 0.0;
+h2_0010_trsl,at = 0.0;
+h2_0010_kink,at = 0.0;
 h2_001a_msn, at = 0.325;
-kink_exit,   at = 0.65;
+h2_001b_kink,at = 0.65;
 h2_003a_msw, at = 1.65;
 h2_005a_msw, at = 3.15;
 h2_007a_ceb, at = 4.21;
-! kink,        at = 4.47;
 h2_009b_sfh, at = 4.9012;
 h2_012a_que, at = 5.485;
 h2_016a_que, at = 6.155;
