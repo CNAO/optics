@@ -29,10 +29,10 @@ SETVARS, TABLE=table_settings, ROW=n;
 call, file="settings_from_rampGen_table.str";
 K0MB=K0MB_ref;
 
+exec, setRigidity();
+
 ! notify user where we are
 PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
-
-exec, setRigidity();
 
 ! set injection bumper k from the specified current
 exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];
