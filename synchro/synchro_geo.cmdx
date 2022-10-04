@@ -1,0 +1,41 @@
+!
+! A.Mereghetti, 2022-10-04
+! synchrotron geometry
+!
+
+! load common defs
+call, file="../common_defs.madx";
+
+! LEGGO I PARAMETRI DEI VARI MAGNETI
+call, file="Magneti.str";
+
+!Azzero gli errori multipolari dei dipoli
+! AM: file does not exist!
+!call, file="lista_multi_zero-v2.txt";
+
+! Definisco gli elementi del sincrotrone
+!call, file="cnao-elem-V2.def";
+call, file="cnao-elem-BDI-v3.ele";
+
+! AM: overwrite the definition of some elements
+call, file="correct_elem_def.ele";
+
+! Definisco  l'anello come sequenza
+! AM: the file should have a .seq extension
+call, file="synchro.seq";
+! Definisco  l'anello come linea
+!call, file="cnao-line.opt";
+
+! DEFINISCO I MULTIPOLI
+! AM: which is the difference between the two?
+!call, file="multipoli.str";
+!call, file="multipoli_2.str";
+
+!ridefinisco i K dei sestupoli
+call, file="sest.str";
+
+! AM: install missing elements
+call, file="install_missing.seq";
+
+! AM: apertures
+call, file="synchro.aper";
