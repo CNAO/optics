@@ -26,6 +26,12 @@ iChopper=0;
 ! 4: LineZ, Room 1
 iLine=4;
 
+! consider also H1 line
+! this is automatically taken from synchro sequence
+! 0: do NOT load H1 line
+! 1: DO load H1 line
+iH1=1;
+
 iMacro_I2K_QU=5;  ! 1: linear; 5: fifth order;
 iMacro_I2K_ded=1; ! 0: general one; 1: specific for each magnet;
 

@@ -19,7 +19,7 @@ H2_005A_MSW_ANGLE=-0.15; H2_005A_MSW_L=1.00; ! [rad], [m]
 
 ! H2_001A_MSN:
 H2_001A_MSN_RR=abs(H2_001A_MSN_L/H2_001A_MSN_ANGLE);           ! radius [m]
-H2_001A_MSN_LS=2*H2_001A_MSN_RR*sin(abs(H2_001A_MSN_ANGLE/2)); ! strainght length [m]
+H2_001A_MSN_LS=2*H2_001A_MSN_RR*sin(abs(H2_001A_MSN_ANGLE/2)); ! straight length [m]
 H2_001A_MSN_TS=asin(H2_001A_MSN_LS/H2_001A_MSN_RR);            ! angle when starting parallel to synchro ref sys [rad]
 if ( H2_001A_MSN_ANGLE<0 ) {H2_001A_MSN_TS=-H2_001A_MSN_TS;};
 H2_001A_MSN_TD=H2_001A_MSN_TS-H2_001A_MSN_ANGLE;
@@ -29,63 +29,47 @@ TRSL_DX=(1-cos(H2_001A_MSN_TS))*H2_001A_MSN_RR;                ! offset necessar
 
 ! H2_003A_MSW:
 H2_003A_MSW_RR=abs(H2_003A_MSW_L/H2_003A_MSW_ANGLE);           ! radius [m]
-H2_003A_MSW_LS=2*H2_003A_MSW_RR*sin(abs(H2_003A_MSW_ANGLE/2)); ! strainght length [m]
+H2_003A_MSW_LS=2*H2_003A_MSW_RR*sin(abs(H2_003A_MSW_ANGLE/2)); ! straight length [m]
 
 ! H2_005A_MSW:
 H2_005A_MSW_RR=abs(H2_005A_MSW_L/H2_005A_MSW_ANGLE);           ! radius [m]
-H2_005A_MSW_LS=2*H2_005A_MSW_RR*sin(abs(H2_005A_MSW_ANGLE/2)); ! strainght length [m]
+H2_005A_MSW_LS=2*H2_005A_MSW_RR*sin(abs(H2_005A_MSW_ANGLE/2)); ! straight length [m]
+
+! ===============================================================
+! insertion of H1
+! ===============================================================
+if (iH1<>0) {
+	! extract H1 from synchro lattice
+	CHDIR, DIR="../synchro";
+	! - set some flags:
+	!   thick/thin lattice: 0=thick, 1=thin
+	is_thin=0;
+	!   TM/RFKO: 0=TM, 1=RFKO;
+	mMode=0;
+	! - load synchro-specific macros:
+	call, file="../macros.cmdx";
+	! - load synchro lattice
+	call, file="synchro_geo.cmdx";
+	! - extract H1 line
+	SEQEDIT, SEQUENCE=MUXL;
+	FLATTEN;
+	CYCLE, START=SE_010A_ESP_UP;
+	EXTRACT, SEQUENCE=MUXL, FROM=SE_010A_ESP_UP, TO=S0_016A_MSP_UP, NEWNAME=H1line;
+	ENDEDIT;
+	seqedit, sequence=H1line; flatten; endedit;
+	! - length of newly extracted sequence
+	/*
+	exec, setBeam(H1line);
+	use,sequence=H1line;
+	DUMPSEQU, SEQUENCE=H1line, LEVEL=0;
+	*/
+	lH1line=8.69701004; ! [m]
+	CHDIR, DIR="../HEBT";
+};
 
 ! ===============================================================
 ! element definition
 ! ===============================================================
-
-! ---------------------------------------------------------------
-! H1 
-! ---------------------------------------------------------------
-H1_001A_ESE: SBEND, L= 0.8, E1 = 0, E2 = -0.00250125, ANGLE = -0.0025, K1 = 0, K2 = 0, HGAP = 0, FINT=0;
-H1_002A_DRI: DRIFT, L= 0.15500162668;
-H1_002B_FLS: MARKER;
-H1_003A_PUH: HMONITOR, L= 0.3;
-H1_003B_FLS: MARKER;
-H1_004A_DRI: DRIFT, L= 0.079001326374;
-H1_005A_CSH: HKICKER, L= 0.292, KICK = 0.0;
-H1_006A_DRI: DRIFT, L= 0.11900042544;
-H1_007A_EDA: SBEND, L= 0.36000033786, E1 = 0.002674, E2 = 0.001852009122, ANGLE = 0.004526009122, K1 = 0.28972777778, K2 = 0, HGAP = 0, FINT=0;
-H1_008A_BS1: MARKER;
-H1_009A_DRI: DRIFT, L= 0.13900023838;
-H1_009B_FLS: MARKER;
-H1_010A_DRI: DRIFT, L= 0.21863570761;
-H1_011A_EDB: SBEND, L= 1.6772141421, E1 = 0.19449753173, E2 = 0.19840046234, ANGLE = 0.39289799407, K1 = 0, K2 = 0, HGAP = 0, FINT=0;
-H1_011B_SIP: DRIFT, L= 0.0;
-H1_011C_MIG: DRIFT, L= 0.0;
-H1_012A_DRI: DRIFT, L= 0.21800135209;
-H1_012B_FLS: MARKER;
-H1_013A_DRI: DRIFT, L= 0.087000712954;
-H1_014A_CSV: VKICKER, L= 0.252, KICK = 0.0;
-H1_015A_DRI: DRIFT, L= 0.10000021031;
-H1_016A_EDC: SBEND, L= 0.36000098085, E1 = -0.00205092149, E2 = -0.004664237419, ANGLE = -0.006715158909, K1 = -0.48834586571, K2 = 0, HGAP = 0, FINT=0;
-H1_017A_BS1: MARKER;
-H1_018A_DRI: DRIFT, L= 0.13900477522;
-H1_018B_FLS: MARKER;
-H1_019A_PUV: VMONITOR, L= 0.3;
-H1_019B_FLS: MARKER;
-H1_020A_DRI: DRIFT, L= 0.21843364155;
-H1_021A_EDD: SBEND, L= 1.6772284226, E1 = 0.20101377827, E2 = 0.1918842158, ANGLE = 0.39289799407, K1 = 0, K2 = 0, HGAP = 0, FINT=0;
-H1_021B_SIP: DRIFT, L= 0.0;
-H1_022A_DRI: DRIFT, L= 0.21991748705;
-H1_022B_FLS: MARKER;
-H1_023A_DRI: DRIFT, L= 0.10900108668;
-H1_024A_EDE: SBEND, L= 0.36000101444, E1 = 0.004465325052, E2 = 0.000857339229, ANGLE = 0.005322664281, K1 = 0.28972975075, K2 = 0, HGAP = 0, FINT=0;
-H1_025A_BS1: MARKER;
-H1_026A_DRI: DRIFT, L= 0.10100014737;
-H1_026B_FLS: MARKER;
-H1_027A_PUH: HMONITOR, L= 0.3;
-H1_027B_FLS: MARKER;
-H1_028A_DRI: DRIFT, L= 0.061000022424;
-H1_029A_SSM: MARKER;
-H1_030A_DRI: DRIFT, L= 0.056000020571;
-H1_031A_DIA: DRIFT, L= 0.0;
-H1_032A_DRI: DRIFT, L= 0.033000012133;
 
 ! ---------------------------------------------------------------
 ! H2
@@ -253,6 +237,7 @@ H5_020A_DRI: DRIFT, L= 0.2398;
 ! ===============================================================
 ! sequence definition
 ! ===============================================================
+
 ! H2-H4
 h2h4LineL=22.53997507;
 h2h4Line: sequence, l=h2h4LineL;
@@ -298,15 +283,28 @@ h5_018b_sfh, at = 6.23684740 ;
 endsequence;
 
 if (iLine==3) {
-    hLineL=h2h4LineL;
-    hLine: sequence, l=hLineL, refer=entry;
+    h2h5LineL=h2h4LineL;
+    h2h5Line: sequence, l=h2h5LineL, refer=entry;
 	h2h4Line, at=0;
 	endsequence;
 }else{
-    hLineL=h2h4LineL+h5LineL;
-    hLine: sequence, l=hLineL, refer=entry;
+    h2h5LineL=h2h4LineL+h5LineL;
+    h2h5Line: sequence, l=h2h5LineL, refer=entry;
 	h2h4Line, at=0;
 	h5Line, at=h2h4LineL;
+	endsequence;
+};
+seqedit, sequence=h2h5Line; flatten; endedit;
+if (iH1==0) {
+    hLineL=h2h5LineL;
+    hLine: sequence, l=hLineL, refer=entry;
+	h2h5Line, at=0;
+	endsequence;
+}else{
+    hLineL=lH1line+h2h5LineL;
+    hLine: sequence, l=hLineL, refer=entry;
+	H1line, at=0;
+	h2h5Line, at=lH1line;
 	endsequence;
 };
 seqedit, sequence=hLine; flatten; endedit;
@@ -315,13 +313,13 @@ seqedit, sequence=hLine; flatten; endedit;
 ! sequence manipulation
 ! ===============================================================
 
-
+/*
 ! distribute kick of chopper 
 exec, surroundKICKER(H3_001A_CHD,hLine);
 exec, surroundKICKER(H3_005A_CHD,hLine);
 exec, surroundKICKER(H3_013A_CHD,hLine);
 exec, surroundKICKER(H3_017A_CHD,hLine);
-
+*/
 /*
 ! distribute other kicks
 exec, surroundMBEND(H2_001A_MSN,hLine);
