@@ -13,18 +13,18 @@
 call, file="fits_Z1-Z2.cmdx";
 
 I_Z1_004A_QUE := PB_004A_LGEN_A;      !H29 
-F_Z1_004A_QUE := 1.0;      
+F_Z1_004A_QUE  = 1.0;      
 I_Z1_013A_QUE := -PB_005A_LGEN_A;     !H30
-F_Z1_013A_QUE := 1.0;    
+F_Z1_013A_QUE  = 1.0;    
 I_Z1_019A_QUE := PB_006A_LGEN_A;      !H31
-F_Z1_019A_QUE := 1.0;     
+F_Z1_019A_QUE  = 1.0;     
 
 I_Z2_005A_QUE := -PB_007A_LGEN_A;     !H32
-F_Z2_005A_QUE := 1.0;    
+F_Z2_005A_QUE  = 1.0;    
 I_Z2_012A_QUE := PB_008A_LGEN_A;      !H34
-F_Z2_012A_QUE := 1.0;
+F_Z2_012A_QUE  = 1.0;
 I_Z2_018A_QUE := -PB_009A_LGEN_A;     !H35
-F_Z2_018A_QUE := 1.0;
+F_Z2_018A_QUE  = 1.0;
 
 if ( iMacro_I2K_QU==1 ) {
    ! use macro: linear

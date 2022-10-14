@@ -215,7 +215,7 @@ I2K_QUs_lin(MagName,biro) : macro {
   ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
   ! ...as well as coefficients of the polynomial
   ! eg. H2_012A_QUE -> a0_LIN_H2_012A_QUE and a1_LIN_H2_012A_QUE
-  K1_MagName := ( a0_LIN_MagName +a1_LIN_MagName*abs(I_MagName) ) /biro *abs(F_MagName);
+  K1_MagName = ( a0_LIN_MagName +a1_LIN_MagName*abs(I_MagName) ) /biro *abs(F_MagName);
   if (I_MagName<0){ K1_MagName=-K1_MagName; };
 };
 

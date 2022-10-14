@@ -18,7 +18,7 @@ I2K_HEBT_QUs_lin(MagName,biro) : macro {
   ! gradiente integrato GL(T) = 3.258e-02 * I (A)
   ! lq = 0.45 m
   ! fromItoK = GL/(lq*Bro) 
-  K1_MagName := 0.03258/(0.45*biro) *I_MagName *abs(F_MagName);
+  K1_MagName = 0.03258/(0.45*biro) *I_MagName *abs(F_MagName);
 };
 
 I2K_HEBT_DIPs_lin(MagName,biro) : macro {
@@ -47,14 +47,14 @@ I2K_HEBT_CEBH(MagName,biro): macro {
   ! from SSavazzi, relation for MADbuilder
   ! the macro expects I_MagName, HKICK_MagName and F_MagName to be defined
   ! Lmag=0.52m;
-  ! HKICK_MagName := ((2.615E-5-3.385E-4*I_MagName)/biro*0.52)*abs(F_MagName);
+  ! HKICK_MagName = ((2.615E-5-3.385E-4*I_MagName)/biro*0.52)*abs(F_MagName);
   !
   ! Magnetic Measurements doc, 2007, performed on prototype
   ! S:\Accelerating-System\Magnets\Magnetic Measurements\Frascati\HEBT\Documenti_misure_e_immagini\Correttori
   ! BLh[Tm]=-1.76 10-4 * I [A] + 1.36 10-5
   ! change sign: a negative vertical B-field (in both ref systems, i.e.
   !    measurements and MADX) kicks positively-charged particles towards x>0 in MADX
-  HKICK_MagName :=-((-1.76E-4*I_MagName + 1.36E-5)/biro)*abs(F_MagName);
+  HKICK_MagName =-((-1.76E-4*I_MagName + 1.36E-5)/biro)*abs(F_MagName);
 };
 
 I2K_HEBT_CEBV(MagName,biro): macro {
@@ -69,7 +69,7 @@ I2K_HEBT_CEBV(MagName,biro): macro {
   ! change sign: a negative horizontal B-field in measurements ref sys
   !    corresponds to a positive horizontal B-field in MADX, which kicks
   !    positively-charged particles towards y>0
-  VKICK_MagName :=-((-1.76E-4*I_MagName + 1.55E-5)/biro)*abs(F_MagName);
+  VKICK_MagName =-((-1.76E-4*I_MagName + 1.55E-5)/biro)*abs(F_MagName);
 };
 
 save_strengths_particular(): macro {
