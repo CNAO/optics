@@ -47,7 +47,7 @@ if (iH1<>0) {
 	!   TM/RFKO: 0=TM, 1=RFKO;
 	mMode=0;
 	! - load synchro-specific macros:
-	call, file="../macros.cmdx";
+	call, file="macros.cmdx";
 	! - load synchro lattice
 	call, file="synchro_geo.cmdx";
 	! - extract H1 line
