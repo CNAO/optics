@@ -37,8 +37,6 @@ call, file="settings_from_LGEN_table.str";
 ! notify user where we are
 PRINTF, TEXT="at Ek = %g MeV/u - BP = %g mm - row = %.0f ...", VALUE= Ek,BP,n;
 
-exec, setRigidity();
-
 ! set injection bumper k from the specified current
 exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];
 

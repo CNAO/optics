@@ -3,6 +3,8 @@
 
 Ek=Ek_MeVN;  ! [MeV/n]
 BP=range_mm; ! [mm] 
+exec, setRigidity();
+Brho=Brho_TM; ! [Tm]
 
 ! - main dipoles:
 ! K0MB=P6_006A_LGEN_K0; !CNAO1 [rad/m^-1]
