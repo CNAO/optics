@@ -10,19 +10,19 @@
 ! V1-V2
 ! ==============================================================================
 
-I_V1_037A_QUE := -PA_012A_LGEN_A;     !V9
-F_V1_037A_QUE  = 1.0;      
-I_V1_041A_QUE := PA_013A_LGEN_A;      !V10
-F_V1_041A_QUE  = 1.0;    
-I_V1_047A_QUE := -PA_014A_LGEN_A;     !V11
-F_V1_047A_QUE  = 1.0;     
+I_V1_037A_QUE = -PA_012A_LGEN_A;     !V9
+F_V1_037A_QUE = 1.0;      
+I_V1_041A_QUE = PA_013A_LGEN_A;      !V10
+F_V1_041A_QUE = 1.0;    
+I_V1_047A_QUE = -PA_014A_LGEN_A;     !V11
+F_V1_047A_QUE = 1.0;     
 
-I_V2_006A_QUE := PA_015A_LGEN_A;      !V12
-F_V2_006A_QUE  = 1.0;    
-I_V2_010A_QUE := -PA_016A_LGEN_A;     !V13
-F_V2_010A_QUE  = 1.0;
-I_V2_016A_QUE := PA_017A_LGEN_A;      !V14
-F_V2_016A_QUE  = 1.0;
+I_V2_006A_QUE = PA_015A_LGEN_A;      !V12
+F_V2_006A_QUE = 1.0;    
+I_V2_010A_QUE = -PA_016A_LGEN_A;     !V13
+F_V2_010A_QUE = 1.0;
+I_V2_016A_QUE = PA_017A_LGEN_A;      !V14
+F_V2_016A_QUE = 1.0;
 
 if ( iMacro_I2K_QU==1 ) {
    ! use macro: linear

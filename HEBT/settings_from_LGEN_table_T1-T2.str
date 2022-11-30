@@ -12,19 +12,19 @@
 
 call, file="fits_T1-T2.cmdx";
 
-I_T1_004A_QUE := P8_004A_LGEN_A;      !H36 
-F_T1_004A_QUE  = 1.0;      
-I_T1_013A_QUE := -P8_005A_LGEN_A;     !H18
-F_T1_013A_QUE  = 1.0;    
-I_T1_019A_QUE := P8_006A_LGEN_A;      !H19
-F_T1_019A_QUE  = 1.0;     
+I_T1_004A_QUE = P8_004A_LGEN_A;      !H36 
+F_T1_004A_QUE = 1.0;      
+I_T1_013A_QUE = -P8_005A_LGEN_A;     !H18
+F_T1_013A_QUE = 1.0;    
+I_T1_019A_QUE = P8_006A_LGEN_A;      !H19
+F_T1_019A_QUE = 1.0;     
 
-I_T2_005A_QUE := -P8_007A_LGEN_A;     !H20
-F_T2_005A_QUE  = 1.0;    
-I_T2_012A_QUE := P8_008A_LGEN_A;      !H21
-F_T2_012A_QUE  = 1.0;
-I_T2_018A_QUE := -P8_009A_LGEN_A;     !H22
-F_T2_018A_QUE  = 1.0;
+I_T2_005A_QUE = -P8_007A_LGEN_A;     !H20
+F_T2_005A_QUE = 1.0;    
+I_T2_012A_QUE = P8_008A_LGEN_A;      !H21
+F_T2_012A_QUE = 1.0;
+I_T2_018A_QUE = -P8_009A_LGEN_A;     !H22
+F_T2_018A_QUE = 1.0;
 
 if ( iMacro_I2K_QU==1 ) {
    ! use macro: linear

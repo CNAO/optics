@@ -61,7 +61,7 @@ I2K_HEBT_CEBV(MagName,biro): macro {
   ! from SSavazzi, relation for MADbuilder
   ! the macro expects I_MagName, VKICK_MagName and F_MagName to be defined
   ! Lmag=0.52m;
-  ! VKICK_MagName := ((2.981E-5-3.385E-4*I_MagName)/biro*0.52)*abs(F_MagName);
+  ! VKICK_MagName = ((2.981E-5-3.385E-4*I_MagName)/biro*0.52)*abs(F_MagName);
   !
   ! Magnetic Measurements doc, 2007, performed on prototype
   ! S:\Accelerating-System\Magnets\Magnetic Measurements\Frascati\HEBT\Documenti_misure_e_immagini\Correttori

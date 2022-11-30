@@ -12,19 +12,19 @@
 
 call, file="fits_U1-U2.cmdx";
 
-I_U1_008A_QUE := P9_003A_LGEN_A;      !H23
-F_U1_008A_QUE  = 1.0;      
-I_U1_014A_QUE := -P9_004A_LGEN_A;     !H24
-F_U1_014A_QUE  = 1.0;    
-I_U1_018A_QUE := P9_005A_LGEN_A;      !H25
-F_U1_018A_QUE  = 1.0;     
+I_U1_008A_QUE = P9_003A_LGEN_A;      !H23
+F_U1_008A_QUE = 1.0;      
+I_U1_014A_QUE = -P9_004A_LGEN_A;     !H24
+F_U1_014A_QUE = 1.0;    
+I_U1_018A_QUE = P9_005A_LGEN_A;      !H25
+F_U1_018A_QUE = 1.0;     
 
-I_U2_006A_QUE := -P9_006A_LGEN_A;     !H26
-F_U2_006A_QUE  = 1.0;    
-I_U2_010A_QUE := P9_007A_LGEN_A;      !H27
-F_U2_010A_QUE  = 1.0;
-I_U2_016A_QUE := -P9_008A_LGEN_A;     !H28
-F_U2_016A_QUE  = 1.0;
+I_U2_006A_QUE = -P9_006A_LGEN_A;     !H26
+F_U2_006A_QUE = 1.0;    
+I_U2_010A_QUE = P9_007A_LGEN_A;      !H27
+F_U2_010A_QUE = 1.0;
+I_U2_016A_QUE = -P9_008A_LGEN_A;     !H28
+F_U2_016A_QUE = 1.0;
 
 if ( iMacro_I2K_QU==1 ) {
    ! use macro: linear
