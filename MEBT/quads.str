@@ -48,13 +48,26 @@ if ( is_carbon==0 ) {
   F_M3_021A_QIB :=  1.0;
 };
 
-! use macro: third order polynomial
-exec, I2K_MEBT_QUs_third(M1_010A_QIB,Bro);
-exec, I2K_MEBT_QUs_third(M1_012A_QIB,Bro);
-exec, I2K_MEBT_QUs_third(M1_014A_QIB,Bro);
-exec, I2K_MEBT_QUs_third(M1_016A_QIB,Bro);
-exec, I2K_MEBT_QUs_third(M2_009A_QIB,Bro);
-exec, I2K_MEBT_QUs_third(M3_008A_QIB,Bro);
-exec, I2K_MEBT_QUs_third(M3_010A_QIB,Bro);
-exec, I2K_MEBT_QUs_third(M3_019A_QIB,Bro);
-exec, I2K_MEBT_QUs_third(M3_021A_QIB,Bro);
+if ( I2K_quads == 3 ) {
+  ! use macro: third order polynomial
+  exec, I2K_MEBT_QUs_third(M1_010A_QIB,Bro);
+  exec, I2K_MEBT_QUs_third(M1_012A_QIB,Bro);
+  exec, I2K_MEBT_QUs_third(M1_014A_QIB,Bro);
+  exec, I2K_MEBT_QUs_third(M1_016A_QIB,Bro);
+  exec, I2K_MEBT_QUs_third(M2_009A_QIB,Bro);
+  exec, I2K_MEBT_QUs_third(M3_008A_QIB,Bro);
+  exec, I2K_MEBT_QUs_third(M3_010A_QIB,Bro);
+  exec, I2K_MEBT_QUs_third(M3_019A_QIB,Bro);
+  exec, I2K_MEBT_QUs_third(M3_021A_QIB,Bro);
+} else {
+  ! use macro: linear dependence, a dedicated one for each quad
+  exec, I2K_MEBT_QUs_lin(M1_010A_QIB,Bro);
+  exec, I2K_MEBT_QUs_lin(M1_012A_QIB,Bro);
+  exec, I2K_MEBT_QUs_lin(M1_014A_QIB,Bro);
+  exec, I2K_MEBT_QUs_lin(M1_016A_QIB,Bro);
+  exec, I2K_MEBT_QUs_lin(M2_009A_QIB,Bro);
+  exec, I2K_MEBT_QUs_lin(M3_008A_QIB,Bro);
+  exec, I2K_MEBT_QUs_lin(M3_010A_QIB,Bro);
+  exec, I2K_MEBT_QUs_lin(M3_019A_QIB,Bro);
+  exec, I2K_MEBT_QUs_lin(M3_021A_QIB,Bro);
+};

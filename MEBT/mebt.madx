@@ -14,6 +14,23 @@ is_open=1;
 ! 1: carbon ions
 is_carbon=0;
 
+! excess IDB kicks: 0: do not use; 1: use;
+i_IDB_excess=0;
+
+! consider extensions:
+! 0: no extensions
+! 1: extension on the LINAC side
+is_extended=1;
+
+! which I2K to use for quads?
+I2K_quads=1; ! 1: linear, personal; 3: third order polynom
+
+! which starting conditions set?
+! <0: from matlab
+! 0: nominal (as from SSavazzi)
+! 1: as from analysis of summary data by AMereghetti, 2021/07/07 (only with extended beam line!)
+i_start_cond=1;
+
 call, file="../macros.cmdx";
 call, file="macros.cmdx";
 
@@ -21,16 +38,26 @@ call, file="mebt.seq";
 
 ! Beam definition
 exec, setBeam(MUXL);
-Ek=7.15; ! [MeV/n], kinetic energy per nucleon;
+if ( is_carbon==0 ) {
+   ! proton
+   Ek=7.18; ! [MeV/n], kinetic energy per nucleon;
+}else{
+   ! carbon ion
+   Ek=7.134663; ! [MeV/n], kinetic energy per nucleon;
+};
 exec, setRigidity();
 
 ! load initial conditions
-call, file=start-conditions.opt;
+if ( i_start_cond<0 ) {
+  call, file=start-conditions_matlab.opt;
+} else {
+  call, file=start-conditions.opt;
+};
 
 ! call, file="k_quads.str";
 ! call, file="k_Kicks.str";
 call, file="quads.str";
-! call, file="corrs.str";
+call, file="corrs.str";
 
 ! ==============================================================================
 ! a simple example
@@ -68,3 +95,5 @@ exec, saveRmatrixTFS(example);
 ! compute response matrices
 ! call, file="compute_RM.cmdx";
 
+! compute quad-dip scans
+call, file="quad-dip-scans.cmdx";

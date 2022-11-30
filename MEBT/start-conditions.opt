@@ -1,9 +1,27 @@
-initial: BETA0,
-         betx = 1.,
-         alfx = 0.,
-         bety = 1.,
-         alfy = 0.,
-         dx = 0.,
-         dpx = 0.,
-         dy = 0.,
-         dpy = 0.;
+if ( i_start_cond == 0 ) {
+  ! as received by SSavazzi
+  initial: BETA0,
+           betx = 1.,
+           alfx = 0.,
+           bety = 1.,
+           alfy = 0.,
+           dx = 0.,
+           dpx = 0.,
+           dy = 0.,
+           dpy = 0.;
+} elseif ( i_start_cond == 1 && is_extended == 1 ) {
+  ! as from first proposal built on analysis of summary data
+  initial: BETA0,
+           betx = 1.745011,
+           alfx = 1.717397,
+           bety = 0.505814,
+           alfy = 0.763666,
+           dx = 2.555103e-01,
+           dpx = 2.184881e-01,
+           dy = 0.,
+           dpy = 0.,
+           x  = 2.538454e-03,
+           px = 2.375456e-03,
+           y  =-3.848890e-04,
+           py = 1.087834e-04;
+};

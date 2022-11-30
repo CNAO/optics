@@ -1,14 +1,62 @@
 ! convert current into K, using a third order polynomial
 ! as from MADbuilder
 I2K_MEBT_QUs_third(MagName,biro) : macro {
+  ! third order polynom as from measurements at Frascati
   ! the macro expects I_MagName, K_MagName and F_MagName to be defined
   ! eg. M1_010A_QIB -> I_M1_010A_QIB, K_M1_010A_QIB, F_M1_010A_QIB
-  K1_MagName = ( 4.37087e-2
-                +6.804791e-2   *abs(I_MagName)
-                +1.898403e-5   *abs(I_MagName)^2
-                -9.8237885E-08 *abs(I_MagName)^3) /biro *abs(F_MagName);
-  if (I_MagName<0){ K1_MagName=-K1_MagName; };
+  if ( I_MagName <> 0.0 ) {
+     K1_MagName = ( 4.37087e-2
+                   +6.804791e-2   *abs(I_MagName)
+                   +1.898403e-5   *abs(I_MagName)^2
+                   -9.8237885E-08 *abs(I_MagName)^3) /biro *abs(F_MagName);
+     if (I_MagName<0){ K1_MagName=-K1_MagName; };
+  };
 };
+I2K_MEBT_QUs_lin(MagName,biro) : macro {
+  ! linear dependence as from magnetic measurements on each quad
+  ! the macro expects I_MagName, K_MagName and F_MagName to be defined
+  ! eg. M1_010A_QIB -> I_M1_010A_QIB, K_M1_010A_QIB, F_M1_010A_QIB
+  if ( I_MagName <> 0.0 ) {
+     K1_MagName = ( a0_MagName+a1_MagName*abs(I_MagName) )/biro *abs(F_MagName);
+     if (I_MagName<0){ K1_MagName=-K1_MagName; };
+  };
+};
+! Coefficients for linear fitting
+a0_M1_010A_QIB=0.036512628575903;
+a0_M1_012A_QIB=0.031994427107307;
+a0_M1_014A_QIB=0.053458070842428;
+a0_M1_016A_QIB=0.046393632114383;
+a0_M2_009A_QIB=0.0326527552238;
+a0_M3_008A_QIB=0.033036507767059;
+a0_M3_010A_QIB=0.05130548603837;
+a0_M3_019A_QIB=0.052830112404795;
+a0_M3_021A_QIB=0.049343916602622;
+!
+a1_M1_010A_QIB=0.070852727010496;
+a1_M1_012A_QIB=0.070585185378843;
+a1_M1_014A_QIB=0.070052757920345;
+a1_M1_016A_QIB=0.070265589740329;
+a1_M2_009A_QIB=0.070459736151335;
+a1_M3_008A_QIB=0.070294517799314;
+a1_M3_010A_QIB=0.070118797148369;
+a1_M3_019A_QIB=0.0704252011492;
+a1_M3_021A_QIB=0.070218560416983;
+
+I2K_MEBT_DIPs_lin(MagName,biro) : macro {
+  ! linear dependence as from magnetic measurements on each main dipole
+  ! the macro expects I_MagName, K0L_MagName and F_MagName to be defined
+  ! eg. M2_001A_IDB -> I_M2_001A_IDB, K0L_M2_001A_IDB, F_M2_001A_IDB
+  if ( I_MagName <> 0.0 ) {
+     K0L_MagName = ( a0_MagName+a1_MagName*abs(I_MagName) )/biro *abs(F_MagName);
+     if (I_MagName<0){ K0L_MagName=-K0L_MagName; };
+  };
+};
+! Coefficients for linear fitting
+a0_M2_001A_IDB=3.583E-03;
+a0_M3_001A_IDB=5.291E-03;
+!
+a1_M2_001A_IDB=2.263E-03;
+a1_M3_001A_IDB=2.260E-03;
 
 I2K_MEBT_CIBH(MagName,biro): macro {
   ! from SSavazzi, relation for MADbuilder
@@ -21,7 +69,9 @@ I2K_MEBT_CIBH(MagName,biro): macro {
   ! BLh[Tm]=-1.38 10-4 * I [A] + 1.53 10-5
   ! change sign: a negative vertical B-field (in both ref systems, i.e.
   !    measurements and MADX) kicks positively-charged particles towards x>0 in MADX
-  HKICK_MagName :=-((-1.38E-4*IH_MagName + 1.53E-5)/biro)*abs(FH_MagName);
+  if ( IH_MagName <> 0.0 ) {
+     HKICK_MagName :=-((-1.38E-4*IH_MagName + 1.53E-5)/biro)*abs(FH_MagName);
+  };
 };
 
 I2K_MEBT_CIBV(MagName,biro): macro {
@@ -36,7 +86,9 @@ I2K_MEBT_CIBV(MagName,biro): macro {
   ! change sign: a negative horizontal B-field in measurements ref sys
   !    corresponds to a positive horizontal B-field in MADX, which kicks
   !    positively-charged particles towards y>0
-  VKICK_MagName :=-((-1.38E-4*IV_MagName + 1.62E-5)/biro)*abs(FV_MagName);
+  if ( IV_MagName <> 0.0 ) {
+     VKICK_MagName :=-((-1.38E-4*IV_MagName + 1.62E-5)/biro)*abs(FV_MagName);
+  };
 };
 
 save_strengths_particular(): macro {

@@ -105,6 +105,9 @@ exec, save_strengths(myOptics);
 ! loop through .tfs file out of the repo with currents
 ! call, file="loopThroughLGENFile.cmdx";
 
+! compute a vertical bump (loop through .tfs file out of the repo with currents)
+! call, file="matchVBump.cmdx";
+
 ! load injection optics
 ! parse table
 if ( is_carbon==0 ) { ! protons
