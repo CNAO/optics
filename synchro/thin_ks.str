@@ -1,6 +1,6 @@
 if ( is_carbon == 0 ) {
    ! kicks of protons
-   if ( is_extraction == 0 ) {
+   if ( iFT == 0 ) {
       ! injection
 
       ! - quads:
@@ -18,7 +18,7 @@ if ( is_carbon == 0 ) {
    };
 } else {
    ! kicks of carbon ions
-   if ( is_extraction == 0 ) {
+   if ( iFT == 0 ) {
       ! injection
 
       ! - quads:
