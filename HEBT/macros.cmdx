@@ -98,27 +98,27 @@ save_strengths_particular(): macro {
 parseTable(): macro={
    if (iLine==1) {
       if (is_carbon==0) {
-         READTABLE, file="LGEN/Protoni_Sala3_2021-02-13.tfs", table=table_settings;
+         READTABLE, file="LGEN/Protoni_Sala3_2021-02-13.tfs", table=LGEN_HEBT_table;
       }else{
-         READTABLE, file="LGEN/Carbonio_Sala3_FromRepoNovembre2020.tfs", table=table_settings;
+         READTABLE, file="LGEN/Carbonio_Sala3_FromRepoNovembre2020.tfs", table=LGEN_HEBT_table;
       };
    }elseif (iLine==2) {
       if (is_carbon==0) {
-         READTABLE, file="LGEN/Protoni_Sala2H_2021-02-13.tfs", table=table_settings;
+         READTABLE, file="LGEN/Protoni_Sala2H_2021-02-13.tfs", table=LGEN_HEBT_table;
       }else{
-         READTABLE, file="LGEN/Carbonio_Sala2H_FromRepo.tfs", table=table_settings;
+         READTABLE, file="LGEN/Carbonio_Sala2H_FromRepo.tfs", table=LGEN_HEBT_table;
       };
    }elseif (iLine==3) {
       if (is_carbon==0) {
-         READTABLE, file="LGEN/Protoni_Sala2V_2021-02-13.tfs", table=table_settings;
+         READTABLE, file="LGEN/Protoni_Sala2V_2021-02-13.tfs", table=LGEN_HEBT_table;
       }else{
-         READTABLE, file="LGEN/Carbonio_Sala2V_FromRepo.tfs", table=table_settings;
+         READTABLE, file="LGEN/Carbonio_Sala2V_FromRepo.tfs", table=LGEN_HEBT_table;
       };
    }elseif (iLine==4) {
       if (is_carbon==0) {
-         READTABLE, file="LGEN/Protoni_Sala1_2021-02-13.tfs", table=table_settings;
+         READTABLE, file="LGEN/Protoni_Sala1_2021-02-13.tfs", table=LGEN_HEBT_table;
       }else{
-         READTABLE, file="LGEN/Carbonio_Sala1_FromRepoNovembre2020.tfs", table=table_settings;
+         READTABLE, file="LGEN/Carbonio_Sala1_FromRepoNovembre2020.tfs", table=LGEN_HEBT_table;
       };
    };
 };
@@ -162,7 +162,7 @@ compute_RM_allCurrents(myMagName,myProperty,myI2K,fileName): macro={
    nEnLevel=NEnLevelstart;
    WHILE (nEnLevel <= NEnLevelstop ) {
       ! loop throuth LGEN data
-      SETVARS, TABLE=table_settings, ROW=nEnLevel;
+      SETVARS, TABLE=LGEN_HEBT_table, ROW=nEnLevel;
       K0MB=K0MB_ref;
       call, file="settings_from_LGEN_table.str";
       

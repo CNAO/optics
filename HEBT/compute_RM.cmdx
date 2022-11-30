@@ -1,6 +1,6 @@
 ! parse table
 exec, parseTable();
-lunghezzaLGEN=table(table_settings,tablelength);
+lunghezzaLGEN=table(LGEN_HEBT_table,tablelength);
 
 ! current loop
 Imin=-150.; ! [A]

@@ -5,7 +5,7 @@
 
 ! parse table
 exec, parseTable();
-lunghezza=table(table_settings,tablelength);
+lunghezza=table(LGEN_HEBT_table,tablelength);
 
 ! first data line is 1 (i.e. .txt header is skipped)
 Nstart=1;
@@ -14,7 +14,7 @@ Nstop=1;
 n=Nstart;
 WHILE (n <= Nstop ) {
 
-SETVARS, TABLE=table_settings, ROW=n;
+SETVARS, TABLE=LGEN_HEBT_table, ROW=n;
 K0MB=K0MB_ref;
 call, file="settings_from_LGEN_table.str";
 
