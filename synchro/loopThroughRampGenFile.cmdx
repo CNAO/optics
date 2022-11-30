@@ -11,7 +11,7 @@ if ( is_carbon==0 ) { ! protons
 } else {
   if ( mMode==1 ) { ! carbon ions
     ! RFKO
-    READTABLE, file="RampGen/KmachinephotoCarbRFKO.tfs", table=table_settings;
+    READTABLE, file="RampGen/CorrSest-MachinePhotoCarbRFKO.tfs", table=table_settings;
   }else{
     ! TM
     READTABLE, file="RampGen/TM_Carbon.tfs", table=table_settings;

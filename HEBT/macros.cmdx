@@ -21,6 +21,28 @@ I2K_HEBT_QUs_lin(MagName,biro) : macro {
   K1_MagName := 0.03258/(0.45*biro) *I_MagName *abs(F_MagName);
 };
 
+I2K_HEBT_DIPs_lin(MagName,biro) : macro {
+  ! linear dependence as from magnetic measurements on each main dipole
+  ! the macro expects I_MagName, K0L_MagName and F_MagName to be defined
+  ! eg. H3_003A_SW2 -> I_H3_003A_SW2, K0L_H3_003A_SW2, F_H3_003A_SW2
+  if ( I_MagName <> 0.0 ) {
+     K0L_MagName = ( a0_MagName+a1_MagName*abs(I_MagName) )/biro *abs(F_MagName);
+     if (I_MagName<0){ K0L_MagName=-K0L_MagName; };
+  };
+};
+! Coefficients for linear fitting
+a0_H3_003A_SW2=0.0;
+a0_H3_009A_MBS=0.0;
+a0_H3_015A_MBS=0.0;
+a0_V1_001A_SWV=0.0;
+a0_V1_005A_MBU=0.0;
+!
+a1_H3_003A_SW2=9.2953E-04;
+a1_H3_009A_MBS=9.3093E-04;
+a1_H3_015A_MBS=9.3204E-04;
+a1_V1_001A_SWV=9.4057E-04;
+a1_V1_005A_MBU=9.2058E-04;
+
 I2K_HEBT_CEBH(MagName,biro): macro {
   ! from SSavazzi, relation for MADbuilder
   ! the macro expects I_MagName, HKICK_MagName and F_MagName to be defined
