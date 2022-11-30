@@ -99,4 +99,8 @@ exec, saveRmatrixTFS(example);
 
 ! call, file="scans_quads.cmdx";
 
-call, file="scans_quads_ReMat.cmdx";
+! call, file="scans_quads_ReMat.cmdx";
+
+! compute quad-dip scans
+call, file="quad-dip-scans.cmdx";
+

@@ -1,0 +1,128 @@
+! define all observations
+writeObservations(fileName,QuadName,myDip1Name,myDip2Name,myDip3Name,MonName): macro{
+   assign, echo=fileName;
+   if ( dip3<>0 ) {
+      PRINTF, TEXT="% 19.12E,% 6.1f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 12.5E,% 12.5E,% 12.5E,% 12.5E,% 12.5E,% 12.5E,% 12.5E,% 12.5E",
+           VALUE=Brho, BP, 
+           table(twiss,MonName,x), table(twiss,MonName,betx), table(twiss,MonName,dx),
+           table(twiss,MonName,y), table(twiss,MonName,bety), table(twiss,MonName,dy),
+           I_QuadName, QuadName->K1, I_myDip1Name, myDip1Name->K0*LMB, I_myDip2Name, myDip2Name->K0*LMB, I_myDip3Name, myDip3Name->K0*LMB;
+   } else {
+      PRINTF, TEXT="% 19.12E,% 6.1f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 12.5E,% 12.5E,% 12.5E,% 12.5E,% 12.5E,% 12.5E",
+           VALUE=Brho, BP, 
+           table(twiss,MonName,x), table(twiss,MonName,betx), table(twiss,MonName,dx),
+           table(twiss,MonName,y), table(twiss,MonName,bety), table(twiss,MonName,dy),
+           I_QuadName, QuadName->K1, I_myDip1Name, myDip1Name->K0*LMB, I_myDip2Name, myDip2Name->K0*LMB;
+   };
+   assign, echo=terminal;
+};
+! a useful header to file written by writeObservations(fileName,MonName) macro
+writeHeader(fileName,QuadName,myDip1Name,myDip2Name,myDip3Name,MonName): macro{
+   assign, echo=fileName;
+   if ( dip3<>0 ) {
+      PRINT, TEXT=# Brho[Tm], BP[mm], X:MonName[m], BETX:MonName[m], DX:MonName[m], Y:MonName[m], BETY:MonName[m], DY:MonName[m], I:QuadName[A], K1:QuadName[m-2], I:myDip1Name[A], K0L:myDip1Name[rad], I:myDip2Name[A], K0L:myDip2Name[rad], I:myDip3Name[A], K0L:myDip3Name[rad];
+   } else {
+      PRINT, TEXT=# Brho[Tm], BP[mm], X:MonName[m], BETX:MonName[m], DX:MonName[m], Y:MonName[m], BETY:MonName[m], DY:MonName[m], I:QuadName[A], K1:QuadName[m-2], I:myDip1Name[A], K0L:myDip1Name[rad], I:myDip2Name[A], K0L:myDip2Name[rad];
+   };
+   assign, echo=terminal;
+};
+! the actual macro:
+compute_Scans(myQuaName,myDip1Name,myDip2Name,myDip3Name,myMonName,fileName): macro={
+   REMOVEFILE, FILE=fileName;
+   exec, writeHeader(fileName,myQuaName,myDip1Name,myDip2Name,myDip3Name,myMonName);
+   
+   ! loop through dipole current values
+   I_myDip1Name=IminD1;
+   I_myDip2Name=IminD2;
+   if ( dip3<>0 ) {
+      I_myDip3Name=IminD3;
+   };
+   while (I_myDip1Name<=ImaxD1) {
+      ! - scanning dipole
+      K0_orig1=myDip1Name->K0;
+      F_myDip1Name=1.0;
+      exec, I2K_HEBT_DIPs_lin(myDip1Name,Brho);
+      myDip1Name->K0=K0L_myDip1Name/LMB;
+      ! - second dipole
+      K0_orig2=myDip2Name->K0;
+      F_myDip2Name=1.0;
+      exec, I2K_HEBT_DIPs_lin(myDip2Name,Brho);
+      myDip2Name->K0=K0L_myDip2Name/LMB;
+      if ( dip3<>0 ) {
+         ! - third dipole
+         K0_orig3=myDip3Name->K0;
+         F_myDip3Name=1.0;
+         exec, I2K_HEBT_DIPs_lin(myDip3Name,Brho);
+         myDip3Name->K0=K0L_myDip3Name/LMB;
+      };
+      
+      ! loop through quadrupole current values
+      K1_orig=K1_myQuaName;
+      I_myQuaName=IminQ;
+      while (I_myQuaName<=ImaxQ) {
+         ! get ready for this step
+          exec, I2K_HEBT_QUs_lin(myQuaName,Brho);
+         ! compute optics and save data
+         use,sequence=MUXL;
+         select,flag=twiss,clear;
+         twiss, beta0=initial, centre=true;
+         exec, writeObservations(fileName,myQuaName,myDip1Name,myDip2Name,myDip3Name,myMonName);
+         ! get ready for new step
+         I_myQuaName=I_myQuaName+IstpQ;   ! get ready for new point
+      };
+      K1_myQuaName=K1_orig;             ! reset kick to original value
+      myDip1Name->K0=K0_orig1;          ! 
+      myDip2Name->K0=K0_orig2;          ! 
+      I_myDip1Name=I_myDip1Name+IstpD1; ! get ready for new point
+      I_myDip2Name=I_myDip2Name+IstpD2; ! 
+      if ( dip3<>0 ) {
+         myDip3Name->K0=K0_orig3;          ! 
+         I_myDip3Name=I_myDip3Name+IstpD3; ! get ready for new point
+      };
+  };
+};
+
+! - parse table
+exec, parseTable();
+lunghezza=table(table_settings,tablelength);
+! - load proper line
+n=46; ! p, 90mm
+SETVARS, TABLE=table_settings, ROW=n;
+K0MB=K0MB_ref;
+call, file="settings_from_LGEN_table.str";
+! - notify user where we are
+PRINTF, TEXT="at Ek = %g MeV/u - BP = %g mm - row = %.0f ...", VALUE= Ek,BP,n;
+use,sequence=APICLS009;
+exec, saveOptics(example);
+
+! first scan:
+! - quad: H2_022A_QUE
+! - dipole: H3_003A_SW2, H3_009A_MBS, H3_015A_MBS
+! - screen: H3_011B_QPM
+Idelta=1.0; ITM=11.934; ! F
+IminQ=ITM-Idelta; ImaxQ=ITM+Idelta; IstpQ=1.0;
+Idelta=1.0; ITM=664.5;
+IminD1=ITM-Idelta; ImaxD1=ITM+Idelta; IstpD1=1.0;
+Idelta=2.0; ITM=663.5;
+IminD2=ITM-Idelta; ImaxD2=ITM+Idelta; IstpD2=2.0;
+exec, compute_Scans(H2_022A_QUE,H3_003A_SW2,H3_009A_MBS,H3_015A_MBS,H3_011B_QPM,H3_scan_2dips.tfs);
+
+! second scan: like first one but adds third dipole and look further downstream
+! - screen: H4_010B_BOX
+Idelta=3.0; ITM=662.71;
+IminD3=ITM-Idelta; ImaxD3=ITM+Idelta; IstpD3=3.0;
+dip3=1;
+exec, compute_Scans(H2_022A_QUE,H3_003A_SW2,H3_009A_MBS,H3_015A_MBS,H4_010B_BOX,H3_scan_3dips.tfs);
+dip3=0;
+
+! third scan:
+! - quad: H4_013A_QUE ! F
+! - dipole: V1_001A_SWV, V1_005A_MBS  ! bending left!!!!
+! - screen: V1_007B_SFH
+Idelta=1.0; ITM=34.17;
+IminQ=ITM-Idelta; ImaxQ=ITM+Idelta; IstpQ=1.0;
+Idelta=1.0; ITM=-656.7;
+IminD1=ITM-Idelta; ImaxD1=ITM+Idelta; IstpD1=1.0;
+Idelta=2.0; ITM=-670.96;
+IminD2=ITM-Idelta; ImaxD2=ITM+Idelta; IstpD2=2.0;
+exec, compute_Scans(H4_013A_QUE,V1_001A_SWV,V1_005A_MBU,V1_028A_MBD,V1_007B_SFH,V1_scan.tfs);
