@@ -20,7 +20,7 @@ Is_S1=1.66921457143512;   ! S8, [A]
 Is_S0=1.50797090194301;   ! S9, [A]
 
 ! - injection bump
-Ibumper=161.0; ! [A] (by LFalbo)
+Ibumper=0.0; ! [A] (by LFalbo)
 
 ! - usual 5-bumpers (hor bump at extraction septum)
 HK_S0  = -2.0E-03;         ! S0_029A_CSH, [rad]

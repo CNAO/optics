@@ -2,39 +2,81 @@
 ! NB: optics with 10-bumpers for orbit at extraction septum
 ! S3_012A_BDI and SD_012A_BDI are set by Ibumper;
 
-Ek=EdipExtr;
-BP=BP_mm;
+BP=BPmm;
 
-! - quads:
-KR=s2kextr;  !S2 [rad/m^-2]
-KF=s3kextr;  !S3 [rad/m^-2]
-KD=s4kextr;  !S4 [rad/m^-2]
-! - air core quad:
-KACQ=0.0;               !  [rad/m^-2]
-! - skew quad (S8_024A_SKQ)
-KSKQ=0.0;               !  [rad/m^-2]
+if ( iFT==0 ) {
+   ! injection optics
 
-! - sextupoles:
-Is_SR=S6;    ! S6, [A]
-Is_S1=S8;    ! S8, [A]
-Is_S0=S9;    ! S9, [A]
+   Ek=EdipInj;
+   ! - quads:
+   KR=s2kinj;  !S2 [rad/m^-2]
+   KF=s3kinj;  !S3 [rad/m^-2]
+   KD=s4kinj;  !S4 [rad/m^-2]
+   ! - air core quad:
+   KACQ=0.0;               !  [rad/m^-2]
+   ! - skew quad (S8_024A_SKQ)
+   KSKQ=0.0;               !  [rad/m^-2]
+   
+   ! - sextupoles:
+   Is_SR=0.0;    ! S6, [A]
+   Is_S1=0.5;    ! S8, [A]
+   Is_S0=0.5;    ! S9, [A]
+   
+   ! - injection bump
+   if ( is_carbon==0 ) {
+      Ibumper=161.0; ! proton, LFalbo [A]
+   }else{
+      Ibumper=385.0; ! carbon, LFalbo [A]
+   };
+   
+   ! - usual 5-bumpers (hor bump at extraction septum)
+   HK_S0  = S0_29Acc*1.0E-03; ! S0_029A_CSH, [rad]
+   HK_S2  = S2_08Acc*1.0E-03; ! S2_008A_CSH, [rad]
+   HK_SC0 = SC_08Acc*1.0E-03; ! SC_008A_CSH, [rad]
+   HK_SC  = SC_21Acc*1.0E-03; ! SC_021A_CSH, [rad]
+   HK_SE  = SE_16Acc*1.0E-03; ! SE_016A_CSH, [rad]
+   ! - additional 5-bumpers (hor bump at extraction septum)
+   ! HK_S4  = S4_08Acc*1.0E-03; ! S4_008A_CSH, [rad]
+   ! HK_S6  = S6_14Acc*1.0E-03; ! S6_014A_CSH, [rad]
+   ! HK_S80 = S8_08Acc*1.0E-03; ! S8_008A_CSH, [rad]
+   ! HK_S8  = S8_35Acc*1.0E-03; ! S8_035A_CSH, [rad]
+   ! HK_SA  = SA_08Acc*1.0E-03; ! SA_008A_CSH, [rad]
 
-! - injection bump
-Ibumper=0.0; ! [A]
+}else{
+   ! extraction optics
+   
+   Ek=EdipExtr;
+   ! - quads:
+   KR=s2kextr;  !S2 [rad/m^-2]
+   KF=s3kextr;  !S3 [rad/m^-2]
+   KD=s4kextr;  !S4 [rad/m^-2]
+   ! - air core quad:
+   KACQ=0.0;               !  [rad/m^-2]
+   ! - skew quad (S8_024A_SKQ)
+   KSKQ=0.0;               !  [rad/m^-2]
+   
+   ! - sextupoles:
+   Is_SR=S6;    ! S6, [A]
+   Is_S1=S8;    ! S8, [A]
+   Is_S0=S9;    ! S9, [A]
+   
+   ! - injection bump
+   Ibumper=0.0; ! [A]
+   
+   ! - usual 5-bumpers (hor bump at extraction septum)
+   HK_S0  = S0_29FT*1.0E-03; ! S0_029A_CSH, [rad]
+   HK_S2  = S2_08FT*1.0E-03; ! S2_008A_CSH, [rad]
+   HK_SC0 = SC_08FT*1.0E-03; ! SC_008A_CSH, [rad]
+   HK_SC  = SC_21FT*1.0E-03; ! SC_021A_CSH, [rad]
+   HK_SE  = SE_16FT*1.0E-03; ! SE_016A_CSH, [rad]
+   ! - additional 5-bumpers (hor bump at extraction septum)
+   HK_S4  = S4_08FT*1.0E-03; ! S4_008A_CSH, [rad]
+   HK_S6  = S6_14FT*1.0E-03; ! S6_014A_CSH, [rad]
+   HK_S80 = S8_08FT*1.0E-03; ! S8_008A_CSH, [rad]
+   HK_S8  = S8_35FT*1.0E-03; ! S8_035A_CSH, [rad]
+   HK_SA  = SA_08FT*1.0E-03; ! SA_008A_CSH, [rad]
 
-! - usual 5-bumpers (hor bump at extraction septum)
-HK_S0  = S0_29FT*1.0E-03; ! S0_029A_CSH, [rad]
-HK_S2  = S2_08FT*1.0E-03; ! S2_008A_CSH, [rad]
-HK_SC0 = SC_08FT*1.0E-03; ! SC_008A_CSH, [rad]
-HK_SC  = SC_21FT*1.0E-03; ! SC_021A_CSH, [rad]
-HK_SE  = SE_16FT*1.0E-03; ! SE_016A_CSH, [rad]
-! - additional 5-bumpers (hor bump at extraction septum)
-HK_S4  = S4_08FT*1.0E-03; ! S4_008A_CSH, [rad]
-HK_S6  = S6_14FT*1.0E-03; ! S6_014A_CSH, [rad]
-HK_S80 = S8_08FT*1.0E-03; ! S8_008A_CSH, [rad]
-HK_S8  = S8_35FT*1.0E-03; ! S8_035A_CSH, [rad]
-HK_SA  = SA_08FT*1.0E-03; ! SA_008A_CSH, [rad]
-
+};
 
 ! - vertical bumpers:
 VK_S1  =  0.0E-03;         ! S1_005A_CSV, [rad]
