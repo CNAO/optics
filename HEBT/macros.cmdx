@@ -95,7 +95,7 @@ save_strengths_particular(): macro {
    value, K1_T2_018A_QUE;
 };
 
-parseTable(): macro={
+parseHEBTtableLGEN(): macro={
    if (iLine==1) {
       if (is_carbon==0) {
          READTABLE, file="LGEN/Protoni_Sala3_2021-02-13.tfs", table=LGEN_HEBT_table;

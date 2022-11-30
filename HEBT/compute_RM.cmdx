@@ -1,5 +1,5 @@
 ! parse table
-exec, parseTable();
+exec, parseHEBTtableLGEN();
 lunghezzaLGEN=table(LGEN_HEBT_table,tablelength);
 
 ! current loop

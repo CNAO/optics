@@ -67,7 +67,7 @@ makeScan(fileName,magName,monName): macro = {
 ! ========================================================================
 
 ! - parse table
-exec, parseTable();
+exec, parseHEBTtableLGEN();
 lunghezza=table(LGEN_HEBT_table,tablelength);
 ! - load proper line
 n=46; ! p, 90mm

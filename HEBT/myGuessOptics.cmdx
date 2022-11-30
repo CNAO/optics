@@ -75,7 +75,7 @@ makeScanFromTable(fileName,tableName,monName): macro = {
 ! ========================================================================
 
 ! - parse LGEN table to get TM values
-exec, parseTable();
+exec, parseHEBTtableLGEN();
 lunghezza=table(LGEN_HEBT_table,tablelength);
 ! - load proper line
 ! n=lunghezza; ! C, 270mm

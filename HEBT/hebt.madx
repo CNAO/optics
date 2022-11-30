@@ -26,7 +26,7 @@ iChopper=0;
 ! 4: LineZ, Room 1
 iLine=4;
 
-! consider also H1 line
+! consider also H1 line (available only in case LGEN currents are used)
 ! this is automatically taken from synchro sequence
 ! 0: do NOT load H1 line
 ! 1: DO load H1 line

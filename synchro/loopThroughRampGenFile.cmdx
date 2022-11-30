@@ -6,17 +6,7 @@
 REMOVEFILE, FILE="ks.txt";
 
 ! parse table
-if ( is_carbon==0 ) { ! protons
-  READTABLE, file="RampGen/TM_Protons.tfs", table=LGEN_synchro_table;
-} else {
-  if ( mMode==1 ) { ! carbon ions
-    ! RFKO
-    READTABLE, file="RampGen/CorrSest-MachinePhotoCarbRFKO.tfs", table=LGEN_synchro_table;
-  }else{
-    ! TM
-    READTABLE, file="RampGen/TM_Carbon.tfs", table=LGEN_synchro_table;
-  };
-};
+exec, parseSYNCHROtableLGEN();
 lunghezza=table(LGEN_synchro_table,tablelength);
 ! first data line is 1 (i.e. .txt header is skipped)
 Nstart=1;
