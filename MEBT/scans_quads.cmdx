@@ -1,0 +1,106 @@
+! ========================================================================
+! macro
+! ========================================================================
+
+makeScan(fileName,magName): macro = {
+
+   ! header to output file: PIB
+   REMOVEFILE, FILE=fileName_PIB.txt;
+   assign, echo=fileName_PIB.txt;
+   PRINT, TEXT="# Brho[Tm], BP[mm], I[A], BETX:M3_032A_PIB[m], ALFX:M3_032A_PIB[], BETY:M3_032A_PIB[m], ALFY:M3_032A_PIB[], X:M3_032A_PIB[m], PX:M3_032A_PIB[], Y:M3_032A_PIB[m], PY:M3_032A_PIB[], DX:M3_032A_PIB[m], DPX:M3_032A_PIB[], DY:M3_032A_PIB[m], DPY:M3_032A_PIB[]";
+   assign, echo=terminal;
+   
+   ! header to output file: ESI
+   REMOVEFILE, FILE=fileName_ESI.txt;
+   assign, echo=fileName_ESI.txt;
+   PRINT, TEXT="# Brho[Tm], BP[mm], I[A], BETX:M3_044A_ESI[m], ALFX:M3_044A_ESI[], BETY:M3_044A_ESI[m], ALFY:M3_044A_ESI[], X:M3_044A_ESI[m], PX:M3_044A_ESI[], Y:M3_044A_ESI[m], PY:M3_044A_ESI[], DX:M3_044A_ESI[m], DPX:M3_044A_ESI[], DY:M3_044A_ESI[m], DPY:M3_044A_ESI[]";
+   assign, echo=terminal;
+   
+   Icurr=minmin;
+   while (Icurr<=maxmax+0.5*stepstep){
+
+      ! save original current
+      I_magName_orig=I_magName;
+      K1_magName_orig=K1_magName;
+   
+      ! set quad strength
+      I_magName = Icurr ;
+      K1_magName = 0.0 ;
+      if ( I2K_quads == 3 ) {
+        ! use macro: third order polynomial
+        exec, I2K_MEBT_QUs_third(magName,Bro);
+      } else {
+        ! use macro: linear dependence, a dedicated one for each quad
+        exec, I2K_MEBT_QUs_lin(magName,Bro);
+      };
+      
+      ! debug
+      ! value, IH_M3_026A_CIB, IH_M3_030B_CIB, IV_M3_026A_CIB, IV_M3_030B_CIB;
+      ! value, Brho, HKICK_M3_026A_CIB, VKICK_M3_026A_CIB, HKICK_M3_030B_CIB, VKICK_M3_030B_CIB;
+      
+      ! compute optics
+      use,sequence=MUXL;
+      select,flag=twiss,clear;
+      twiss, beta0=initial, centre=true;
+      ! save data
+      assign, echo=fileName_PIB.txt;
+      PRINTF, TEXT="% 19.12E,% 6.1f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
+                 VALUE=Brho, BP, I_magName, 
+                 table(twiss,M3_032A_PIB,BETX), table(twiss,M3_032A_PIB,ALFX), table(twiss,M3_032A_PIB,BETY), table(twiss,M3_032A_PIB,ALFY),
+                 table(twiss,M3_032A_PIB,X),    table(twiss,M3_032A_PIB,PX),   table(twiss,M3_032A_PIB,Y),    table(twiss,M3_032A_PIB,PY),
+                 table(twiss,M3_032A_PIB,DX),   table(twiss,M3_032A_PIB,DPX),  table(twiss,M3_032A_PIB,DY),   table(twiss,M3_032A_PIB,DPY);
+      assign, echo=fileName_ESI.txt;
+      PRINTF, TEXT="% 19.12E,% 6.1f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
+                 VALUE=Brho, BP, I_magName, 
+                 table(twiss,M3_044A_ESI,BETX), table(twiss,M3_044A_ESI,ALFX), table(twiss,M3_044A_ESI,BETY), table(twiss,M3_044A_ESI,ALFY),
+                 table(twiss,M3_044A_ESI,X),    table(twiss,M3_044A_ESI,PX),   table(twiss,M3_044A_ESI,Y),    table(twiss,M3_044A_ESI,PY),
+                 table(twiss,M3_044A_ESI,DX),   table(twiss,M3_044A_ESI,DPX),  table(twiss,M3_044A_ESI,DY),   table(twiss,M3_044A_ESI,DPY);
+      assign, echo=terminal;
+      ! debug
+      ! exec, saveOpticsTFS(example);
+      ! exec, saveGeometryTFS(example);
+      
+      ! restore original current
+      I_magName=I_magName_orig;
+      K1_magName=K1_magName_orig;
+   
+      Icurr=Icurr+stepstep;
+   };
+};
+
+! ========================================================================
+! setting up cycle
+! ========================================================================
+
+! ========================================================================
+! cycle here
+! ========================================================================
+
+! cycle conditions, M3_008A_QIB
+minmin=  0.0; ! [A]
+maxmax= 40.0; ! [A]
+stepstep=1.0; ! [A]
+! exec macro
+exec, makeScan(M3_008A_QIB,M3_008A_QIB);
+
+! cycle conditions, M3_010A_QIB
+minmin=-40.0; ! [A]
+maxmax=  0.0; ! [A]
+stepstep=1.0; ! [A]
+! exec macro
+exec, makeScan(M3_010A_QIB,M3_010A_QIB);
+
+! cycle conditions, M3_019A_QIB
+minmin=  0.0; ! [A]
+maxmax= 40.0; ! [A]
+stepstep=1.0; ! [A]
+! exec macro
+exec, makeScan(M3_019A_QIB,M3_019A_QIB);
+
+! cycle conditions, M3_021A_QIB
+minmin=-40.0; ! [A]
+maxmax=  0.0; ! [A]
+stepstep=1.0; ! [A]
+! exec macro
+exec, makeScan(M3_021A_QIB,M3_021A_QIB);
+

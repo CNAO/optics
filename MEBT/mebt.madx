@@ -15,21 +15,21 @@ is_open=1;
 is_carbon=0;
 
 ! excess IDB kicks: 0: do not use; 1: use;
-i_IDB_excess=0;
+i_IDB_excess=1;
 
 ! consider extensions:
 ! 0: no extensions
 ! 1: extension on the LINAC side
-is_extended=0;
+is_extended=1;
 
 ! which I2K to use for quads?
-I2K_quads=3; ! 1: linear, personal; 3: third order polynom
+I2K_quads=1; ! 1: linear, personal; 3: third order polynom
 
 ! which starting conditions set?
 ! <0: from matlab
 ! 0: nominal (as from SSavazzi)
 ! 1: as from analysis of summary data by AMereghetti, 2021/07/07 (only with extended beam line!)
-i_start_cond=0;
+i_start_cond=1;
 
 call, file="../macros.cmdx";
 call, file="macros.cmdx";
@@ -62,7 +62,7 @@ call, file="corrs.str";
 ! ==============================================================================
 ! a simple example
 ! ==============================================================================
-/*
+
 ! generate optics files
 use,sequence=MUXL;
 exec, saveOpticsTFS(example);
@@ -86,7 +86,7 @@ exec, save_strengths(MEBT);
 ! saving Rmatrix
 use,sequence=MUXL;
 exec, saveRmatrixTFS(example);
-*/
+
 ! ==============================================================================
 ! specific tasks
 ! NB: you can comment out all the part concerning the simple example
@@ -95,4 +95,8 @@ exec, saveRmatrixTFS(example);
 ! compute response matrices
 ! call, file="compute_RM.cmdx";
 
-call, file="reproduce_MEBT_scans.cmdx";
+! call, file="reproduce_MEBT_scans.cmdx";
+
+! call, file="scans_quads.cmdx";
+
+call, file="scans_quads_ReMat.cmdx";
