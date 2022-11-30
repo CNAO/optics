@@ -55,9 +55,9 @@ switch upper(source)
                     error("no source of data available for %s %s %s %s",machine,source,beamPart,config);
             end
             if ( lCurrents )
-                save2MADXTable(ranges,Eks,Brhos,currents,psNames,MADXFileName,lCurrents,machine);
+                save2MADXTable(ranges,Eks,Brhos,currents,psNames,MADXFileName,lCurrents);
             else
-                save2MADXTable(ranges,Eks,Brhos,kicks,psNames,MADXFileName,lCurrents,machine);
+                save2MADXTable(ranges,Eks,Brhos,kicks,psNames,MADXFileName,lCurrents);
             end
         end
     otherwise
@@ -69,22 +69,15 @@ return
 
 %% functions
 
-function save2MADXTable(ranges,Eks,Brhos,myTable,psNames,MADXFileName,isCurrent,machine)
+function save2MADXTable(ranges,Eks,Brhos,myTable,psNames,MADXFileName,isCurrent)
     myTitle="myTable";
     % SAVE FILE FOR MADX
     nPSs=length(psNames);
     % prepare header
     headers=strings(1,nPSs+3);
-    switch upper(machine)
-        case "SYNCHRO"
-            headers(1)="range_synchro_mm";
-            headers(2)="Ek_synchro_MeVN";
-            headers(3)="Brho_synchro_Tm";
-        otherwise % all the HEBT lines
-            headers(1)="range_hebt_mm";
-            headers(2)="Ek_hebt_MeVN";
-            headers(3)="Brho_hebt_Tm";
-    end
+    headers(1)="range_mm";
+    headers(2)="Ek_MeVN";
+    headers(3)="Brho_Tm";
     if ( isCurrent==1)
         headers(4:end)=psNames+"_A";
     else
