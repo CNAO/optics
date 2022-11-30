@@ -6,6 +6,16 @@
 ! parse table
 exec, parseHEBTtableLGEN();
 lunghezza=table(LGEN_HEBT_table,tablelength);
+if (iH1<>0) {
+   CHDIR, DIR="../synchro";
+   exec, parseSYNCHROtableLGEN();
+   CHDIR, DIR="../HEBT";
+   lunghezzaSynchro=table(LGEN_HEBT_table,tablelength);
+   if (lunghezza<>lunghezzaSynchro) {
+       PRINTF, TEXT="ERROR! mismatch in length between HEBT table (%.0f lines) and synchro table (%.0f lines)", VALUE=lunghezza,lunghezzaSynchro;
+	   stop;
+   };
+};
 
 ! first data line is 1 (i.e. .txt header is skipped)
 Nstart=1;
@@ -14,15 +24,29 @@ Nstop=1;
 n=Nstart;
 WHILE (n <= Nstop ) {
 
-SETVARS, TABLE=LGEN_HEBT_table, ROW=n;
-K0MB=K0MB_ref;
-call, file="settings_from_LGEN_table.str";
+   SETVARS, TABLE=LGEN_HEBT_table, ROW=n;
+   K0MB=K0MB_ref;
+   call, file="settings_from_LGEN_table.str";
 
-! notify user where we are
-PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
+   ! notify user where we are
+   PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
 
-use,sequence=APICLS009;
-exec, saveOptics(LGEN);
+   ! load H1 kicks 
+   if (iH1<>0) {
+      CHDIR, DIR="../synchro";
+	  SETVARS, TABLE=LGEN_synchro_table, ROW=n;
+      call, file="settings_from_LGEN_table.str";
 
-n = n+1;
+	  ! notify user where we are
+	  PRINTF, TEXT="...with H1 line: at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
+
+	  ! set injection bumper k from the specified current
+	  exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];
+      CHDIR, DIR="../HEBT";
+   };
+   
+   use,sequence=APICLS009;
+   exec, saveOptics(LGEN);
+
+   n = n+1;
 };
