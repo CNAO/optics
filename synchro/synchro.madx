@@ -101,5 +101,5 @@ exec, save_strengths(myOptics);
 ! loop through .tfs file out of the repo with currents
 ! call, file="loopThroughLGENFile.cmdx";
 
-! vertical bump
+! compute a vertical bump (loop through .tfs file out of the repo with currents)
 ! call, file="matchVBump.cmdx";
