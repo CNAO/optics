@@ -18,9 +18,9 @@ is_carbon=0;
 ! 1: RFKO
 mMode=0;
 
-! 0: injection
-! 1: FT
-iFT=0; ! only for RAMPGEN, for the time being
+! 0: FT
+! 1: injection
+is_injection=0; ! only for RAMPGEN, for the time being
 
 title, "Sincrotrone CNAO";
 
