@@ -20,16 +20,16 @@ i_IDB_excess=0;
 ! consider extensions:
 ! 0: no extensions
 ! 1: extension on the LINAC side
-is_extended=0;
+is_extended=1;
 
 ! which I2K to use for quads?
-I2K_quads=3; ! 1: linear, personal; 3: third order polynom
+I2K_quads=1; ! 1: linear, personal; 3: third order polynom
 
 ! which starting conditions set?
 ! <0: from matlab
 ! 0: nominal (as from SSavazzi)
 ! 1: as from analysis of summary data by AMereghetti, 2021/07/07 (only with extended beam line!)
-i_start_cond=0;
+i_start_cond=1;
 
 call, file="../macros.cmdx";
 call, file="macros.cmdx";
@@ -94,3 +94,6 @@ exec, saveRmatrixTFS(example);
 
 ! compute response matrices
 ! call, file="compute_RM.cmdx";
+
+! compute quad-dip scans
+call, file="quad-dip-scans.cmdx";

@@ -42,6 +42,22 @@ a1_M3_010A_QIB=0.070118797148369;
 a1_M3_019A_QIB=0.0704252011492;
 a1_M3_021A_QIB=0.070218560416983;
 
+I2K_MEBT_DIPs_lin(MagName,biro) : macro {
+  ! linear dependence as from magnetic measurements on each main dipole
+  ! the macro expects I_MagName, K0L_MagName and F_MagName to be defined
+  ! eg. M2_001A_IDB -> I_M2_001A_IDB, K0L_M2_001A_IDB, F_M2_001A_IDB
+  if ( I_MagName <> 0.0 ) {
+     K0L_MagName = ( a0_MagName+a1_MagName*abs(I_MagName) )/biro *abs(F_MagName);
+     if (I_MagName<0){ K0L_MagName=-K0L_MagName; };
+  };
+};
+! Coefficients for linear fitting
+a0_M2_001A_IDB=3.583E-03;
+a0_M3_001A_IDB=5.291E-03;
+!
+a1_M2_001A_IDB=2.263E-03;
+a1_M3_001A_IDB=2.260E-03;
+
 I2K_MEBT_CIBH(MagName,biro): macro {
   ! from SSavazzi, relation for MADbuilder
   ! the macro expects IH_MagName, HKICK_MagName and FH_MagName to be defined
