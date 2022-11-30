@@ -209,7 +209,7 @@ insertMarkerUpstreamOf(MyMarkerName,UpEleName,MySeqName): macro = {
    ENDEDIT;
 };
 
-! convert current into K, using a linear dependence
+! convert current into K1, using a linear dependence
 I2K_QUs_lin(MagName,biro) : macro {
   ! the macro expects IMagName, KMagName and FMagName to be defined
   ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
@@ -219,7 +219,7 @@ I2K_QUs_lin(MagName,biro) : macro {
   if (I_MagName<0){ K1_MagName=-K1_MagName; };
 };
 
-! convert current into K, using a fifth order polynomial
+! convert current into K1, using a fifth order polynomial
 I2K_QUs_fifth(MagName,biro) : macro {
   ! the macro expects IMagName, KMagName and FMagName to be defined
   ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE

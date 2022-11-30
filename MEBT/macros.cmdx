@@ -70,7 +70,7 @@ I2K_MEBT_CIBH(MagName,biro): macro {
   ! change sign: a negative vertical B-field (in both ref systems, i.e.
   !    measurements and MADX) kicks positively-charged particles towards x>0 in MADX
   if ( IH_MagName <> 0.0 ) {
-     HKICK_MagName :=-((-1.38E-4*IH_MagName + 1.53E-5)/biro)*abs(FH_MagName);
+     HKICK_MagName =-((-1.38E-4*IH_MagName + 1.53E-5)/biro)*abs(FH_MagName);
   };
 };
 
@@ -87,7 +87,7 @@ I2K_MEBT_CIBV(MagName,biro): macro {
   !    corresponds to a positive horizontal B-field in MADX, which kicks
   !    positively-charged particles towards y>0
   if ( IV_MagName <> 0.0 ) {
-     VKICK_MagName :=-((-1.38E-4*IV_MagName + 1.62E-5)/biro)*abs(FV_MagName);
+     VKICK_MagName =-((-1.38E-4*IV_MagName + 1.62E-5)/biro)*abs(FV_MagName);
   };
 };
 

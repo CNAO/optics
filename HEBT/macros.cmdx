@@ -1,5 +1,5 @@
 ! convert current into K, using a fifth order polynomial
-I2K_HEBT_QUs_fifth(MagName,biro) : macro {
+I2K_HEBT_QUs_fifth(MagName,biro): macro {
   ! the macro expects IMagName, KMagName and FMagName to be defined
   ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
   K1_MagName = (-2.794551e-1
@@ -12,7 +12,7 @@ I2K_HEBT_QUs_fifth(MagName,biro) : macro {
 };
 
 ! convert current into K, using a linear dependence
-I2K_HEBT_QUs_lin(MagName,biro) : macro {
+I2K_HEBT_QUs_lin(MagName,biro): macro {
   ! the macro expects IMagName, KMagName and FMagName to be defined
   ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
   ! gradiente integrato GL(T) = 3.258e-02 * I (A)
@@ -21,7 +21,7 @@ I2K_HEBT_QUs_lin(MagName,biro) : macro {
   K1_MagName = 0.03258/(0.45*biro) *I_MagName *abs(F_MagName);
 };
 
-I2K_HEBT_DIPs_lin(MagName,biro) : macro {
+I2K_HEBT_DIPs_lin(MagName,biro): macro {
   ! linear dependence as from magnetic measurements on each main dipole
   ! the macro expects I_MagName, K0L_MagName and F_MagName to be defined
   ! eg. H3_003A_SW2 -> I_H3_003A_SW2, K0L_H3_003A_SW2, F_H3_003A_SW2
