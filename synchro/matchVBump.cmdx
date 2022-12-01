@@ -10,17 +10,7 @@
 REMOVEFILE, FILE="ks.txt";
 
 ! parse table
-if ( is_carbon==0 ) { ! protons
-  READTABLE, file="LGEN/ProtoniSincro_2021-02-13.tfs", table=LGEN_synchro_table;
-} else {
-  if ( mMode==1 ) { ! carbon ions
-    ! RFKO - not available yet!
-    stop;
-  }else{
-    ! TM
-    READTABLE, file="LGEN/CarbonioSincro_2021-02-05.tfs", table=LGEN_synchro_table;
-  };
-};
+exec, parseSYNCHROtableLGEN();
 lunghezza=table(LGEN_synchro_table,tablelength);
 
 ! first data line is 1 (i.e. .txt header is skipped)
