@@ -3,9 +3,6 @@
 ! synchrotron geometry
 !
 
-! load common defs
-call, file="../common_defs.madx";
-
 ! LEGGO I PARAMETRI DEI VARI MAGNETI
 call, file="Magneti.str";
 

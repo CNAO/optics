@@ -28,6 +28,9 @@ title, "Sincrotrone CNAO";
 call, file="../macros.cmdx";
 call, file="macros.cmdx";
 
+! load common defs
+call, file="../common_defs.madx";
+
 ! load synchro geometry
 call, file="synchro_geo.cmdx";
 
