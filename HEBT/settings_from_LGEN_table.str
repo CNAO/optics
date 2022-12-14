@@ -6,233 +6,39 @@
 ! - K1_H2_012A_QUE: kick [1/m^2];
 ! - F_H2_012A_QUE: multiplication factor of K(I) (includes sign!)
 
-Ek=Ek_MeVN;  ! [MeV/n]
-BP=range_mm; ! [mm] 
+PRINT, TEXT="LGEN settings from TABLE for HEBT";
+
+! ==============================================================================
+! from H2 to the end
+! ==============================================================================
+
+Ek=Ek_MeVN;   ! [MeV/n]
+BP=range_mm;  ! [mm] 
 exec, setRigidity();
+Brho=Brho_TM; ! [Tm]
 
-! ==============================================================================
+! ------------------------------------------------------------------------------
 ! H2-H4
-! ==============================================================================
+! ------------------------------------------------------------------------------
+call, file="settings_from_LGEN_table_H2-H4.str";
 
-I_H2_012A_QUE := P7_008A_LGEN_A;      !H8
-F_H2_012A_QUE := 1.0;     
-I_H2_016A_QUE := -P7_009A_LGEN_A;     !H9
-F_H2_016A_QUE := 1.0;  
-I_H2_022A_QUE := P7_010A_LGEN_A;      !H10
-F_H2_022A_QUE := 1.0;  
-!
-I_H4_003A_QUE := P7_011A_LGEN_A;      !H11
-F_H4_003A_QUE := 1.0;         
-I_H4_007A_QUE := -P7_012A_LGEN_A;     !H12     
-F_H4_007A_QUE := 1.0;          
-I_H4_013A_QUE := P7_013A_LGEN_A;      !H13
-F_H4_013A_QUE := 1.0;      
-
-if ( iMacro_I2K_QU==1 ) {
-   ! use macro: linear
-   exec, I2K_HEBT_QUs_lin(H2_012A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H2_016A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H2_022A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H4_003A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H4_007A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H4_013A_QUE,Brho);
-} elseif ( iMacro_I2K_QU==5 ) {
-   ! use macro: fifth order polynomial
-   exec, I2K_HEBT_QUs_fifth(H2_012A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H2_016A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H2_022A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H4_003A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H4_007A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H4_013A_QUE,Brho);
-};
-
-! ==============================================================================
+! ------------------------------------------------------------------------------
 ! H5-V1
-! ==============================================================================
+! ------------------------------------------------------------------------------
+call, file="settings_from_LGEN_table_H5-V1.str";
 
-if (iLine==3) {
-   !
-   I_V1_010A_QUE := -PA_008A_LGEN_A;     !V5  
-   F_V1_010A_QUE := 1.0;      
-   I_V1_014A_QUE := PA_009A_LGEN_A;      !V6    
-   F_V1_014A_QUE := 1.0;      
-   I_V1_018A_QUE := PA_010A_LGEN_A;      !V7   
-   F_V1_018A_QUE := 1.0;
-   I_V1_022A_QUE := -PA_011A_LGEN_A;     !V8   
-   F_V1_022A_QUE := 1.0;
-   !
-   if ( iMacro_I2K_QU==1 ) {
-      ! use macro: linear
-      exec, I2K_HEBT_QUs_lin(V1_010A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(V1_014A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(V1_018A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(V1_022A_QUE,Brho);
-   } elseif ( iMacro_I2K_QU==5 ) {
-      ! use macro: fifth order polynomial
-      exec, I2K_HEBT_QUs_fifth(V1_010A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(V1_014A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(V1_018A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(V1_022A_QUE,Brho);
-   };
-}else{
-   !
-   I_H5_005A_QUE := -P7_014A_LGEN_A;     !H14  
-   F_H5_005A_QUE := 1.0;      
-   I_H5_009A_QUE := P7_015A_LGEN_A;      !H15    
-   F_H5_009A_QUE := 1.0;      
-   I_H5_015A_QUE := -P7_016A_LGEN_A;     !H16   
-   F_H5_015A_QUE := 1.0;
-   !
-   if ( iMacro_I2K_QU==1 ) {
-      ! use macro: linear
-      exec, I2K_HEBT_QUs_lin(H5_005A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(H5_009A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(H5_015A_QUE,Brho);
-   } elseif ( iMacro_I2K_QU==5 ) {
-      ! use macro: fifth order polynomial
-      exec, I2K_HEBT_QUs_fifth(H5_005A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(H5_009A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(H5_015A_QUE,Brho);
-   };
-};
-
-! ==============================================================================
+! ------------------------------------------------------------------------------
 ! single ramifications
-! ==============================================================================
+! ------------------------------------------------------------------------------
 
 if (iLine==1) {
-   !
-   I_T1_004A_QUE := P8_004A_LGEN_A;      !H36 
-   F_T1_004A_QUE := 1.0;      
-   I_T1_013A_QUE := -P8_005A_LGEN_A;     !H18
-   F_T1_013A_QUE := 1.0;    
-   I_T1_019A_QUE := P8_006A_LGEN_A;      !H19
-   F_T1_019A_QUE := 1.0;     
-   !
-   I_T2_005A_QUE := -P8_007A_LGEN_A;     !H20
-   F_T2_005A_QUE := 1.0;    
-   I_T2_012A_QUE := P8_008A_LGEN_A;      !H21
-   F_T2_012A_QUE := 1.0;
-   I_T2_018A_QUE := -P8_009A_LGEN_A;     !H22
-   F_T2_018A_QUE := 1.0;
-   !
-   if ( iMacro_I2K_QU==1 ) {
-      ! use macro: linear
-      exec, I2K_HEBT_QUs_lin(T1_004A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(T1_013A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(T1_019A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(T2_005A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(T2_012A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(T2_018A_QUE,Brho);
-   } elseif ( iMacro_I2K_QU==5 ) {
-      ! use macro: fifth order polynomial
-      exec, I2K_HEBT_QUs_fifth(T1_004A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(T1_013A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(T1_019A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(T2_005A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(T2_012A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(T2_018A_QUE,Brho);
-   };
-   !
+   call, file="settings_from_LGEN_table_T1-T2.str";
 }elseif (iLine==2) {
-   !
-   I_U1_008A_QUE := P9_003A_LGEN_A;      !H23
-   F_U1_008A_QUE := 1.0;      
-   I_U1_014A_QUE := -P9_004A_LGEN_A;     !H24
-   F_U1_014A_QUE := 1.0;    
-   I_U1_018A_QUE := P9_005A_LGEN_A;      !H25
-   F_U1_018A_QUE := 1.0;     
-   !
-   I_U2_006A_QUE := -P9_006A_LGEN_A;     !H26
-   F_U2_006A_QUE := 1.0;    
-   I_U2_010A_QUE := P9_007A_LGEN_A;      !H27
-   F_U2_010A_QUE := 1.0;
-   I_U2_016A_QUE := -P9_008A_LGEN_A;     !H28
-   F_U2_016A_QUE := 1.0;
-   !
-   if ( iMacro_I2K_QU==1 ) {
-      ! use macro: linear
-      exec, I2K_HEBT_QUs_lin(U1_008A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(U1_014A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(U1_018A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(U2_006A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(U2_010A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(U2_016A_QUE,Brho);
-   } elseif ( iMacro_I2K_QU==5 ) {
-      ! use macro: fifth order polynomial
-      exec, I2K_HEBT_QUs_fifth(U1_008A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(U1_014A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(U1_018A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(U2_006A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(U2_010A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(U2_016A_QUE,Brho);
-   };
-   !
+   call, file="settings_from_LGEN_table_U1-U2.str";
 }elseif (iLine==3) {
-   !
-   I_V1_037A_QUE := -PA_012A_LGEN_A;     !V9
-   F_V1_037A_QUE := 1.0;      
-   I_V1_041A_QUE := PA_013A_LGEN_A;      !V10
-   F_V1_041A_QUE := 1.0;    
-   I_V1_047A_QUE := -PA_014A_LGEN_A;     !V11
-   F_V1_047A_QUE := 1.0;     
-   !
-   I_V2_006A_QUE := PA_015A_LGEN_A;      !V12
-   F_V2_006A_QUE := 1.0;    
-   I_V2_010A_QUE := -PA_016A_LGEN_A;     !V13
-   F_V2_010A_QUE := 1.0;
-   I_V2_016A_QUE := PA_017A_LGEN_A;      !V14
-   F_V2_016A_QUE := 1.0;
-   !
-   if ( iMacro_I2K_QU==1 ) {
-      ! use macro: linear
-      exec, I2K_HEBT_QUs_lin(V1_037A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(V1_041A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(V1_047A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(V2_006A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(V2_010A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(V2_016A_QUE,Brho);
-   } elseif ( iMacro_I2K_QU==5 ) {
-      ! use macro: fifth order polynomial
-      exec, I2K_HEBT_QUs_fifth(V1_037A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(V1_041A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(V1_047A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(V2_006A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(V2_010A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(V2_016A_QUE,Brho);
-   };
-   !
+   call, file="settings_from_LGEN_table_V1-V2.str";
 }elseif (iLine==4) {
-   !
-   I_Z1_004A_QUE := PB_004A_LGEN_A;      !H29 
-   F_Z1_004A_QUE := 1.0;      
-   I_Z1_013A_QUE := -PB_005A_LGEN_A;     !H30
-   F_Z1_013A_QUE := 1.0;    
-   I_Z1_019A_QUE := PB_006A_LGEN_A;      !H31
-   F_Z1_019A_QUE := 1.0;     
-   !
-   I_Z2_005A_QUE := -PB_007A_LGEN_A;     !H32
-   F_Z2_005A_QUE := 1.0;    
-   I_Z2_012A_QUE := PB_008A_LGEN_A;      !H34
-   F_Z2_012A_QUE := 1.0;
-   I_Z2_018A_QUE := -PB_009A_LGEN_A;     !H35
-   F_Z2_018A_QUE := 1.0;
-   !
-   if ( iMacro_I2K_QU==1 ) {
-      ! use macro: linear
-      exec, I2K_HEBT_QUs_lin(Z1_004A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(Z1_013A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(Z1_019A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(Z2_005A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(Z2_012A_QUE,Brho);
-      exec, I2K_HEBT_QUs_lin(Z2_018A_QUE,Brho);
-   } elseif ( iMacro_I2K_QU==5 ) {
-      ! use macro: fifth order polynomial
-      exec, I2K_HEBT_QUs_fifth(Z1_004A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(Z1_013A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(Z1_019A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(Z2_005A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(Z2_012A_QUE,Brho);
-      exec, I2K_HEBT_QUs_fifth(Z2_018A_QUE,Brho);
-   };
+   call, file="settings_from_LGEN_table_Z1-Z2.str";
+}elseif (iLine==7) {
+   call, file="settings_from_LGEN_table_XPR.str";
 };

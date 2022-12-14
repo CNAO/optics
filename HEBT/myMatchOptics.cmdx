@@ -1,0 +1,111 @@
+! ========================================================================
+! setting up sequence
+! ========================================================================
+
+! - parse LGEN table to get TM values
+exec, parseTable();
+lunghezza=table(table_settings,tablelength);
+! - load proper line
+! n=1; ! C,  30mm
+! n=61; ! C, 150mm
+! n=71; ! C, 170mm
+! n=81; ! C, 190mm
+n=lunghezza; ! C, 270mm
+SETVARS, TABLE=table_settings, ROW=n;
+K0MB=K0MB_ref;
+call, file="settings_from_LGEN_table.str";
+! - notify user where we are
+PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
+use,sequence=APICLS009;
+exec, saveOptics(TM);
+
+! - insert marker upstream of first scanning quad
+exec, insertMarkerUpstreamOf(MYINS,H2_022A_QUE,APICLS009);
+! exec, insertMarkerUpstreamOf(MYINS,T1_013A_QUE,APICLS009);
+! exec, insertMarkerUpstreamOf(MYINS,U1_008A_QUE,APICLS009);
+! exec, insertMarkerUpstreamOf(MYINS,Z1_013A_QUE,APICLS009);
+! ! - insert marker upstream of H5_018B_SFH
+! exec, insertMarkerUpstreamOf(MYINS,H5_018B_SFH,APICLS009);
+! - insert end marker
+SEQEDIT, SEQUENCE=APICLS009;
+INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=0.0, FROM=X3_015A_MOB;
+! INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=0.0, FROM=T2_032A_MOB;
+! INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=-0.4, FROM=U2_029A_MOB; ! move ISO upstream by 40cm
+! INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=0.0, FROM=Z2_032A_MOB;
+! MOVE, ELEMENT=U2_029A_MOB, BY=-0.4; ! move ISO upstream by 40cm
+ENDEDIT;
+! - flatten sequence
+SEQEDIT, SEQUENCE=APICLS009; FLATTEN; ENDEDIT;
+
+! - save optics functions at inserted marker
+use,sequence=APICLS009;
+SAVEBETA, LABEL=newInitial, PLACE=MYINS, SEQUENCE=APICLS009;
+TWISS, beta0=initial;
+
+! - extract concerned piece of line
+SEQEDIT, SEQUENCE=APICLS009;
+FLATTEN;
+EXTRACT, SEQUENCE=APICLS009, FROM=MYINS, TO=MYEND, NEWNAME=SHORTAPIC;
+ENDEDIT;
+! - flatten new sequence
+SEQEDIT, SEQUENCE=SHORTAPIC; FLATTEN; ENDEDIT;
+
+! ========================================================================
+! setting up matchin
+! ========================================================================
+
+! ------------------------------------------------------------------------
+initialMatch: BETA0, betx = 20.0, alfx = -3.0, bety = 9.0, alfy = 1.8; ! 270 mm
+! ------------------------------------------------------------------------
+
+! - get again output files, to check
+exec, setBeam(SHORTAPIC);
+use,sequence=SHORTAPIC;
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,betx,alfx,bety,alfy,x,px,y,py,dx,dpx,dy,dpy,mux,muy;
+twiss, file=TM_short_optics.tfs, beta0=initialMatch;
+! twiss, file=TM_short_optics.tfs, beta0=newInitial;
+! twiss, file=TM_short_optics.tfs, beta0=initial;
+use,sequence=SHORTAPIC;
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,kick,hkick,vkick,angle,k0l,k1l,k2l,apertype,aper_1,aper_2,aper_3,aper_4,apoff_1,apoff_2;
+twiss, file=TM_short_geometry.tfs, beta0=initialMatch;
+! twiss, file=TM_short_geometry.tfs, beta0=newInitial;
+! twiss, file=TM_short_geometry.tfs, beta0=initial;
+use,sequence=SHORTAPIC;
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,re11,re12,re21,re22,re16,re26,re33,re34,re43,re44,re36,re46,re51,re52,re55,re56,re66;
+twiss, rmatrix=true, file=TM_short_Rmatrix.tfs, beta0=initialMatch;
+! twiss, rmatrix=true, file=TM_short_Rmatrix.tfs, beta0=newInitial;
+! twiss, rmatrix=true, file=TM_short_Rmatrix.tfs, beta0=initial;
+! stop;
+
+! ------------------------------------------------------------------------
+! user defined vars
+! ------------------------------------------------------------------------
+
+! FWHMs
+EMIGx=0.3E-6; EMIGy=1.0E-6; sigMCS=1.0E-3; ! mm
+MVAR1 := sqrt(table(twiss,betx)*EMIGx+sigMCS^2)*2.35;
+MVAR2 := sqrt(table(twiss,bety)*EMIGy+sigMCS^2)*2.35;
+use,sequence=SHORTAPIC;
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,MVAR1,MVAR2,betx,alfx,bety,alfy,x,px,y,py,dx,dpx,dy,dpy,mux,muy;
+twiss,sequence=SHORTAPIC, file=TM_short_optics_wFWHM.tfs, beta0=initialMatch;
+
+USE, sequence=SHORTAPIC;
+MATCH, sequence=SHORTAPIC, beta0=initialMatch, slow=true;
+CONSTRAINT, SEQUENCE=SHORTAPIC, RANGE=#S/#E, BETX<1000, BETY<1000;
+CONSTRAINT, sequence=SHORTAPIC, range=MYEND, MVAR1=4E-3, MVAR2=4E-3;
+VARY, NAME=K1_H2_022A_QUE, STEP=1E-5, lower=0.0;
+VARY, NAME=K1_HE_018A_QUE, STEP=1E-5, upper=0.0;
+VARY, NAME=K1_HE_020A_QUE, STEP=1E-5, lower=0.0;
+VARY, NAME=K1_HE_023A_QUE, STEP=1E-5, upper=0.0;
+VARY, NAME=K1_HE_025A_QUE, STEP=1E-5, lower=0.0;
+LMDIF, CALLS=10000, TOLERANCE=1.0E-12;
+! JACOBIAN, CALLS=10000, TOLERANCE=1.0E-12;
+ENDMATCH;
+
+select,flag=twiss,clear;
+select,flag=twiss,column=name,keyword,l,s,MVAR1,MVAR2,betx,alfx,bety,alfy,x,px,y,py,dx,dpx,dy,dpy,mux,muy;
+twiss,sequence=SHORTAPIC, file=TM_short_optics_wFWHM_matched.tfs, beta0=initialMatch;

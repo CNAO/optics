@@ -4,18 +4,8 @@
 !    LGEN PS data
 
 ! parse table
-if ( is_carbon==0 ) { ! protons
-  READTABLE, file="LGEN/ProtoniSincro_2021-02-13.tfs", table=table_settings;
-} else {
-  if ( mMode==1 ) { ! carbon ions
-    ! RFKO - not available yet!
-    stop;
-  }else{
-    ! TM
-    READTABLE, file="LGEN/CarbonioSincro_2021-02-05.tfs", table=table_settings;
-  };
-};
-lunghezza=table(table_settings,tablelength);
+exec, parseSYNCHROtableLGEN();
+lunghezza=table(LGEN_synchro_table,tablelength);
 
 ! first data line is 1 (i.e. .txt header is skipped)
 Nstart=lunghezza;
@@ -24,14 +14,12 @@ Nstop=lunghezza;
 n=Nstart;
 WHILE (n <= Nstop ) {
 
-SETVARS, TABLE=table_settings, ROW=n;
+SETVARS, TABLE=LGEN_synchro_table, ROW=n;
 K0MB=K0MB_ref;
 call, file="settings_from_LGEN_table.str";
 
 ! notify user where we are
-PRINTF, TEXT="at Ek = %g MeV/u - BP = %g mm - row = %.0f ...", VALUE= Ek,BP,n;
-
-exec, setRigidity();
+PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
 
 ! set injection bumper k from the specified current
 exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];
@@ -40,7 +28,7 @@ use,sequence=MUXL;
 
 exec, saveOpticsTFS(extraction);
 exec, saveGeometryTFS(extraction);
-exec, save_strengths(myOptics);
+exec, save_strengths(myOptics,synchro);
 
 n = n+1;
 };

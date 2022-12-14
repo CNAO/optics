@@ -1,0 +1,24 @@
+! A.Mereghetti, 2022-11-30
+! script to extract the H1 beam line automatically out of the synchro definition
+
+! load synchro-specific macros:
+call, file="macros.cmdx";
+
+! load synchro lattice
+call, file="synchro_geo.cmdx";
+
+! extract H1 line
+SEQEDIT, SEQUENCE=MUXL;
+FLATTEN;
+CYCLE, START=SE_010A_ESP_UP;
+EXTRACT, SEQUENCE=MUXL, FROM=SE_010A_ESP_UP, TO=S0_016A_MSP_UP, NEWNAME=H1line;
+ENDEDIT;
+seqedit, sequence=H1line; flatten; endedit;
+
+! length of newly extracted sequence
+/*
+exec, setBeam(H1line);
+use,sequence=H1line;
+DUMPSEQU, SEQUENCE=H1line, LEVEL=0;
+*/
+lH1line=8.69701004; ! [m]

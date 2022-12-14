@@ -6,18 +6,8 @@
 REMOVEFILE, FILE="ks.txt";
 
 ! parse table
-if ( is_carbon==0 ) { ! protons
-  READTABLE, file="RampGen/TM_Protons.tfs", table=table_settings;
-} else {
-  if ( mMode==1 ) { ! carbon ions
-    ! RFKO
-    READTABLE, file="RampGen/CorrSest-MachinePhotoCarbRFKO.tfs", table=table_settings;
-  }else{
-    ! TM
-    READTABLE, file="RampGen/TM_Carbon.tfs", table=table_settings;
-  };
-};
-lunghezza=table(table_settings,tablelength);
+exec, parseSYNCHROtableRAMPGEN();
+lunghezza=table(RAMPGEN_synchro_table,tablelength);
 ! first data line is 1 (i.e. .txt header is skipped)
 Nstart=1;
 Nstop=1;
@@ -25,14 +15,14 @@ Nstop=1;
 n=Nstart;
 WHILE (n <= Nstop ) {
 
-SETVARS, TABLE=table_settings, ROW=n;
+SETVARS, TABLE=RAMPGEN_synchro_table, ROW=n;
 call, file="settings_from_rampGen_table.str";
 K0MB=K0MB_ref;
 
-! notify user where we are
-PRINTF, TEXT="at Ek = %g MeV/u- BP = %g mm - row = %.0f ...", VALUE= Ek,BP,n;
-
 exec, setRigidity();
+
+! notify user where we are
+PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
 
 ! set injection bumper k from the specified current
 exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];
@@ -47,7 +37,7 @@ use,sequence=MUXL;
 
 exec, saveOpticsTFS(extraction);
 exec, saveGeometryTFS(extraction);
-exec, save_strengths(myOptics);
+exec, save_strengths(myOptics,synchro);
 
 k_ini=KD;
 delta_Q=5E-4;

@@ -8,44 +8,44 @@ Bro = Brho;
 
 if ( is_carbon==0 ) {
   ! protons, TM
-  I_M1_010A_QIB := -76.32 ; ! M4,  P5-008A-LGEN
-  F_M1_010A_QIB :=  1.0;
-  I_M1_012A_QIB := -0.5   ; ! M5,  P5-009A-LGEN
-  F_M1_012A_QIB :=  1.0;
-  I_M1_014A_QIB :=  60.2  ; ! M6,  P5-010A-LGEN
-  F_M1_014A_QIB :=  1.0;
-  I_M1_016A_QIB := -46.5  ; ! M7,  P5-011A-LGEN
-  F_M1_016A_QIB :=  1.0;
-  I_M2_009A_QIB :=  25.0  ; ! M8,  P5-012A-LGEN
-  F_M2_009A_QIB :=  1.0;
-  I_M3_008A_QIB :=  22.0  ; ! M9,  P5-013A-LGEN
-  F_M3_008A_QIB :=  1.0;
-  I_M3_010A_QIB := -21.5  ; ! M10, P5-014A-LGEN
-  F_M3_010A_QIB :=  1.0;
-  I_M3_019A_QIB :=  13.0  ; ! M11, P5-015A-LGEN
-  F_M3_019A_QIB :=  1.0;
-  I_M3_021A_QIB := -6.0   ; ! M12, P5-016A-LGEN
-  F_M3_021A_QIB :=  1.0;
+  I_M1_010A_QIB = -76.32 ; ! M4,  P5-008A-LGEN
+  F_M1_010A_QIB =  1.0;
+  I_M1_012A_QIB = -0.5   ; ! M5,  P5-009A-LGEN
+  F_M1_012A_QIB =  1.0;
+  I_M1_014A_QIB =  60.2  ; ! M6,  P5-010A-LGEN
+  F_M1_014A_QIB =  1.0;
+  I_M1_016A_QIB = -46.5  ; ! M7,  P5-011A-LGEN
+  F_M1_016A_QIB =  1.0;
+  I_M2_009A_QIB =  25.0  ; ! M8,  P5-012A-LGEN
+  F_M2_009A_QIB =  1.0;
+  I_M3_008A_QIB =  22.0  ; ! M9,  P5-013A-LGEN
+  F_M3_008A_QIB =  1.0;
+  I_M3_010A_QIB = -21.5  ; ! M10, P5-014A-LGEN
+  F_M3_010A_QIB =  1.0;
+  I_M3_019A_QIB =  13.0  ; ! M11, P5-015A-LGEN
+  F_M3_019A_QIB =  1.0;
+  I_M3_021A_QIB = -6.0   ; ! M12, P5-016A-LGEN
+  F_M3_021A_QIB =  1.0;
 } else {
   ! carbon ions, TM
-  I_M1_010A_QIB := -149.0 ; ! M4,  P5-008A-LGEN
-  F_M1_010A_QIB :=  1.0;
-  I_M1_012A_QIB := -0.5   ; ! M5,  P5-009A-LGEN
-  F_M1_012A_QIB :=  1.0;
-  I_M1_014A_QIB :=  120.0 ; ! M6,  P5-010A-LGEN
-  F_M1_014A_QIB :=  1.0;
-  I_M1_016A_QIB := -92.9  ; ! M7,  P5-011A-LGEN
-  F_M1_016A_QIB :=  1.0;
-  I_M2_009A_QIB :=  51.0  ; ! M8,  P5-012A-LGEN
-  F_M2_009A_QIB :=  1.0;
-  I_M3_008A_QIB :=  46.5  ; ! M9,  P5-013A-LGEN
-  F_M3_008A_QIB :=  1.0;
-  I_M3_010A_QIB := -45.2  ; ! M10, P5-014A-LGEN
-  F_M3_010A_QIB :=  1.0;
-  I_M3_019A_QIB :=  16.1  ; ! M11, P5-015A-LGEN
-  F_M3_019A_QIB :=  1.0;
-  I_M3_021A_QIB := -2.5   ; ! M12, P5-016A-LGEN
-  F_M3_021A_QIB :=  1.0;
+  I_M1_010A_QIB = -149.0 ; ! M4,  P5-008A-LGEN
+  F_M1_010A_QIB =  1.0;
+  I_M1_012A_QIB = -0.5   ; ! M5,  P5-009A-LGEN
+  F_M1_012A_QIB =  1.0;
+  I_M1_014A_QIB =  120.0 ; ! M6,  P5-010A-LGEN
+  F_M1_014A_QIB =  1.0;
+  I_M1_016A_QIB = -92.9  ; ! M7,  P5-011A-LGEN
+  F_M1_016A_QIB =  1.0;
+  I_M2_009A_QIB =  51.0  ; ! M8,  P5-012A-LGEN
+  F_M2_009A_QIB =  1.0;
+  I_M3_008A_QIB =  46.5  ; ! M9,  P5-013A-LGEN
+  F_M3_008A_QIB =  1.0;
+  I_M3_010A_QIB = -45.2  ; ! M10, P5-014A-LGEN
+  F_M3_010A_QIB =  1.0;
+  I_M3_019A_QIB =  16.1  ; ! M11, P5-015A-LGEN
+  F_M3_019A_QIB =  1.0;
+  I_M3_021A_QIB = -2.5   ; ! M12, P5-016A-LGEN
+  F_M3_021A_QIB =  1.0;
 };
 
 if ( I2K_quads == 3 ) {

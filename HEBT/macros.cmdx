@@ -1,27 +1,27 @@
 ! convert current into K, using a fifth order polynomial
-I2K_HEBT_QUs_fifth(MagName,biro) : macro {
+I2K_HEBT_QUs_fifth(MagName,biro): macro {
   ! the macro expects IMagName, KMagName and FMagName to be defined
   ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
   K1_MagName = (-2.794551e-1
-                +9.32005e-2   *abs(IMagName)
-                -4.26890e-4   *abs(IMagName)^2
-                +3.498485e-6  *abs(IMagName)^3
-                -1.1996845e-8 *abs(IMagName)^4
-                +1.3348656E-11*abs(IMagName)^5) /biro *abs(F_MagName);
+                +9.32005e-2   *abs(I_MagName)
+                -4.26890e-4   *abs(I_MagName)^2
+                +3.498485e-6  *abs(I_MagName)^3
+                -1.1996845e-8 *abs(I_MagName)^4
+                +1.3348656E-11*abs(I_MagName)^5) /biro *abs(F_MagName);
   if (I_MagName<0){ K1_MagName=-K1_MagName; };
 };
 
 ! convert current into K, using a linear dependence
-I2K_HEBT_QUs_lin(MagName,biro) : macro {
+I2K_HEBT_QUs_lin(MagName,biro): macro {
   ! the macro expects IMagName, KMagName and FMagName to be defined
   ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
   ! gradiente integrato GL(T) = 3.258e-02 * I (A)
   ! lq = 0.45 m
   ! fromItoK = GL/(lq*Bro) 
-  K1_MagName := 0.03258/(0.45*biro) *I_MagName *abs(F_MagName);
+  K1_MagName = 0.03258/(0.45*biro) *I_MagName *abs(F_MagName);
 };
 
-I2K_HEBT_DIPs_lin(MagName,biro) : macro {
+I2K_HEBT_DIPs_lin(MagName,biro): macro {
   ! linear dependence as from magnetic measurements on each main dipole
   ! the macro expects I_MagName, K0L_MagName and F_MagName to be defined
   ! eg. H3_003A_SW2 -> I_H3_003A_SW2, K0L_H3_003A_SW2, F_H3_003A_SW2
@@ -47,21 +47,21 @@ I2K_HEBT_CEBH(MagName,biro): macro {
   ! from SSavazzi, relation for MADbuilder
   ! the macro expects I_MagName, HKICK_MagName and F_MagName to be defined
   ! Lmag=0.52m;
-  ! HKICK_MagName := ((2.615E-5-3.385E-4*I_MagName)/biro*0.52)*abs(F_MagName);
+  ! HKICK_MagName = ((2.615E-5-3.385E-4*I_MagName)/biro*0.52)*abs(F_MagName);
   !
   ! Magnetic Measurements doc, 2007, performed on prototype
   ! S:\Accelerating-System\Magnets\Magnetic Measurements\Frascati\HEBT\Documenti_misure_e_immagini\Correttori
   ! BLh[Tm]=-1.76 10-4 * I [A] + 1.36 10-5
   ! change sign: a negative vertical B-field (in both ref systems, i.e.
   !    measurements and MADX) kicks positively-charged particles towards x>0 in MADX
-  HKICK_MagName :=-((-1.76E-4*I_MagName + 1.36E-5)/biro)*abs(F_MagName);
+  HKICK_MagName =-((-1.76E-4*I_MagName + 1.36E-5)/biro)*abs(F_MagName);
 };
 
 I2K_HEBT_CEBV(MagName,biro): macro {
   ! from SSavazzi, relation for MADbuilder
   ! the macro expects I_MagName, VKICK_MagName and F_MagName to be defined
   ! Lmag=0.52m;
-  ! VKICK_MagName := ((2.981E-5-3.385E-4*I_MagName)/biro*0.52)*abs(F_MagName);
+  ! VKICK_MagName = ((2.981E-5-3.385E-4*I_MagName)/biro*0.52)*abs(F_MagName);
   !
   ! Magnetic Measurements doc, 2007, performed on prototype
   ! S:\Accelerating-System\Magnets\Magnetic Measurements\Frascati\HEBT\Documenti_misure_e_immagini\Correttori
@@ -69,10 +69,10 @@ I2K_HEBT_CEBV(MagName,biro): macro {
   ! change sign: a negative horizontal B-field in measurements ref sys
   !    corresponds to a positive horizontal B-field in MADX, which kicks
   !    positively-charged particles towards y>0
-  VKICK_MagName :=-((-1.76E-4*I_MagName + 1.55E-5)/biro)*abs(F_MagName);
+  VKICK_MagName =-((-1.76E-4*I_MagName + 1.55E-5)/biro)*abs(F_MagName);
 };
 
-save_strengths_particular(): macro {
+save_strengths_HEBT(): macro {
    print, TEXT="";
    print, TEXT="! main dipole strengths [rad/m]";
    value, K0MB;
@@ -95,63 +95,69 @@ save_strengths_particular(): macro {
    value, K1_T2_018A_QUE;
 };
 
-parseTable(): macro={
+parseHEBTtableLGEN(): macro={
    if (iLine==1) {
       if (is_carbon==0) {
-         READTABLE, file="LGEN/Protoni_Sala3_2021-02-13.tfs", table=table_settings;
+         READTABLE, file="LGEN/Protoni_Sala3_2021-02-13.tfs", table=LGEN_HEBT_table;
       }else{
-         READTABLE, file="LGEN/Carbonio_Sala3_FromRepoNovembre2020.tfs", table=table_settings;
+         READTABLE, file="LGEN/Carbonio_Sala3_FromRepoNovembre2020.tfs", table=LGEN_HEBT_table;
       };
    }elseif (iLine==2) {
       if (is_carbon==0) {
-         READTABLE, file="LGEN/Protoni_Sala2H_2021-02-13.tfs", table=table_settings;
+         READTABLE, file="LGEN/Protoni_Sala2H_2021-02-13.tfs", table=LGEN_HEBT_table;
       }else{
-         READTABLE, file="LGEN/Carbonio_Sala2H_FromRepo.tfs", table=table_settings;
+         READTABLE, file="LGEN/Carbonio_Sala2H_FromRepo.tfs", table=LGEN_HEBT_table;
       };
    }elseif (iLine==3) {
       if (is_carbon==0) {
-         READTABLE, file="LGEN/Protoni_Sala2V_2021-02-13.tfs", table=table_settings;
+         READTABLE, file="LGEN/Protoni_Sala2V_2021-02-13.tfs", table=LGEN_HEBT_table;
       }else{
-         READTABLE, file="LGEN/Carbonio_Sala2V_FromRepo.tfs", table=table_settings;
+         READTABLE, file="LGEN/Carbonio_Sala2V_FromRepo.tfs", table=LGEN_HEBT_table;
       };
    }elseif (iLine==4) {
       if (is_carbon==0) {
-         READTABLE, file="LGEN/Protoni_Sala1_2021-02-13.tfs", table=table_settings;
+         READTABLE, file="LGEN/Protoni_Sala1_2021-02-13.tfs", table=LGEN_HEBT_table;
       }else{
-         READTABLE, file="LGEN/Carbonio_Sala1_FromRepoNovembre2020.tfs", table=table_settings;
+         READTABLE, file="LGEN/Carbonio_Sala1_FromRepoNovembre2020.tfs", table=LGEN_HEBT_table;
+      };
+   }elseif (iLine==7) {
+      if (is_carbon==0) {
+         READTABLE, file="LGEN/LGEN_X3_P_FG_10Luglio2019.tfs", table=table_settings;
+      }else{
+         READTABLE, file="LGEN/LGEN_X3_C_FP_X2fit.tfs", table=table_settings;
       };
    };
 };
 
 saveOptics(additional): macro={
   if (iLine==1) {
-      exec, saveOpticsTFS(LineT_additional);
-      exec, saveGeometryTFS(LineT_additional);
-      exec, saveRmatrixTFS(LineT_additional);
+      exec, saveOpticsTFS(Room3_additional);
+      exec, saveGeometryTFS(Room3_additional);
+      exec, saveRmatrixTFS(Room3_additional);
    }elseif (iLine==2) {
-      exec, saveOpticsTFS(LineU_additional);
-      exec, saveGeometryTFS(LineU_additional);
-      exec, saveRmatrixTFS(LineU_additional);
+      exec, saveOpticsTFS(Room2H_additional);
+      exec, saveGeometryTFS(Room2H_additional);
+      exec, saveRmatrixTFS(Room2H_additional);
    }elseif (iLine==3) {
-      exec, saveOpticsTFS(LineV_additional);
-      exec, saveGeometryTFS(LineV_additional);
-      exec, saveRmatrixTFS(LineV_additional);
+      exec, saveOpticsTFS(Room2V_additional);
+      exec, saveGeometryTFS(Room2V_additional);
+      exec, saveRmatrixTFS(Room2V_additional);
    }elseif (iLine==4) {
-      exec, saveOpticsTFS(LineZ_additional);
-      exec, saveGeometryTFS(LineZ_additional);
-      exec, saveRmatrixTFS(LineZ_additional);
+      exec, saveOpticsTFS(Room1_additional);
+      exec, saveGeometryTFS(Room1_additional);
+      exec, saveRmatrixTFS(Room1_additional);
    };
 };
 
-saveStrengths(additional): macro={
+saveStrengths(additional,beamLine): macro={
   if (iLine==1) {
-      exec, save_strengths(LineT_additional);
+      exec, save_strengths(Room3_additional,beamLine);
    }elseif (iLine==2) {
-      exec, save_strengths(LineU_additional);
+      exec, save_strengths(Room2H_additional,beamLine);
    }elseif (iLine==3) {
-      exec, save_strengths(LineV_additional);
+      exec, save_strengths(Room2V_additional,beamLine);
    }elseif (iLine==4) {
-      exec, save_strengths(LineZ_additional);
+      exec, save_strengths(Room1_additional,beamLine);
    };
 };
 
@@ -162,13 +168,13 @@ compute_RM_allCurrents(myMagName,myProperty,myI2K,fileName): macro={
    nEnLevel=NEnLevelstart;
    WHILE (nEnLevel <= NEnLevelstop ) {
       ! loop throuth LGEN data
-      SETVARS, TABLE=table_settings, ROW=nEnLevel;
+      SETVARS, TABLE=LGEN_HEBT_table, ROW=nEnLevel;
       K0MB=K0MB_ref;
       call, file="settings_from_LGEN_table.str";
       
       ! notify user where we are
       PRINT, TEXT="==========================================================================================";
-      PRINTF, TEXT="at Ek = %g MeV/u - BP = %g mm - row = %.0f ...", VALUE= Ek,BP,nEnLevel;
+      PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
       PRINT, TEXT="==========================================================================================";
 
       ! loop through current values

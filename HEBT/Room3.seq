@@ -1,0 +1,11 @@
+!
+! This is the description of Treatment Room 3 Beam Line
+! 
+
+call, file="LineH.seq";
+call, file="LineT.seq";
+
+apicls009: sequence, l=hLineL+tLineL, refer=entry;
+hLine, at=0;
+tLine, at=hLineL;
+endsequence;

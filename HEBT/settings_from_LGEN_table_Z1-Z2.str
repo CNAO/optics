@@ -1,0 +1,63 @@
+! get settings directly from spreadsheet of LGEN
+
+! For every magnet MagName we have IMagName, KMagName and FMagName
+! eg. H2_012A_QUE:
+! - I_H2_012A_QUE: current [A];
+! - K1_H2_012A_QUE: kick [1/m^2];
+! - F_H2_012A_QUE: multiplication factor of K(I) (includes sign!)
+
+! ==============================================================================
+! Z1-Z2
+! ==============================================================================
+
+call, file="fits_Z1-Z2.cmdx";
+
+I_Z1_004A_QUE = PB_004A_LGEN_A;      !H29 
+F_Z1_004A_QUE = 1.0;      
+I_Z1_013A_QUE = -PB_005A_LGEN_A;     !H30
+F_Z1_013A_QUE = 1.0;    
+I_Z1_019A_QUE = PB_006A_LGEN_A;      !H31
+F_Z1_019A_QUE = 1.0;     
+
+I_Z2_005A_QUE = -PB_007A_LGEN_A;     !H32
+F_Z2_005A_QUE = 1.0;    
+I_Z2_012A_QUE = PB_008A_LGEN_A;      !H34
+F_Z2_012A_QUE = 1.0;
+I_Z2_018A_QUE = -PB_009A_LGEN_A;     !H35
+F_Z2_018A_QUE = 1.0;
+
+if ( iMacro_I2K_QU==1 ) {
+   ! use macro: linear
+   if ( iMacro_I2K_ded==0 ) {
+      exec, I2K_HEBT_QUs_lin(Z1_004A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z1_013A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z1_019A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z2_005A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z2_012A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(Z2_018A_QUE,Brho);
+   }elseif ( iMacro_I2K_ded==1 ) {
+      exec, I2K_QUs_lin(Z1_004A_QUE,Brho);
+      exec, I2K_QUs_lin(Z1_013A_QUE,Brho);
+      exec, I2K_QUs_lin(Z1_019A_QUE,Brho);
+      exec, I2K_QUs_lin(Z2_005A_QUE,Brho);
+      exec, I2K_QUs_lin(Z2_012A_QUE,Brho);
+      exec, I2K_QUs_lin(Z2_018A_QUE,Brho);
+   };
+} elseif ( iMacro_I2K_QU==5 ) {
+   ! use macro: fifth order polynomial
+   if ( iMacro_I2K_ded==0 ) {
+      exec, I2K_HEBT_QUs_fifth(Z1_004A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z1_013A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z1_019A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z2_005A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z2_012A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(Z2_018A_QUE,Brho);
+   }elseif ( iMacro_I2K_ded==1 ) {
+      exec, I2K_QUs_fifth(Z1_004A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z1_013A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z1_019A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z2_005A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z2_012A_QUE,Brho);
+      exec, I2K_QUs_fifth(Z2_018A_QUE,Brho);
+   };
+};

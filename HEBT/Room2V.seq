@@ -1,0 +1,11 @@
+!
+! This is the description of Treatment Room 2 - V Beam Line
+! 
+
+call, file="LineH.seq";
+call, file="LineV.seq";
+
+apicls009: sequence, l=hLineL+vLineL, refer=entry;
+hLine, at=0;
+vLine, at=hLineL;
+endsequence;

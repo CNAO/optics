@@ -1,0 +1,44 @@
+! get settings directly from spreadsheet of LGEN
+
+! For every magnet MagName we have IMagName, KMagName and FMagName
+! eg. H2_012A_QUE:
+! - I_H2_012A_QUE: current [A];
+! - K1_H2_012A_QUE: kick [1/m^2];
+! - F_H2_012A_QUE: multiplication factor of K(I) (includes sign!)
+
+! ==============================================================================
+! H2-H4
+! ==============================================================================
+
+I_H2_012A_QUE = P7_008A_LGEN_A;      !H8
+F_H2_012A_QUE = 1.0;     
+I_H2_016A_QUE = -P7_009A_LGEN_A;     !H9
+F_H2_016A_QUE = 1.0;  
+I_H2_022A_QUE = P7_010A_LGEN_A;      !H10
+F_H2_022A_QUE = 1.0;  
+
+I_H4_003A_QUE = P7_011A_LGEN_A;      !H11
+F_H4_003A_QUE = 1.0;         
+I_H4_007A_QUE = -P7_012A_LGEN_A;     !H12     
+F_H4_007A_QUE = 1.0;          
+I_H4_013A_QUE = P7_013A_LGEN_A;      !H13
+F_H4_013A_QUE = 1.0;      
+
+if ( iMacro_I2K_QU==1 ) {
+   ! use macro: linear
+   exec, I2K_HEBT_QUs_lin(H2_012A_QUE,Brho);
+   exec, I2K_HEBT_QUs_lin(H2_016A_QUE,Brho);
+   exec, I2K_HEBT_QUs_lin(H2_022A_QUE,Brho);
+   exec, I2K_HEBT_QUs_lin(H4_003A_QUE,Brho);
+   exec, I2K_HEBT_QUs_lin(H4_007A_QUE,Brho);
+   exec, I2K_HEBT_QUs_lin(H4_013A_QUE,Brho);
+} elseif ( iMacro_I2K_QU==5 ) {
+   ! use macro: fifth order polynomial
+   exec, I2K_HEBT_QUs_fifth(H2_012A_QUE,Brho);
+   exec, I2K_HEBT_QUs_fifth(H2_016A_QUE,Brho);
+   exec, I2K_HEBT_QUs_fifth(H2_022A_QUE,Brho);
+   exec, I2K_HEBT_QUs_fifth(H4_003A_QUE,Brho);
+   exec, I2K_HEBT_QUs_fifth(H4_007A_QUE,Brho);
+   exec, I2K_HEBT_QUs_fifth(H4_013A_QUE,Brho);
+};
+
