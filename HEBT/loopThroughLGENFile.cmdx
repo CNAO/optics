@@ -10,7 +10,7 @@ if (iH1<>0) {
    CHDIR, DIR="../synchro";
    exec, parseSYNCHROtableLGEN();
    CHDIR, DIR="../HEBT";
-   lunghezzaSynchro=table(LGEN_HEBT_table,tablelength);
+   lunghezzaSynchro=table(LGEN_synchro_table,tablelength);
    if (lunghezza<>lunghezzaSynchro) {
        PRINTF, TEXT="ERROR! mismatch in length between HEBT table (%.0f lines) and synchro table (%.0f lines)", VALUE=lunghezza,lunghezzaSynchro;
 	   stop;
