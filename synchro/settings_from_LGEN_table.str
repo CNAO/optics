@@ -1,6 +1,8 @@
 ! get settings directly from spreadsheet of LGEN
 ! NB: S3_012A_BDI and SD_012A_BDI are set by Ibumper;
 
+PRINT, TEXT="LGEN settings from TABLE for SYNCHRO";
+
 Ek=Ek_MeVN;  ! [MeV/n]
 BP=range_mm; ! [mm] 
 exec, setRigidity();
