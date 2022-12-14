@@ -6,8 +6,8 @@
 REMOVEFILE, FILE="ks.txt";
 
 ! parse table
-exec, parseSYNCHROtableLGEN();
-lunghezza=table(LGEN_synchro_table,tablelength);
+exec, parseSYNCHROtableRAMPGEN();
+lunghezza=table(RAMPGEN_synchro_table,tablelength);
 ! first data line is 1 (i.e. .txt header is skipped)
 Nstart=1;
 Nstop=1;
@@ -15,7 +15,7 @@ Nstop=1;
 n=Nstart;
 WHILE (n <= Nstop ) {
 
-SETVARS, TABLE=LGEN_synchro_table, ROW=n;
+SETVARS, TABLE=RAMPGEN_synchro_table, ROW=n;
 call, file="settings_from_rampGen_table.str";
 K0MB=K0MB_ref;
 
