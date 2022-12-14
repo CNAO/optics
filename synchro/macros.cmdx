@@ -58,7 +58,7 @@ I2K_sextupoles_S9_S0: macro = {
     ! value, Is_S0, I_S0, S0;
 };
 
-save_strengths_particular(): macro = {
+save_strengths_synchro(): macro = {
    print, TEXT="! quadrupole strengths [rad/m^2]";
    value, KR;
    value, KF;
@@ -96,7 +96,6 @@ save_strengths_particular(): macro = {
    value, VK_SB;
    value, VK_SD;
    value, VK_SF;
-   assign, echo=terminal;
 };
 
 parseSYNCHROtableLGEN(): macro={

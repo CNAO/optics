@@ -26,8 +26,8 @@ iChopper=1;
 ! 4: LineZ, Room 1
 iLine=1;
 
-! consider also H1 line (available only in case LGEN currents are used)
-! this is automatically taken from synchro sequence
+! consider also H1 line (kicks are available only in case of LGEN currents)
+! the H1 line is automatically extracted from synchro sequence
 ! 0: do NOT load H1 line
 ! 1: DO load H1 line
 iH1=1;
@@ -83,7 +83,7 @@ exec, setRigidity();
 ! generate optics files
 use,sequence=APICLS009;
 exec, saveOptics(example);
-exec, saveStrengths(example);
+exec, saveStrengths(example,HEBT);
 */
 ! ==============================================================================
 ! specific tasks

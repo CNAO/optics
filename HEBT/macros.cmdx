@@ -72,7 +72,7 @@ I2K_HEBT_CEBV(MagName,biro): macro {
   VKICK_MagName =-((-1.76E-4*I_MagName + 1.55E-5)/biro)*abs(F_MagName);
 };
 
-save_strengths_particular(): macro {
+save_strengths_HEBT(): macro {
    print, TEXT="";
    print, TEXT="! main dipole strengths [rad/m]";
    value, K0MB;
@@ -125,33 +125,33 @@ parseHEBTtableLGEN(): macro={
 
 saveOptics(additional): macro={
   if (iLine==1) {
-      exec, saveOpticsTFS(LineT_additional);
-      exec, saveGeometryTFS(LineT_additional);
-      exec, saveRmatrixTFS(LineT_additional);
+      exec, saveOpticsTFS(Room3_additional);
+      exec, saveGeometryTFS(Room3_additional);
+      exec, saveRmatrixTFS(Room3_additional);
    }elseif (iLine==2) {
-      exec, saveOpticsTFS(LineU_additional);
-      exec, saveGeometryTFS(LineU_additional);
-      exec, saveRmatrixTFS(LineU_additional);
+      exec, saveOpticsTFS(Room2H_additional);
+      exec, saveGeometryTFS(Room2H_additional);
+      exec, saveRmatrixTFS(Room2H_additional);
    }elseif (iLine==3) {
-      exec, saveOpticsTFS(LineV_additional);
-      exec, saveGeometryTFS(LineV_additional);
-      exec, saveRmatrixTFS(LineV_additional);
+      exec, saveOpticsTFS(Room2V_additional);
+      exec, saveGeometryTFS(Room2V_additional);
+      exec, saveRmatrixTFS(Room2V_additional);
    }elseif (iLine==4) {
-      exec, saveOpticsTFS(LineZ_additional);
-      exec, saveGeometryTFS(LineZ_additional);
-      exec, saveRmatrixTFS(LineZ_additional);
+      exec, saveOpticsTFS(Room1_additional);
+      exec, saveGeometryTFS(Room1_additional);
+      exec, saveRmatrixTFS(Room1_additional);
    };
 };
 
-saveStrengths(additional): macro={
+saveStrengths(additional,beamLine): macro={
   if (iLine==1) {
-      exec, save_strengths(LineT_additional);
+      exec, save_strengths(Room3_additional,beamLine);
    }elseif (iLine==2) {
-      exec, save_strengths(LineU_additional);
+      exec, save_strengths(Room2H_additional,beamLine);
    }elseif (iLine==3) {
-      exec, save_strengths(LineV_additional);
+      exec, save_strengths(Room2V_additional,beamLine);
    }elseif (iLine==4) {
-      exec, save_strengths(LineZ_additional);
+      exec, save_strengths(Room1_additional,beamLine);
    };
 };
 

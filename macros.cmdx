@@ -191,7 +191,8 @@ show_kIVals_element(eleName): macro = {
   PRINTF, TEXT=eleName % 24.16E % 24.16E % 24.16E % 24.16E, VALUE=tmpK0,tmpK0*Brho,eleName->K1,eleName->K1*Brho;
 };
 
-save_strengths(fileName): macro = {
+save_strengths(fileName,beamLine): macro = {
+   ! beamLine: MEBT, synchro, HEBT;
    REMOVEFILE, FILE=fileName.str;
    assign, echo=filename.str;
    print, TEXT="! general infos:";
@@ -199,7 +200,7 @@ save_strengths(fileName): macro = {
    print, TEXT="! - Range [mm]";
    value, Ek;
    value, Bp;
-   exec, save_strengths_particular();
+   exec, save_strengths_beamLine();
    assign, echo=terminal;
 };
 

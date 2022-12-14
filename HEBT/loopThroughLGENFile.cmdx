@@ -47,6 +47,8 @@ WHILE (n <= Nstop ) {
    
    use,sequence=APICLS009;
    exec, saveOptics(LGEN);
-
+   exec, saveStrengths(LGEN_HEBT,HEBT);
+   if (iH1<>0) {exec, saveStrengths(LGEN_synchro,synchro);};
+   
    n = n+1;
 };

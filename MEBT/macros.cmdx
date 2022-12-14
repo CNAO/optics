@@ -91,7 +91,7 @@ I2K_MEBT_CIBV(MagName,biro): macro {
   };
 };
 
-save_strengths_particular(): macro {
+save_strengths_MEBT(): macro {
    print, TEXT="";
    print, TEXT="! quadrupole strengths [rad/m^2]";
    value, K1_M1_010A_QIB;

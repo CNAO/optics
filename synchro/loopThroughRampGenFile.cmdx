@@ -37,7 +37,7 @@ use,sequence=MUXL;
 
 exec, saveOpticsTFS(extraction);
 exec, saveGeometryTFS(extraction);
-exec, save_strengths(myOptics);
+exec, save_strengths(myOptics,synchro);
 
 k_ini=KD;
 delta_Q=5E-4;
