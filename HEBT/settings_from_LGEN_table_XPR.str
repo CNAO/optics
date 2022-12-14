@@ -10,14 +10,14 @@
 ! XPR
 ! ==============================================================================
 
-I_HE_018A_QUE := -PX_001A_LGEN_A;    !H?? 
-F_HE_018A_QUE := 1.0;      
-I_HE_020A_QUE := PX_002A_LGEN_A;     !H??
-F_HE_020A_QUE := 1.0;    
-I_HE_023A_QUE := -PX_003A_LGEN_A;    !H??
-F_HE_023A_QUE := 1.0;     
-I_HE_025A_QUE := PX_004A_LGEN_A;     !H??
-F_HE_025A_QUE := 1.0;    
+I_HE_018A_QUE = -PX_001A_LGEN_A;    !H?? 
+F_HE_018A_QUE = 1.0;      
+I_HE_020A_QUE = PX_002A_LGEN_A;     !H??
+F_HE_020A_QUE = 1.0;    
+I_HE_023A_QUE = -PX_003A_LGEN_A;    !H??
+F_HE_023A_QUE = 1.0;     
+I_HE_025A_QUE = PX_004A_LGEN_A;     !H??
+F_HE_025A_QUE = 1.0;    
 
 if ( iMacro_I2K_QU==1 ) {
    ! use macro: linear
