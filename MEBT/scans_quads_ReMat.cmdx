@@ -1,0 +1,120 @@
+! ========================================================================
+! macro
+! ========================================================================
+
+makeScan(fileName,magName): macro = {
+
+   ! header to output file: PIB
+   REMOVEFILE, FILE=fileName_PIB_ReMat.txt;
+   assign, echo=fileName_PIB_ReMat.txt;
+   PRINT, TEXT="# Brho[Tm], BP[mm], I[A], RE11:M3_032A_PIB[m], RE12:M3_032A_PIB[], RE21:M3_032A_PIB[m], RE22:M3_032A_PIB[], RE16:M3_032A_PIB[m], RE26:M3_032A_PIB[], RE33:M3_032A_PIB[m], RE34:M3_032A_PIB[], RE43:M3_032A_PIB[m], RE44:M3_032A_PIB[], RE36:M3_032A_PIB[m], RE46:M3_032A_PIB[], RE51:M3_032A_PIB[], RE52:M3_032A_PIB[m], RE55:M3_032A_PIB[], RE56:M3_032A_PIB[m], RE66:M3_032A_PIB[]";
+   assign, echo=terminal;
+   
+   Icurr=minmin;
+   while (Icurr<=maxmax+0.5*stepstep){
+
+      ! save original current
+      I_magName_orig=I_magName;
+      K1_magName_orig=K1_magName;
+   
+      ! set quad strength
+      I_magName = Icurr ;
+      K1_magName = 0.0 ;
+      if ( I2K_quads == 3 ) {
+        ! use macro: third order polynomial
+        exec, I2K_MEBT_QUs_third(magName,Bro);
+      } else {
+        ! use macro: linear dependence, a dedicated one for each quad
+        exec, I2K_MEBT_QUs_lin(magName,Bro);
+      };
+      
+      ! debug
+      ! value, IH_M3_026A_CIB, IH_M3_030B_CIB, IV_M3_026A_CIB, IV_M3_030B_CIB;
+      ! value, Brho, HKICK_M3_026A_CIB, VKICK_M3_026A_CIB, HKICK_M3_030B_CIB, VKICK_M3_030B_CIB;
+      
+      ! compute optics
+      use,sequence=MUXL;
+      select,flag=twiss,clear;
+      twiss, beta0=initial, centre=true, rmatrix=true;
+      ! save data
+      assign, echo=fileName_PIB_ReMat.txt;
+      PRINTF, TEXT="% 19.12E,% 6.1f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
+                 VALUE=Brho, BP, I_magName, 
+                 table(twiss,M3_032A_PIB,RE11), table(twiss,M3_032A_PIB,RE12), table(twiss,M3_032A_PIB,RE21), table(twiss,M3_032A_PIB,RE22), table(twiss,M3_032A_PIB,RE16), table(twiss,M3_032A_PIB,RE26),
+                 table(twiss,M3_032A_PIB,RE33), table(twiss,M3_032A_PIB,RE34), table(twiss,M3_032A_PIB,RE43), table(twiss,M3_032A_PIB,RE44), table(twiss,M3_032A_PIB,RE36), table(twiss,M3_032A_PIB,RE46),
+                 table(twiss,M3_032A_PIB,RE51), table(twiss,M3_032A_PIB,RE52), table(twiss,M3_032A_PIB,RE55), table(twiss,M3_032A_PIB,RE56), table(twiss,M3_032A_PIB,RE66);
+      assign, echo=terminal;
+      ! debug
+      ! exec, saveOpticsTFS(example);
+      ! exec, saveGeometryTFS(example);
+      
+      ! restore original current
+      I_magName=I_magName_orig;
+      K1_magName=K1_magName_orig;
+   
+      Icurr=Icurr+stepstep;
+   };
+};
+
+! ========================================================================
+! setting up cycle
+! ========================================================================
+
+! extract shorter sequence
+! use,sequence=MUXL;
+! SEQEDIT, sequence=MUXL;
+! INSTALL, ELEMENT=SUBSTART, CLASS=MARKER, AT=-0.5*M3_008A_QIB->L, FROM=M3_008A_QIB;
+! INSTALL, ELEMENT=SUBSTOP,  CLASS=MARKER, AT= 0.5*M3_044A_ESI->L, FROM=M3_044A_ESI;
+! EXTRACT, sequence=MUXL, FROM=SUBSTART, TO=SUBSTOP, NEWNAME=MUXL_SHORT;
+! FLATTEN;
+! ENDEDIT;
+
+! Beam definition
+exec, setBeam(MUXL);
+if ( is_carbon==0 ) {
+   ! proton
+   Ek=7.18; ! [MeV/n], kinetic energy per nucleon;
+}else{
+   ! carbon ion
+   Ek=7.134663; ! [MeV/n], kinetic energy per nucleon;
+};
+exec, setRigidity();
+
+! generate optics files
+! use,sequence=MUXL;
+! exec, saveOpticsTFS(example_short);
+! exec, saveGeometryTFS(example_short);
+! stop;
+
+! ========================================================================
+! cycle here
+! ========================================================================
+
+! cycle conditions, M3_008A_QIB
+minmin=  0.0; ! [A]
+maxmax= 40.0; ! [A]
+stepstep=1.0; ! [A]
+! exec macro
+exec, makeScan(M3_008A_QIB,M3_008A_QIB);
+
+! cycle conditions, M3_010A_QIB
+minmin=-40.0; ! [A]
+maxmax=  0.0; ! [A]
+stepstep=1.0; ! [A]
+! exec macro
+exec, makeScan(M3_010A_QIB,M3_010A_QIB);
+
+! cycle conditions, M3_019A_QIB
+minmin=  0.0; ! [A]
+maxmax= 40.0; ! [A]
+stepstep=1.0; ! [A]
+! exec macro
+exec, makeScan(M3_019A_QIB,M3_019A_QIB);
+
+! cycle conditions, M3_021A_QIB
+minmin=-40.0; ! [A]
+maxmax=  0.0; ! [A]
+stepstep=1.0; ! [A]
+! exec macro
+exec, makeScan(M3_021A_QIB,M3_021A_QIB);
+
