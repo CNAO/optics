@@ -4,7 +4,6 @@
 
 BP=BPmm;
 
-
 if ( is_injection==1 ) {
    ! injection optics
 
