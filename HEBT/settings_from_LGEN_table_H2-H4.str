@@ -10,19 +10,19 @@
 ! H2-H4
 ! ==============================================================================
 
-I_H2_012A_QUE := P7_008A_LGEN_A;      !H8
-F_H2_012A_QUE := 1.0;     
-I_H2_016A_QUE := -P7_009A_LGEN_A;     !H9
-F_H2_016A_QUE := 1.0;  
-I_H2_022A_QUE := P7_010A_LGEN_A;      !H10
-F_H2_022A_QUE := 1.0;  
+I_H2_012A_QUE = P7_008A_LGEN_A;      !H8
+F_H2_012A_QUE = 1.0;     
+I_H2_016A_QUE = -P7_009A_LGEN_A;     !H9
+F_H2_016A_QUE = 1.0;  
+I_H2_022A_QUE = P7_010A_LGEN_A;      !H10
+F_H2_022A_QUE = 1.0;  
 
-I_H4_003A_QUE := P7_011A_LGEN_A;      !H11
-F_H4_003A_QUE := 1.0;         
-I_H4_007A_QUE := -P7_012A_LGEN_A;     !H12     
-F_H4_007A_QUE := 1.0;          
-I_H4_013A_QUE := P7_013A_LGEN_A;      !H13
-F_H4_013A_QUE := 1.0;      
+I_H4_003A_QUE = P7_011A_LGEN_A;      !H11
+F_H4_003A_QUE = 1.0;         
+I_H4_007A_QUE = -P7_012A_LGEN_A;     !H12     
+F_H4_007A_QUE = 1.0;          
+I_H4_013A_QUE = P7_013A_LGEN_A;      !H13
+F_H4_013A_QUE = 1.0;      
 
 if ( iMacro_I2K_QU==1 ) {
    ! use macro: linear

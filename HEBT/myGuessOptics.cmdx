@@ -75,13 +75,13 @@ makeScanFromTable(fileName,tableName,monName): macro = {
 ! ========================================================================
 
 ! - parse LGEN table to get TM values
-exec, parseTable();
-lunghezza=table(table_settings,tablelength);
+exec, parseHEBTtableLGEN();
+lunghezza=table(LGEN_HEBT_table,tablelength);
 ! - load proper line
 ! n=lunghezza; ! C, 270mm
 n=81; ! C, 190mm
 ! n=71; ! C, 170mm
-SETVARS, TABLE=table_settings, ROW=n;
+SETVARS, TABLE=LGEN_HEBT_table, ROW=n;
 K0MB=K0MB_ref;
 call, file="settings_from_LGEN_table.str";
 ! - notify user where we are

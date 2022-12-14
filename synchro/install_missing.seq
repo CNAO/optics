@@ -58,3 +58,7 @@ S2_013A_SVA->L=S2_013A_SVA->L-shortenMe;
 S6_018A_SHH->L=S6_018A_SHH->L-shortenMe;
 S8_013A_SVA->L=S8_013A_SVA->L-shortenMe;
 SC_013A_DCT->L=SC_013A_DCT->L-shortenMe;
+
+! insert marker upstream of extraction magnetic septum
+exec, insertMarkerUpstreamOf(S0_016A_MSP_UP,S0_016A_MSP,MUXL);
+exec, insertMarkerUpstreamOf(SE_010A_ESP_UP,SE_010A_ESP,MUXL);
