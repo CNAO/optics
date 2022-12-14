@@ -4,7 +4,8 @@
 !
 
 ! LEGGO I PARAMETRI DEI VARI MAGNETI
-call, file="Magneti.str";
+! AM: kept call for historical reasons...
+! call, file="Magneti.str";
 
 !Azzero gli errori multipolari dei dipoli
 ! AM: file does not exist!
@@ -28,8 +29,9 @@ call, file="synchro.seq";
 !call, file="multipoli.str";
 !call, file="multipoli_2.str";
 
-!ridefinisco i K dei sestupoli
-call, file="sest.str";
+! ridefinisco i K dei sestupoli
+! AM: kept call for historical reasons...
+! call, file="sest.str";
 
 ! AM: install missing elements
 call, file="install_missing.seq";
