@@ -20,10 +20,14 @@ start_cond=1;
 ! 2: LineU, Room 2H
 ! 3: LineV, Room 2V
 ! 4: LineZ, Room 1
-iLine=1;
+! 5: XPR, ISO1
+! 6: XPR, ISO2
+! 7: XPR, ISO3 (only available one, for the time being)
+! 8: XPR, ISO4
+iLine=7;
 
 iMacro_I2K_QU=5;  ! 1: linear; 5: fifth order;
-iMacro_I2K_ded=1; ! 0: general one; 1: specific for each magnet;
+iMacro_I2K_ded=0; ! 0: general one; 1: specific for each magnet;
 
 call, file=../macros.cmdx;
 call, file=macros.cmdx;
@@ -44,6 +48,12 @@ if (iLine==1) {
 }elseif(iLine==4) {
    title, "HEBT CNAO - Line Z - Sala 1";
    call, file=LineZ.seq;
+}elseif(iLine==7) {
+   title, "HEBT CNAO - Line XPR - ISO3";
+   call, file=XPR_ISO3.seq;
+}else{
+   print, TEXT="Please specify a proper line!";
+   stop;
 };
 
 ! load initial conditions
@@ -56,7 +66,7 @@ exec, setBeam(APICLS009);
 ! end of template - DO NOT DELETE THIS LINE!
 
 ! ==============================================================================
-! a simple example
+! a simple example (treatment rooms only, no XPR)
 ! ==============================================================================
 /*
 ! load desired optics
@@ -90,4 +100,5 @@ exec, saveStrengths(example);
 
 ! guess optics
 ! call, file="guessOptics.cmdx";
-call, file="myGuessOptics.cmdx";
+! call, file="myGuessOptics.cmdx";
+call, file="myMatchOptics.cmdx";
