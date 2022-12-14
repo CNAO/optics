@@ -10,7 +10,8 @@ writeObservations(fileName,monName): macro{
          table(twiss,monName,RE11), table(twiss,monName,RE12), table(twiss,monName,RE21), table(twiss,monName,RE22), table(twiss,monName,RE16), table(twiss,monName,RE26),
          table(twiss,monName,RE33), table(twiss,monName,RE34), table(twiss,monName,RE43), table(twiss,monName,RE44), table(twiss,monName,RE36), table(twiss,monName,RE46),
          table(twiss,monName,RE51), table(twiss,monName,RE52), table(twiss,monName,RE55), table(twiss,monName,RE56), table(twiss,monName,RE66),
-		 T1_004A_QUE->K1, T1_013A_QUE->K1, T1_019A_QUE->K1, T2_005A_QUE->K1, T2_012A_QUE->K1, T2_018A_QUE->K1;
+		 H2_016A_QUE->K1, H2_022A_QUE->K1, HE_018A_QUE->K1, HE_020A_QUE->K1, HE_023A_QUE->K1, HE_025A_QUE->K1;
+! 		   T1_004A_QUE->K1, T1_013A_QUE->K1, T1_019A_QUE->K1, T2_005A_QUE->K1, T2_012A_QUE->K1, T2_018A_QUE->K1;
 ! 		   U1_008A_QUE->K1, U1_014A_QUE->K1, U1_018A_QUE->K1, U2_006A_QUE->K1, U2_010A_QUE->K1, U2_016A_QUE->K1;
 !		   Z1_004A_QUE->K1, Z1_013A_QUE->K1, Z1_019A_QUE->K1, Z2_005A_QUE->K1, Z2_012A_QUE->K1, Z2_018A_QUE->K1;
    assign, echo=terminal;
@@ -23,7 +24,8 @@ writeHeader(fileName,monName): macro{
    RE11:monName[], RE12:monName[m], RE21:monName[m-1], RE22:monName[], RE16:monName[m], RE26:monName[],
    RE33:monName[], RE34:monName[m], RE43:monName[m-1], RE44:monName[], RE36:monName[m], RE46:monName[], 
    RE51:monName[s m-1], RE52:monName[s], RE55:monName[], RE56:monName[s], RE66:monName[m],
-   T1_004A_QUE->K1[m-2], T1_013A_QUE->K1[m-2], T1_019A_QUE->K1[m-2], T2_005A_QUE->K1[m-2], T2_012A_QUE->K1[m-2], T2_018A_QUE->K1[m-2];
+   H2_016A_QUE->K1[m-2], H2_022A_QUE->K1[m-2], HE_018A_QUE->K1[m-2], HE_020A_QUE->K1[m-2], HE_023A_QUE->K1[m-2], HE_025A_QUE->K1[m-2];
+!    T1_004A_QUE->K1[m-2], T1_013A_QUE->K1[m-2], T1_019A_QUE->K1[m-2], T2_005A_QUE->K1[m-2], T2_012A_QUE->K1[m-2], T2_018A_QUE->K1[m-2];
 !    U1_008A_QUE->K1[m-2], U1_014A_QUE->K1[m-2], U1_018A_QUE->K1[m-2], U2_006A_QUE->K1[m-2], U2_010A_QUE->K1[m-2], U2_016A_QUE->K1[m-2];
 !    Z1_004A_QUE->K1[m-2], Z1_013A_QUE->K1[m-2], Z1_019A_QUE->K1[m-2], Z2_005A_QUE->K1[m-2], Z2_012A_QUE->K1[m-2], Z2_018A_QUE->K1[m-2];
    assign, echo=terminal;
@@ -50,7 +52,8 @@ makeScanFromTable(fileName,tableName,monName): macro = {
 
       SETVARS, TABLE=table_scan, ROW=n;
       K0MB=K0MB_ref;
-      call, file="settings_from_LGEN_table_T1-T2.str";
+      call, file="settings_from_LGEN_table.str";
+!       call, file="settings_from_LGEN_table_T1-T2.str";
 !       call, file="settings_from_LGEN_table_U1-U2.str";
 !       call, file="settings_from_LGEN_table_Z1-Z2.str";
 
@@ -78,9 +81,11 @@ makeScanFromTable(fileName,tableName,monName): macro = {
 exec, parseHEBTtableLGEN();
 lunghezza=table(LGEN_HEBT_table,tablelength);
 ! - load proper line
-! n=lunghezza; ! C, 270mm
-n=81; ! C, 190mm
+! n=1; ! C,  30mm
+! n=61; ! C, 150mm
 ! n=71; ! C, 170mm
+! n=81; ! C, 190mm
+n=lunghezza; ! C, 270mm
 SETVARS, TABLE=LGEN_HEBT_table, ROW=n;
 K0MB=K0MB_ref;
 call, file="settings_from_LGEN_table.str";
@@ -89,15 +94,17 @@ PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VA
 use,sequence=APICLS009;
 exec, saveOptics(TM);
 
-! ! - insert marker upstream of scanning quad
+! - insert marker upstream of first scanning quad
+exec, insertMarkerUpstreamOf(MYINS,H2_022A_QUE,APICLS009);
 ! exec, insertMarkerUpstreamOf(MYINS,T1_013A_QUE,APICLS009);
 ! exec, insertMarkerUpstreamOf(MYINS,U1_008A_QUE,APICLS009);
 ! exec, insertMarkerUpstreamOf(MYINS,Z1_013A_QUE,APICLS009);
-! - insert marker upstream of H5_018B_SFH
-exec, insertMarkerUpstreamOf(MYINS,H5_018B_SFH,APICLS009);
+! ! - insert marker upstream of H5_018B_SFH
+! exec, insertMarkerUpstreamOf(MYINS,H5_018B_SFH,APICLS009);
 ! - insert end marker
 SEQEDIT, SEQUENCE=APICLS009;
-INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=0.0, FROM=T2_032A_MOB;
+INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=0.0, FROM=X3_015A_MOB;
+! INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=0.0, FROM=T2_032A_MOB;
 ! INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=-0.4, FROM=U2_029A_MOB; ! move ISO upstream by 40cm
 ! INSTALL, ELEMENT=MYEND, CLASS=MARKER, AT=0.0, FROM=Z2_032A_MOB;
 ! MOVE, ELEMENT=U2_029A_MOB, BY=-0.4; ! move ISO upstream by 40cm
@@ -140,6 +147,40 @@ twiss, rmatrix=true, file=TM_short_Rmatrix.tfs, beta0=newInitial;
 ! call, file=start-conditions_matlab.opt;
 
 ! perform scans
+! 2022-10, XPR ISO3, C-270mm
+exec, makeScanFromTable("2022-10-08.09/HE-018A-QUE_C270_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-018A-QUE_C270_roughScan/HE-018A-QUE_C270_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-018A-QUE_C270_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-018A-QUE_C270_roughScan/HE-018A-QUE_C270_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-020A-QUE_C270_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-020A-QUE_C270_roughScan/HE-020A-QUE_C270_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-020A-QUE_C270_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-020A-QUE_C270_roughScan/HE-020A-QUE_C270_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-023A-QUE_C270_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-023A-QUE_C270_roughScan/HE-023A-QUE_C270_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-023A-QUE_C270_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-023A-QUE_C270_roughScan/HE-023A-QUE_C270_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-025A-QUE_C270_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-025A-QUE_C270_roughScan/HE-025A-QUE_C270_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-025A-QUE_C270_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-025A-QUE_C270_roughScan/HE-025A-QUE_C270_roughScan_DDS.tfs",X3_013B_NZL);
+/*
+! 2022-10, XPR ISO3, C-150mm
+exec, makeScanFromTable("2022-10-08.09/HE-018A-QUE_C150_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-018A-QUE_C150_roughScan/HE-018A-QUE_C150_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-018A-QUE_C150_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-018A-QUE_C150_roughScan/HE-018A-QUE_C150_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-020A-QUE_C150_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-020A-QUE_C150_roughScan/HE-020A-QUE_C150_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-020A-QUE_C150_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-020A-QUE_C150_roughScan/HE-020A-QUE_C150_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-023A-QUE_C150_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-023A-QUE_C150_roughScan/HE-023A-QUE_C150_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-023A-QUE_C150_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-023A-QUE_C150_roughScan/HE-023A-QUE_C150_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-025A-QUE_C150_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-025A-QUE_C150_roughScan/HE-025A-QUE_C150_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-025A-QUE_C150_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-025A-QUE_C150_roughScan/HE-025A-QUE_C150_roughScan_DDS.tfs",X3_013B_NZL);
+*/
+/*
+! 2022-10, XPR ISO3, C-30mm
+exec, makeScanFromTable("2022-10-08.09/H2-022A-QUE_C030_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/H2-022A-QUE_C030_roughScan/H2-022A-QUE_C030_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/H2-022A-QUE_C030_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/H2-022A-QUE_C030_roughScan/H2-022A-QUE_C030_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-018A-QUE_C030_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-018A-QUE_C030_roughScan/HE-018A-QUE_C030_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-018A-QUE_C030_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-018A-QUE_C030_roughScan/HE-018A-QUE_C030_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-020A-QUE_C030_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-020A-QUE_C030_roughScan/HE-020A-QUE_C030_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-020A-QUE_C030_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-020A-QUE_C030_roughScan/HE-020A-QUE_C030_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-023A-QUE_C030_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-023A-QUE_C030_roughScan/HE-023A-QUE_C030_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-023A-QUE_C030_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-023A-QUE_C030_roughScan/HE-023A-QUE_C030_roughScan_DDS.tfs",X3_013B_NZL);
+exec, makeScanFromTable("2022-10-08.09/HE-025A-QUE_C030_roughScan_CAM_ReMat.tfs","../../../2022-10-08.09/HE-025A-QUE_C030_roughScan/HE-025A-QUE_C030_roughScan_CAM.tfs",MYEND);
+exec, makeScanFromTable("2022-10-08.09/HE-025A-QUE_C030_roughScan_DDS_ReMat.tfs","../../../2022-10-08.09/HE-025A-QUE_C030_roughScan/HE-025A-QUE_C030_roughScan_DDS.tfs",X3_013B_NZL);
+*/
+/*
 ! 2020-12, C-190mm
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-013A-QUE_C190_CAM_ReMat.tfs","../../../2020-12/T1-013A-QUE_C190/T1-013A-QUE_C190_CAM.tfs",MYEND);
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-013A-QUE_C190_DDS_ReMat.tfs","../../../2020-12/T1-013A-QUE_C190/T1-013A-QUE_C190_DDS.tfs",T2_030B_NZL);
@@ -151,6 +192,7 @@ exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-012A-QUE_C190_CAM_ReMat.tfs","..
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-012A-QUE_C190_DDS_ReMat.tfs","../../../2020-12/T2-012A-QUE_C190/T2-012A-QUE_C190_DDS.tfs",T2_030B_NZL);
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-018A-QUE_C190_CAM_ReMat.tfs","../../../2020-12/T2-018A-QUE_C190/T2-018A-QUE_C190_CAM.tfs",MYEND);
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T2-018A-QUE_C190_DDS_ReMat.tfs","../../../2020-12/T2-018A-QUE_C190/T2-018A-QUE_C190_DDS.tfs",T2_030B_NZL);
+*/
 /*
 ! 2020-12, C-270mm
 exec, makeScanFromTable("2020-12/H5_018B_SFH/T1-013A-QUE_C270_CAM_ReMat.tfs","../../../2020-12/T1-013A-QUE_C270/T1-013A-QUE_C270_CAM.tfs",MYEND);

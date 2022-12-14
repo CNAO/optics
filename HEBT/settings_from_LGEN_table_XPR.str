@@ -1,0 +1,43 @@
+! get settings directly from spreadsheet of LGEN
+
+! For every magnet MagName we have IMagName, KMagName and FMagName
+! eg. H2_012A_QUE:
+! - I_H2_012A_QUE: current [A];
+! - K1_H2_012A_QUE: kick [1/m^2];
+! - F_H2_012A_QUE: multiplication factor of K(I) (includes sign!)
+
+! ==============================================================================
+! XPR
+! ==============================================================================
+
+I_HE_018A_QUE = -PX_001A_LGEN_A;    !H?? 
+F_HE_018A_QUE = 1.0;      
+I_HE_020A_QUE = PX_002A_LGEN_A;     !H??
+F_HE_020A_QUE = 1.0;    
+I_HE_023A_QUE = -PX_003A_LGEN_A;    !H??
+F_HE_023A_QUE = 1.0;     
+I_HE_025A_QUE = PX_004A_LGEN_A;     !H??
+F_HE_025A_QUE = 1.0;    
+
+if ( iMacro_I2K_QU==1 ) {
+   ! use macro: linear
+   if ( iMacro_I2K_ded==0 ) {
+      exec, I2K_HEBT_QUs_lin(HE_018A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(HE_020A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(HE_023A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(HE_025A_QUE,Brho);
+   }elseif ( iMacro_I2K_ded==1 ) {
+	  print, TEXT="per-magnet B(I) function not yet available for XPR!";
+	  stop;
+   };
+} elseif ( iMacro_I2K_QU==5 ) {
+   ! use macro: fifth order polynomial
+   if ( iMacro_I2K_ded==0 ) {
+      exec, I2K_HEBT_QUs_fifth(HE_018A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(HE_020A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(HE_023A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(HE_025A_QUE,Brho);
+   }elseif ( iMacro_I2K_ded==1 ) {
+	  print, TEXT="per-magnet B(I) function not yet available for XPR!";
+   };
+};
