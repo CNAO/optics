@@ -9,18 +9,14 @@
 ! ---------------------------------------------------------------
 ! V1
 ! ---------------------------------------------------------------
-V1_001A_SW2PRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = -0.000;
 V1_001A_SWV: SBEND, L= LMB, E1 = -Es, E2 = -Es, ANGLE = -ANGLEMB, K1 = 0, K2 = 0, HGAP = 0.036, TILT=pi/2;
-V1_001A_SW2DOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = -0.000;
 V1_002A_DRI: DRIFT, L= 0.1818525103;
 V1_002B_DRI: DRIFT, L= 0.0862;
 V1_003A_CEB: KICKER, L= 0.52, HKICK := HKICK_V1_003A_CEB, VKICK := VKICK_V1_003A_CEB;
 V1_004A_DRI: DRIFT, L= 0.0862;
 V1_004B_BSH: DRIFT, L= 0.0;
 V1_004C_DRI: DRIFT, L= 0.1818525103;
-V1_005A_MBUPRIMA: KICKER, L= 0.0, HKICK = -0.000, VKICK = -0.000;
 V1_005A_MBU: SBEND, L= LMB, E1 = -Es, E2 = -Es, ANGLE = -ANGLEMB, K1 = 0, K2 = 0, HGAP = 0.036, TILT=pi/2;
-V1_005A_MBUDOPO: KICKER, L= 0.0, HKICK = -0.000, VKICK = -0.000;
 V1_006A_DRI: DRIFT, L= 0.1818525103;
 V1_006B_DRI: DRIFT, L= 0.1022;
 V1_006C_BSH: DRIFT, L= 0.0;
@@ -55,18 +51,14 @@ V1_025E_SIP: DRIFT, L= 0.0;
 V1_026A_DRI: DRIFT, L= 0.1022;
 V1_026B_BSH: DRIFT, L= 0.0;
 V1_027A_DRI: DRIFT, L= 0.1818525103;
-V1_028A_MBDPRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.000;
 V1_028A_MBD: SBEND, L= LMB, E1 = Es, E2 = Es, ANGLE = ANGLEMB, K1 = 0, K2 = 0, HGAP = 0.036, TILT=pi/2;
-V1_028A_MBDDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.000;
 V1_029A_DRI: DRIFT, L= 0.1818525103;
 V1_029B_DRI: DRIFT, L= 0.0862;
 V1_030A_CEB: KICKER, L= 0.52, HKICK := HKICK_V1_030A_CEB, VKICK := VKICK_V1_030A_CEB;
 V1_031A_DRI: DRIFT, L= 0.0862;
 V1_031B_BSH: DRIFT, L= 0.0;
 V1_031C_DRI: DRIFT, L= 0.1818525103;
-V1_032A_MBDPRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.000;
 V1_032A_MBD: SBEND, L= LMB, E1 = Es, E2 = Es, ANGLE = ANGLEMB, K1 = 0, K2 = 0, HGAP = 0.036, TILT=pi/2;
-V1_032A_MBDDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.000;
 V1_033A_DRI: DRIFT, L= 0.1818525103;
 V1_033B_DRI: DRIFT, L= 0.1023;
 V1_033C_BSH: DRIFT, L= 0.0;
@@ -132,9 +124,9 @@ V2_019G_BSH: DRIFT, L= 0.0;
 V2_019H_SIP: DRIFT, L= 0.0;
 V2_019I_MIG: DRIFT, L= 0.0;
 V2_020A_DRI: DRIFT, L= 0.1485;
-V2_021A_SCA: SBEND, L= 0.6, E1 = 0, E2 = 0, ANGLE = 0, K1 = 0, K2 = 0, HGAP = 0;
+V2_021A_SCA: RBEND, L= 0.6, ANGLE = 0, K1 = 0, K2 = 0, HGAP = 0;
 V2_022A_DRI: DRIFT, L= 0.223;
-V2_023A_SCA: SBEND, L= 0.6, E1 = 0, E2 = 0, ANGLE = 0, K1 = 0, K2 = 0, HGAP = 0;
+V2_023A_SCA: RBEND, L= 0.6, ANGLE = 0, K1 = 0, K2 = 0, HGAP = 0;
 V2_024A_DRI: DRIFT, L= 0.1485;
 V2_025A_DRI: DRIFT, L= 0.175;
 V2_025B_BOX: DRIFT, L= 0.0;
@@ -160,26 +152,18 @@ V2_031A_MOB: MONITOR, L= 0.0;
 
 vLineL=33.86116767;
 vLine: sequence, l = vLineL ;
-V1_001A_SW2PRIMA, at = 0.00000000 ;
 v1_001a_swv, at = 0.83860000 ;
-V1_001A_SW2DOPO, at = 1.67720000 ;
 v1_003a_ceb, at = 2.20525251 ;
-V1_005A_MBUPRIMA, at = 2.73330502 ;
 v1_005a_mbu, at = 3.57190502 ;
-V1_005A_MBUDOPO, at = 4.41050502 ;
 v1_007b_sfh, at = 4.74955753 ;
 v1_010a_que, at = 5.38555003 ;
 v1_014a_que, at = 6.05555003 ;
 v1_018a_que, at = 6.78555003 ;
 v1_022a_que, at = 7.45555003 ;
 v1_025b_sfh, at = 8.09155003 ;
-V1_028A_MBDPRIMA, at = 8.43060254 ;
 v1_028a_mbd, at = 9.26920254 ;
-V1_028A_MBDDOPO, at = 10.10780254 ;
 v1_030a_ceb, at = 10.63585505 ;
-V1_032A_MBDPRIMA, at = 11.16390756 ;
 v1_032a_mbd, at = 12.00250756 ;
-V1_032A_MBDDOPO, at = 12.84110756 ;
 v1_034b_sfh, at = 13.30026007 ;
 v1_037a_que, at = 13.82416007 ;
 v1_041a_que, at = 14.69416007 ;
@@ -198,3 +182,15 @@ V2_027A_HBMDOPO, at = 31.35834867 ;
 v2_029b_nzl, at = 32.99766767 ;
 v2_031a_mob, at = 33.86116767 ;
 endsequence;
+
+! ===============================================================
+! sequence manipulation
+! ===============================================================
+
+/*
+! distribute MB kicks
+exec, surroundMBEND(V1_001A_SWV,vLine);
+exec, surroundMBEND(V1_005A_MBU,vLine);
+exec, surroundMBEND(V1_028A_MBD,vLine);
+exec, surroundMBEND(V1_032A_MBD,vLine);
+*/

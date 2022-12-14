@@ -81,7 +81,7 @@ use,sequence=MUXL;
 exec, saveAPIC();
 
 ! saving strengths
-exec, save_strengths(MEBT);
+exec, save_strengths(MEBT,MEBT);
 
 ! saving Rmatrix
 use,sequence=MUXL;
