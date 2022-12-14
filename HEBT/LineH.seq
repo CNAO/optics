@@ -13,27 +13,32 @@ H3_013A_CHD_HKICK=-AH_CHOPPER;
 H3_017A_CHD_HKICK= AH_CHOPPER;
 
 ! MSx ARCs and ANGLEs
-H2_001A_MSN_ANGLE=-0.05; H2_001A_MSN_L=0.65; ! [rad], [m]
-H2_003A_MSW_ANGLE=-0.15; H2_003A_MSW_L=1.00; ! [rad], [m]
-H2_005A_MSW_ANGLE=-0.15; H2_005A_MSW_L=1.00; ! [rad], [m]
+H2_001A_MSN_ANGLE=-0.05; H2_001A_MSN_L=0.65; ! deviation angle [rad], arc length [m]
+H2_003A_MSW_ANGLE=-0.15; H2_003A_MSW_L=1.00; ! deviation angle [rad], arc length [m]
+H2_005A_MSW_ANGLE=-0.15; H2_005A_MSW_L=1.00; ! deviation angle [rad], arc length [m]
 
 ! H2_001A_MSN:
-H2_001A_MSN_RR=abs(H2_001A_MSN_L/H2_001A_MSN_ANGLE);           ! radius [m]
-H2_001A_MSN_LS=2*H2_001A_MSN_RR*sin(abs(H2_001A_MSN_ANGLE/2)); ! straight length [m]
-H2_001A_MSN_TS=asin(H2_001A_MSN_LS/H2_001A_MSN_RR);            ! angle when starting parallel to synchro ref sys [rad]
-if ( H2_001A_MSN_ANGLE<0 ) {H2_001A_MSN_TS=-H2_001A_MSN_TS;};
-H2_001A_MSN_TD=H2_001A_MSN_TS-H2_001A_MSN_ANGLE;
-KINK_ANGLE_UP=-H2_001A_MSN_ANGLE/2; ! [rad]
-KINK_ANGLE_DW= (H2_001A_MSN_ANGLE+H2_001A_MSN_TD)/2; ! [rad]
-TRSL_DX=(1-cos(H2_001A_MSN_TS))*H2_001A_MSN_RR;                ! offset necessary to exit from MSN at centre of ref sys [m]
+H2_001A_MSN_RR=abs(H2_001A_MSN_L/H2_001A_MSN_ANGLE);           ! curvature radius [m] (always >0)
+H2_001A_MSN_SL=2*H2_001A_MSN_RR*sin(abs(H2_001A_MSN_ANGLE/2)); ! straight length [m] (always >0)
 
 ! H2_003A_MSW:
-H2_003A_MSW_RR=abs(H2_003A_MSW_L/H2_003A_MSW_ANGLE);           ! radius [m]
-H2_003A_MSW_LS=2*H2_003A_MSW_RR*sin(abs(H2_003A_MSW_ANGLE/2)); ! straight length [m]
+H2_003A_MSW_RR=abs(H2_003A_MSW_L/H2_003A_MSW_ANGLE);           ! curvature radius [m] (always >0)
+H2_003A_MSW_SL=2*H2_003A_MSW_RR*sin(abs(H2_003A_MSW_ANGLE/2)); ! straight length [m] (always >0)
 
 ! H2_005A_MSW:
-H2_005A_MSW_RR=abs(H2_005A_MSW_L/H2_005A_MSW_ANGLE);           ! radius [m]
-H2_005A_MSW_LS=2*H2_005A_MSW_RR*sin(abs(H2_005A_MSW_ANGLE/2)); ! straight length [m]
+H2_005A_MSW_RR=abs(H2_005A_MSW_L/H2_005A_MSW_ANGLE);           ! curvature radius [m] (always >0)
+H2_005A_MSW_SL=2*H2_005A_MSW_RR*sin(abs(H2_005A_MSW_ANGLE/2)); ! straight length [m] (always >0)
+
+! offsetting/tilting local ref system, to exit from MSN on axis
+if (iH1<>0) {
+   H2_001A_MSN_TS=asin(H2_001A_MSN_SL/H2_001A_MSN_RR);            ! deviation angle when entering H2_001A_MSN (RBEND) perpendicular to pole faces [rad] (always >0)
+   if ( H2_001A_MSN_ANGLE<0 ) {H2_001A_MSN_TS=-H2_001A_MSN_TS;};  ! ...with sign
+   H2_001A_MSN_TD=H2_001A_MSN_TS-H2_001A_MSN_ANGLE;
+   KINK_ANGLE_UP=-H2_001A_MSN_ANGLE/2;                            ! upstream change of ref sys: angle [rad]
+   KINK_ANGLE_DW= H2_001A_MSN_ANGLE/2;                            ! downstream change of ref sys: angle [rad]
+   ! upstream change of ref sys: offset necessary to EXIT from MSN at centre of ref sys [m]
+   TRSL_DX_UP=(1-cos(H2_001A_MSN_TS))*H2_001A_MSN_RR*cos(H2_001A_MSN_ANGLE/2);             
+};
 
 ! ===============================================================
 ! insertion of H1
@@ -52,14 +57,18 @@ if (iH1<>0) {
 ! ---------------------------------------------------------------
 ! H2
 ! ---------------------------------------------------------------
-H2_0010_KINK: YROTATION, ANGLE := KINK_ANGLE_UP;
-H2_0010_TRSL: TRANSLATION, DX :=TRSL_DX;
-H2_001A_MSN: RBEND, L= H2_001A_MSN_LS, ANGLE= H2_001A_MSN_ANGLE, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
-H2_001B_KINK:  YROTATION, ANGLE := KINK_ANGLE_DW;
+
+! offsetting/tilting local ref system, to exit from MSN on axis
+if (iH1<>0) {
+   H2_0010_TRSL: TRANSLATION, DX :=TRSL_DX_UP;
+   H2_0010_KINK: YROTATION, ANGLE := KINK_ANGLE_UP;
+   H2_001B_KINK: YROTATION, ANGLE := KINK_ANGLE_DW;
+};
+H2_001A_MSN: RBEND, L= H2_001A_MSN_SL, ANGLE= H2_001A_MSN_ANGLE, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
 H2_002A_DRI: DRIFT, L= 0.5;
-H2_003A_MSW: RBEND, L= H2_003A_MSW_LS, ANGLE= H2_003A_MSW_ANGLE, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
+H2_003A_MSW: RBEND, L= H2_003A_MSW_SL, ANGLE= H2_003A_MSW_ANGLE, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
 H2_004A_DRI: DRIFT, L= 0.5;
-H2_005A_MSW: RBEND, L= H2_005A_MSW_LS, ANGLE= H2_005A_MSW_ANGLE, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
+H2_005A_MSW: RBEND, L= H2_005A_MSW_SL, ANGLE= H2_005A_MSW_ANGLE, K1 = 0, K2 = 0, HGAP = 0.02, FINT=0;
 H2_006A_DRI: DRIFT, L= 0.3;
 H2_007A_CEB: KICKER, L= 0.52, HKICK := HKICK_H2_007A_CEB, VKICK := VKICK_H2_007A_CEB;
 H2_008A_DRI: DRIFT, L= 0.0839;
@@ -219,10 +228,16 @@ H5_020A_DRI: DRIFT, L= 0.2398;
 ! H2-H4
 h2h4LineL=22.53997507;
 h2h4Line: sequence, l=h2h4LineL;
-h2_0010_trsl,at = 0.0;
-h2_0010_kink,at = 0.0;
+! offsetting/tilting local ref system, to exit from MSN on axis
+if (iH1<>0) {
+	h2_0010_trsl, at = 0.0;
+	h2_0010_kink, at = 0.0;
+};
 h2_001a_msn, at = 0.325;
-h2_001b_kink,at = 0.65;
+! offsetting/tilting local ref system, to exit from MSN on axis
+if (iH1<>0) {
+	h2_001b_kink, at = 0.65;
+};
 h2_003a_msw, at = 1.65;
 h2_005a_msw, at = 3.15;
 h2_007a_ceb, at = 4.21;
