@@ -37,7 +37,7 @@ iLine=7;
 iH1=1;
 
 iMacro_I2K_QU=5;  ! 1: linear; 5: fifth order;
-iMacro_I2K_ded=0; ! 0: general one; 1: specific for each magnet;
+iMacro_I2K_ded=0; ! 0: general one; 1: specific for each magnet (NOT yet available for XPR beam line);
 
 call, file=../macros.cmdx;
 call, file=macros.cmdx;
