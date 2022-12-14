@@ -15,7 +15,7 @@ is_open=1;
 is_carbon=0;
 
 ! excess IDB kicks: 0: do not use; 1: use;
-i_IDB_excess=0;
+i_IDB_excess=1;
 
 ! consider extensions:
 ! 0: no extensions
@@ -81,7 +81,7 @@ use,sequence=MUXL;
 exec, saveAPIC();
 
 ! saving strengths
-exec, save_strengths(MEBT);
+exec, save_strengths(MEBT,MEBT);
 
 ! saving Rmatrix
 use,sequence=MUXL;
@@ -95,5 +95,12 @@ exec, saveRmatrixTFS(example);
 ! compute response matrices
 ! call, file="compute_RM.cmdx";
 
+! call, file="reproduce_MEBT_scans.cmdx";
+
+! call, file="scans_quads.cmdx";
+
+! call, file="scans_quads_ReMat.cmdx";
+
 ! compute quad-dip scans
 call, file="quad-dip-scans.cmdx";
+

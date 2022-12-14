@@ -83,11 +83,11 @@ compute_Scans(myQuaName,myDip1Name,myDip2Name,myDip3Name,myMonName,fileName): ma
 };
 
 ! - parse table
-exec, parseTable();
-lunghezza=table(table_settings,tablelength);
+exec, parseHEBTtableLGEN();
+lunghezza=table(LGEN_HEBT_table,tablelength);
 ! - load proper line
 n=46; ! p, 90mm
-SETVARS, TABLE=table_settings, ROW=n;
+SETVARS, TABLE=LGEN_HEBT_table, ROW=n;
 K0MB=K0MB_ref;
 call, file="settings_from_LGEN_table.str";
 ! - notify user where we are

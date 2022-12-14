@@ -1,8 +1,12 @@
 ! get settings directly from spreadsheet of LGEN
 ! NB: S3_012A_BDI and SD_012A_BDI are set by Ibumper;
 
+PRINT, TEXT="LGEN settings from TABLE for SYNCHRO";
+
 Ek=Ek_MeVN;  ! [MeV/n]
 BP=range_mm; ! [mm] 
+exec, setRigidity();
+Brho=Brho_TM; ! [Tm]
 
 ! - main dipoles:
 ! K0MB=P6_006A_LGEN_K0; !CNAO1 [rad/m^-1]
@@ -44,6 +48,6 @@ HK_SA  = P6_102C_LGEN_kick; ! SA_008A_CSH, [rad]
 ! VK_S5  = P6_103C_LGEN_kick; ! S5_005A_CSV, [rad]
 ! VK_S7  = P6_103D_LGEN_kick; ! S7_005A_CSV, [rad]
 ! VK_S9  = P6_105A_LGEN_kick; ! S9_005A_CSV, [rad]
-! VK_SB  = P6_105B_LGEN_kick; ! SB_005A_CSV, [rad]
+! VK_SB  = P6_105B_LGEN_kick; ! SB_007A_CSV, [rad]
 ! VK_SD  = P6_105C_LGEN_kick; ! SD_005A_CSV, [rad]
 ! VK_SF  = P6_105D_LGEN_kick; ! SF_005A_CSV, [rad]

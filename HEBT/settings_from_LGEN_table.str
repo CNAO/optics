@@ -6,13 +6,16 @@
 ! - K1_H2_012A_QUE: kick [1/m^2];
 ! - F_H2_012A_QUE: multiplication factor of K(I) (includes sign!)
 
-Ek=Ek_MeVN;  ! [MeV/n]
-BP=range_mm; ! [mm] 
-exec, setRigidity();
+PRINT, TEXT="LGEN settings from TABLE for HEBT";
 
 ! ==============================================================================
-! apply currents
+! from H2 to the end
 ! ==============================================================================
+
+Ek=Ek_MeVN;   ! [MeV/n]
+BP=range_mm;  ! [mm] 
+exec, setRigidity();
+Brho=Brho_TM; ! [Tm]
 
 ! ------------------------------------------------------------------------------
 ! H2-H4
