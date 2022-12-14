@@ -113,16 +113,16 @@ parseSYNCHROtableLGEN(): macro={
    };
 };
 
-parseSYNCHROtableLGEN(): macro={
+parseSYNCHROtableRAMPGEN(): macro={
    if ( is_carbon==0 ) { ! protons
-     READTABLE, file="RampGen/TM_Protons.tfs", table=LGEN_synchro_table;
+     READTABLE, file="RampGen/TM_Protons.tfs", table=RAMPGEN_synchro_table;
    } else {
      if ( mMode==1 ) { ! carbon ions
        ! RFKO
-       READTABLE, file="RampGen/CorrSest-MachinePhotoCarbRFKO.tfs", table=LGEN_synchro_table;
+       READTABLE, file="RampGen/CorrSest-MachinePhotoCarbRFKO.tfs", table=RAMPGEN_synchro_table;
      }else{
        ! TM
-       READTABLE, file="RampGen/TM_Carbon.tfs", table=LGEN_synchro_table;
+       READTABLE, file="RampGen/TM_Carbon.tfs", table=RAMPGEN_synchro_table;
      };
    };
 };
