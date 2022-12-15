@@ -46,29 +46,25 @@ call, file=macros.cmdx;
 call, file=../common_defs.madx;
 
 ! load desired HEBT
+call, file="LineH.seq";
 if (iLine==1) {
    title, "HEBT CNAO - Line T - Room 3";
-   call, file="LineH.seq";
    call, file="LineT.seq";
    exec, concatenate2Sequences(LineH,LineT,apicls009);
 }elseif(iLine==2) {
    title, "HEBT CNAO - Line U - Room 2(H)";
-   call, file="LineH.seq";
    call, file="LineU.seq";
    exec, concatenate2Sequences(LineH,LineU,apicls009);
 }elseif(iLine==3) {
    title, "HEBT CNAO - Line V - Room 2(V)";
-   call, file="LineH.seq";
    call, file="LineV.seq";
    exec, concatenate2Sequences(LineH,LineV,apicls009);
 }elseif(iLine==4) {
    title, "HEBT CNAO - Line Z - Sala 1";
-   call, file="LineH.seq";
    call, file="LineZ.seq";
    exec, concatenate2Sequences(LineH,LineZ,apicls009);
 }elseif(iLine==7) {
    title, "HEBT CNAO - Line XPR - ISO3";
-   call, file="LineH.seq";
    call, file="LineX3.seq";
    exec, concatenate2Sequences(LineH,LineX3,apicls009);
 }else{
