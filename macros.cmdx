@@ -243,7 +243,7 @@ duplicateSequence(SeqInName,SeqOutName): macro {
 	endsequence;
 };
 
-! duplicate an existing sequence
+! concatenate two existing sequences
 concatenate2Sequences(SeqInName1,SeqInName2,SeqOutName): macro {
     SeqOutName_L=SeqInName1_L+SeqInName2_L;
     SeqOutName: sequence, l=SeqOutName_L, refer=entry;
