@@ -92,9 +92,9 @@ U2_019G_MIG: DRIFT, L= 0.0;
 U2_020A_DRI: DRIFT, L= 0.122;
 U2_020B_BSH: DRIFT, L= 0.0;
 U2_020C_DRI: DRIFT, L= 0.2;
-U2_021A_SCA: RBEND, L= 0.6, ANGLE = 0, K1 = 0, K2 = 0, HGAP = 0;
+U2_021A_SCA: KICKER, L= 0.6, HKICK=0, VKICK=0;
 U2_022A_DRI: DRIFT, L= 0.12;
-U2_023A_SCA: RBEND, L= 0.6, ANGLE = 0, K1 = 0, K2 = 0, HGAP = 0;
+U2_023A_SCA: KICKER, L= 0.6, HKICK=0, VKICK=0;
 U2_024A_DRI: DRIFT, L= 0.2;
 U2_024B_DRI: DRIFT, L= 3.19;
 U2_025A_DRI: DRIFT, L= 0.31;
@@ -114,8 +114,8 @@ U2_029A_MOB: MONITOR, L= 0.0;
 ! sequence definition
 ! ===============================================================
 
-uLineL=20.372;
-uLine: sequence, l=uLineL;
+LineU_L=20.372;
+LineU: sequence, l=LineU_L;
 u1_003a_ceb, at = 2.0457 ;
 u1_005b_sfh, at = 3.4007 ;
 u1_008a_que, at = 4.015 ;

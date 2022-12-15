@@ -3,7 +3,7 @@
 ! ========================================================================
 
 ! - parse LGEN table to get TM values
-exec, parseTable();
+exec, parseHEBTtableLGEN();
 lunghezza=table(table_settings,tablelength);
 ! - load proper line
 ! n=1; ! C,  30mm

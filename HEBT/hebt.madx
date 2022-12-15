@@ -14,11 +14,11 @@ is_carbon=1;
 ! 0: initial conditions at entrance of ESE
 ! 1: initial conditions at entrance of S0-016A-MSP (synchro seq)
 !    / H2-001A-MSN (HEBT seq)
-start_cond=0;
+start_cond=1;
 
 ! 0: chopper HEBT off
 ! 1: chopper HEBT on
-iChopper=1;
+iChopper=0;
 
 ! 1: LineT, Room 3
 ! 2: LineU, Room 2H
@@ -28,16 +28,16 @@ iChopper=1;
 ! 6: XPR, ISO2
 ! 7: XPR, ISO3 (only available one, for the time being)
 ! 8: XPR, ISO4
-iLine=7;
+iLine=3;
 
 ! consider also H1 line (kicks are available only in case of LGEN currents)
 ! the H1 line is automatically extracted from synchro sequence
 ! 0: do NOT load H1 line
 ! 1: DO load H1 line
-iH1=1;
+iH1=0;
 
 iMacro_I2K_QU=5;  ! 1: linear; 5: fifth order;
-iMacro_I2K_ded=0; ! 0: general one; 1: specific for each magnet (NOT yet available for XPR beam line);
+iMacro_I2K_ded=1; ! 0: general one; 1: specific for each magnet (NOT yet available for XPR beam line);
 
 call, file=../macros.cmdx;
 call, file=macros.cmdx;
@@ -46,26 +46,36 @@ call, file=macros.cmdx;
 call, file=../common_defs.madx;
 
 ! load desired HEBT
+call, file="LineH.seq";
 if (iLine==1) {
    title, "HEBT CNAO - Line T - Room 3";
-   call, file=Room3.seq;
+   call, file="LineT.seq";
+   exec, concatenate2Sequences(LineH,LineT,apicls009);
 }elseif(iLine==2) {
    title, "HEBT CNAO - Line U - Room 2(H)";
-   call, file=Room2H.seq;
+   call, file="LineU.seq";
+   exec, concatenate2Sequences(LineH,LineU,apicls009);
 }elseif(iLine==3) {
    title, "HEBT CNAO - Line V - Room 2(V)";
-   call, file=Room2V.seq;
+   call, file="LineV.seq";
+   exec, concatenate2Sequences(LineH,LineV,apicls009);
 }elseif(iLine==4) {
    title, "HEBT CNAO - Line Z - Sala 1";
-   call, file=Room1.seq;
+   call, file="LineZ.seq";
+   exec, concatenate2Sequences(LineH,LineZ,apicls009);
 }elseif(iLine==7) {
    title, "HEBT CNAO - Line XPR - ISO3";
-   call, file=XPR_ISO3.seq;
+   call, file="LineX3.seq";
+   exec, concatenate2Sequences(LineH,LineX3,apicls009);
 }else{
    print, TEXT="Please specify a proper line!";
    stop;
 };
 seqedit, sequence=apicls009; flatten; endedit;
+/*
+save, sequence=apicls009, file=hebt.seq, bare; // only sequence is saved
+save, sequence=apicls009, file=hebt.seq; // both sequence and elements are saved
+*/
 
 ! load initial conditions
 call, file=start-conditions.opt;
@@ -112,4 +122,4 @@ call, file="loopThroughLGENFile.cmdx";
 ! guess optics
 ! call, file="guessOptics.cmdx";
 ! call, file="myGuessOptics.cmdx";
-call, file="myMatchOptics.cmdx";
+! call, file="myMatchOptics.cmdx";

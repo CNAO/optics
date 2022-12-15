@@ -124,18 +124,16 @@ V2_019G_BSH: DRIFT, L= 0.0;
 V2_019H_SIP: DRIFT, L= 0.0;
 V2_019I_MIG: DRIFT, L= 0.0;
 V2_020A_DRI: DRIFT, L= 0.1485;
-V2_021A_SCA: RBEND, L= 0.6, ANGLE = 0, K1 = 0, K2 = 0, HGAP = 0;
+V2_021A_SCA: KICKER, L= 0.6, HKICK=0, VKICK=0;
 V2_022A_DRI: DRIFT, L= 0.223;
-V2_023A_SCA: RBEND, L= 0.6, ANGLE = 0, K1 = 0, K2 = 0, HGAP = 0;
+V2_023A_SCA: KICKER, L= 0.6, HKICK=0, VKICK=0;
 V2_024A_DRI: DRIFT, L= 0.1485;
 V2_025A_DRI: DRIFT, L= 0.175;
 V2_025B_BOX: DRIFT, L= 0.0;
 V2_025C_DRI: DRIFT, L= 0.175;
 V2_026A_DRI: DRIFT, L= 0.3035;
 V2_026B_DRI: DRIFT, L= 0.770;
-V2_027A_HBMPRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0005;
 V2_027A_HBM: SBEND, L= 5.7334065928, E1 = 0.523599, E2 = 0.366519, ANGLE = 1.5707963267949, K1 = 0, K2 = 0, HGAP = 0, TILT=pi/2;
-V2_027A_HBMDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0005;
 V2_028A_DRI: DRIFT, L= 0.7985;
 V2_028B_DRI: DRIFT, L= 0.516819-0.015;
 V2_029A_DRI: DRIFT, L= 0.339;
@@ -150,8 +148,8 @@ V2_031A_MOB: MONITOR, L= 0.0;
 ! sequence definition
 ! ===============================================================
 
-vLineL=33.86116767;
-vLine: sequence, l = vLineL ;
+LineV_L=33.86116767;
+LineV: sequence, l = LineV_L ;
 v1_001a_swv, at = 0.83860000 ;
 v1_003a_ceb, at = 2.20525251 ;
 v1_005a_mbu, at = 3.57190502 ;
@@ -176,9 +174,7 @@ v2_016a_que, at = 21.56794207 ;
 v2_019b_sfh, at = 22.04244207 ;
 v2_021a_sca, at = 22.92994207 ;
 v2_023a_sca, at = 23.75294207 ;
-V2_027A_HBMPRIMA, at = 25.62494207 ;
 v2_027a_hbm, at = 28.49164537 ;
-V2_027A_HBMDOPO, at = 31.35834867 ;
 v2_029b_nzl, at = 32.99766767 ;
 v2_031a_mob, at = 33.86116767 ;
 endsequence;
@@ -189,8 +185,9 @@ endsequence;
 
 /*
 ! distribute MB kicks
-exec, surroundMBEND(V1_001A_SWV,vLine);
-exec, surroundMBEND(V1_005A_MBU,vLine);
-exec, surroundMBEND(V1_028A_MBD,vLine);
-exec, surroundMBEND(V1_032A_MBD,vLine);
+exec, surroundMBEND(V1_001A_SWV,LineV);
+exec, surroundMBEND(V1_005A_MBU,LineV);
+exec, surroundMBEND(V1_028A_MBD,LineV);
+exec, surroundMBEND(V1_032A_MBD,LineV);
+exec, surroundMBEND(V2_027A_HBM,LineV);
 */

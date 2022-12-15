@@ -234,3 +234,20 @@ I2K_QUs_fifth(MagName,biro) : macro {
                 +a5_FIF_MagName*abs(I_MagName)^5) /biro *abs(F_MagName);
   if (I_MagName<0){ K1_MagName=-K1_MagName; };
 };
+
+! duplicate an existing sequence
+duplicateSequence(SeqInName,SeqOutName): macro {
+    SeqOutName_L=SeqInName_L;
+    SeqOutName: sequence, l=SeqOutName_L, refer=entry;
+	SeqInName, at=0;
+	endsequence;
+};
+
+! concatenate two existing sequences
+concatenate2Sequences(SeqInName1,SeqInName2,SeqOutName): macro {
+    SeqOutName_L=SeqInName1_L+SeqInName2_L;
+    SeqOutName: sequence, l=SeqOutName_L, refer=entry;
+	SeqInName1, at=0;
+	SeqInName2, at=SeqInName1_L;
+	endsequence;
+};

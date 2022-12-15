@@ -122,15 +122,15 @@ parseHEBTtableLGEN(): macro={
       };
    }elseif (iLine==7) {
       if (is_carbon==0) {
-         READTABLE, file="LGEN/LGEN_X3_P_FG_10Luglio2019.tfs", table=table_settings;
+         READTABLE, file="LGEN/LGEN_X3_P_FG_10Luglio2019.tfs", table=LGEN_HEBT_table;
       }else{
-         READTABLE, file="LGEN/LGEN_X3_C_FP_X2fit.tfs", table=table_settings;
+         READTABLE, file="LGEN/LGEN_X3_C_FP_X2fit.tfs", table=LGEN_HEBT_table;
       };
    };
 };
 
 saveOptics(additional): macro={
-  if (iLine==1) {
+   if (iLine==1) {
       exec, saveOpticsTFS(Room3_additional);
       exec, saveGeometryTFS(Room3_additional);
       exec, saveRmatrixTFS(Room3_additional);
@@ -146,11 +146,15 @@ saveOptics(additional): macro={
       exec, saveOpticsTFS(Room1_additional);
       exec, saveGeometryTFS(Room1_additional);
       exec, saveRmatrixTFS(Room1_additional);
+   }elseif (iLine==7) {
+      exec, saveOpticsTFS(XPR_ISO3_additional);
+      exec, saveGeometryTFS(XPR_ISO3_additional);
+      exec, saveRmatrixTFS(XPR_ISO3_additional);
    };
 };
 
 saveStrengths(additional,beamLine): macro={
-  if (iLine==1) {
+   if (iLine==1) {
       exec, save_strengths(Room3_additional,beamLine);
    }elseif (iLine==2) {
       exec, save_strengths(Room2H_additional,beamLine);
@@ -158,6 +162,8 @@ saveStrengths(additional,beamLine): macro={
       exec, save_strengths(Room2V_additional,beamLine);
    }elseif (iLine==4) {
       exec, save_strengths(Room1_additional,beamLine);
+   }elseif (iLine==7) {
+      exec, save_strengths(XPR_ISO3_additional,beamLine);
    };
 };
 
