@@ -74,13 +74,13 @@ H2_007A_CEB: KICKER, L= 0.52, HKICK := HKICK_H2_007A_CEB, VKICK := VKICK_H2_007A
 H2_008A_DRI: DRIFT, L= 0.0839;
 H2_008B_VVH: DRIFT, L= 0.07;
 H2_008C_DRI: DRIFT, L= 0.1023;
-H2_008D_BSH: DRIFT, L= 0.0;
+H2_008D_BSH: MARKER;
 H2_009A_DRI: DRIFT, L= 0.175;
 H2_009B_SFH: MONITOR, L= 0.0;
 H2_009C_DRI: DRIFT, L= 0.175;
-H2_009D_SIP: DRIFT, L= 0.0;
+H2_009D_SIP: MARKER;
 H2_010A_DRI: DRIFT, L= 0.0838;
-H2_010B_BSH: DRIFT, L= 0.0;
+H2_010B_BSH: MARKER;
 H2_011A_DRI: DRIFT, L= 0.1;
 H2_012A_QUE: QUADRUPOLE, L= 0.45, K1 := K1_H2_012A_QUE;
 H2_013A_DRI: DRIFT, L= 0.1;
@@ -99,10 +99,10 @@ H2_024B_BSH: DRIFT, L= 0.0;
 H2_025A_DRI: DRIFT, L= 0.175;
 H2_025B_SFH: MONITOR, L= 0.0;
 H2_025C_DRI: DRIFT, L= 0.175;
-H2_025D_SIP: DRIFT, L= 0.0;
-H2_025E_MIG: DRIFT, L= 0.0;
+H2_025D_SIP: MARKER;
+H2_025E_MIG: MARKER;
 H2_026A_DRI: DRIFT, L= 0.1385;
-H2_026B_BSH: DRIFT, L= 0.0;
+H2_026B_BSH: MARKER;
 
 ! ---------------------------------------------------------------
 ! H3
@@ -221,6 +221,71 @@ H5_019A_DRI: DRIFT, L= 0.1023;
 H5_019B_BSH: DRIFT, L= 0.0;
 H5_020A_DRI: DRIFT, L= 0.2398;
 
+! ---------------------------------------------------------------
+! HE
+! ---------------------------------------------------------------
+HE_001A_DRI:DRIFT,L = 1.8898;
+HE_002A_DRI:DRIFT,L = 0.1023;
+HE_002B_BSH:MARKER;
+HE_003A_VVH:DRIFT,L = 0.07;
+HE_004A_DRI:DRIFT,L = 0.1023;
+HE_004B_BSH:MARKER;
+HE_005A_FCV:DRIFT,L = 0.2;
+HE_006A_DRI:DRIFT,L = 0.0256;
+HE_007A_CEB:KICKER, L= 0.52, HKICK:= HKICK_HE_007A_CEB, VKICK:=VKICK_HE_007A_CEB;
+HE_008A_DRI:DRIFT,L = 0.1586;
+HE_009A_DRI:DRIFT,L = 0.1023;
+HE_009B_BSH:MARKER;
+HE_010A_DRI:DRIFT,L = 0.071;
+HE_010B_QPP:monitor, L=0;
+HE_010C_DRI:DRIFT,L = 0.124;
+HE_010D_DMP:DRIFT,L = 0.2;
+HE_010E_DRI:DRIFT,L = 0.055;
+HE_010F_TMP:MARKER;
+HE_010G_PVV:MARKER;
+HE_011A_DRI:DRIFT,L = 0.1023;
+HE_011B_BSH:MARKER;
+HE_012A_DRI:DRIFT,L = 0.071;
+HE_012B_SFP:monitor, L=0;
+HE_012C_DRI:DRIFT,L = 0.1095;
+HE_012D_BSE:DRIFT,L = 0.065;
+HE_012E_DRI:DRIFT,L = 0.095;
+HE_012F_BSE:DRIFT,L = 0.065;
+HE_012G_DRI:DRIFT,L = 0.0445;
+HE_012H_MIG:MARKER;
+HE_012I_SIP:MARKER;
+HE_013A_DRI:DRIFT,L = 0.1023;
+HE_013B_BSH:MARKER;
+HE_014A_DRI:DRIFT,L = 0.2645;
+HE_015A_CEB:KICKER, L= 0.52, HKICK:= HKICK_HE_015A_CEB, VKICK:=VKICK_HE_015A_CEB;
+HE_016A_DRI:DRIFT,L = 0.1325;
+HE_017A_DRI:DRIFT,L = 0.1325;
+HE_018A_QUE:QUADRUPOLE, L = 0.45, K1:=K1_HE_018A_QUE;
+HE_019A_DRI:DRIFT,L = 0.25;
+HE_020A_QUE:QUADRUPOLE, L = 0.45, K1:=K1_HE_020A_QUE;
+HE_021A_DRI:DRIFT,L = 0.1205;
+HE_022A_DRI:DRIFT,L = 0.1295;
+HE_023A_QUE:QUADRUPOLE, L = 0.45, K1:=K1_HE_023A_QUE;
+HE_024A_DRI:DRIFT,L = 0.25;
+HE_025A_QUE:QUADRUPOLE, L = 0.45, K1:=K1_HE_025A_QUE;
+HE_026A_DRI:DRIFT,L = 0.2215;
+HE_027A_CEB:KICKER, L= 0.52, HKICK:= HKICK_HE_027A_CEB, VKICK:=VKICK_HE_027A_CEB;
+HE_028A_DRI:MARKER;
+HE_029A_DRI:DRIFT,L = 0.0813;
+HE_029B_BSH:MARKER;
+HE_030A_DRI:DRIFT,L = 0.071;
+HE_030B_SFP:monitor, L=0;
+HE_030C_DRI:DRIFT,L = 0.1095;
+HE_030D_BSE:DRIFT,L = 0.065;
+HE_030E_DRI:DRIFT,L = 0.095;
+HE_030F_BSE:DRIFT,L = 0.065;
+HE_030G_DRI:DRIFT,L = 0.0445;
+HE_030H_MIG:MARKER;
+HE_030I_SIP:MARKER;
+HE_031A_DRI:DRIFT,L = 0.1023;
+HE_031B_BSH:MARKER;
+HE_032A_DRI:DRIFT,L = 3.0608;
+
 ! ===============================================================
 ! sequence definition
 ! ===============================================================
@@ -241,12 +306,19 @@ if (iH1<>0) {
 h2_003a_msw, at = 1.65;
 h2_005a_msw, at = 3.15;
 h2_007a_ceb, at = 4.21;
+h2_008d_bsh, at = 4.7262;
 h2_009b_sfh, at = 4.9012;
+h2_009d_sip, at = 5.0762;
+h2_010b_bsh, at = 5.16;
 h2_012a_que, at = 5.485;
 h2_016a_que, at = 6.155;
 h2_019a_ceb, at = 6.78;
 h2_022a_que, at = 7.405;
+h2_024b_bsh, at = 7.8208;
 h2_025b_sfh, at = 7.9958;
+h2_025d_sip, at = 8.1708;
+h2_025e_mig, at = 8.1708;
+h2_026b_bsh, at = 8.3093;
 h3_001a_chd, at = 8.4843;
 h3_003a_sw2, at = 9.81865251;
 h3_005a_chd, at = 11.15300502;
@@ -275,29 +347,82 @@ h5_015a_que, at = 5.57364740 ;
 h5_018b_sfh, at = 6.23684740 ;
 endsequence;
 
+! H2-H3 for XPR
+SEQEDIT, SEQUENCE=h2h4Line;
+FLATTEN;
+INSTALL, ELEMENT=H2_0010_STRT, CLASS=MARKER, AT=0.0;
+INSTALL, ELEMENT=HE_0010_STR,  CLASS=MARKER, AT=H3_001A_CHD->L/2+H3_002A_DRI->L+H3_002B_DRI->L, FROM=H3_001A_CHD;
+FLATTEN;
+EXTRACT, SEQUENCE=h2h4Line, FROM=H2_0010_STRT, TO=HE_0010_STR, NEWNAME=h2h3Line;
+ENDEDIT;
+seqedit, sequence=h2h3Line; flatten; endedit;
+! length of newly extracted sequence
+/*
+exec, setBeam(h2h3Line);
+use,sequence=h2h3Line;
+DUMPSEQU, SEQUENCE=h2h3Line, LEVEL=0;
+*/
+h2h3LineL=8.98005251; ! [m]
+
+! HE
+heLineL=12.3109;
+heLine: sequence, l=heLineL;
+he_002b_bsh, at = 1.9921 ;
+he_004b_bsh, at = 2.1644 ;
+he_007a_ceb, at = 2.65 ;
+he_009b_bsh, at = 3.1709 ;
+he_010b_qpp, at = 3.2419 ;
+he_010f_tmp, at = 3.6209 ;
+he_010g_pvv, at = 3.6209 ;
+he_011b_bsh, at = 3.7232 ;
+he_012b_sfp, at = 3.7942 ;
+he_012h_mig, at = 4.1732 ;
+he_012i_sip, at = 4.1732 ;
+he_013b_bsh, at = 4.2755 ;
+he_015a_ceb, at = 4.8 ;
+he_018a_que, at = 5.55 ;
+he_020a_que, at = 6.25 ;
+he_023a_que, at = 6.95 ;
+he_025a_que, at = 7.65 ;
+he_027a_ceb, at = 8.3565 ;
+he_028a_dri, at = 8.6165 ;
+he_029b_bsh, at = 8.6978 ;
+he_030b_sfp, at = 8.7688 ;
+he_030h_mig, at = 9.1478 ;
+he_030i_sip, at = 9.1478 ;
+he_031b_bsh, at = 9.2501 ;
+endsequence;
+
 if (iLine==3) {
-    h2h5LineL=h2h4LineL;
-    h2h5Line: sequence, l=h2h5LineL, refer=entry;
+    reqHLineL=h2h4LineL;
+    reqHLine: sequence, l=reqHLineL, refer=entry;
 	h2h4Line, at=0;
 	endsequence;
-}else{
-    h2h5LineL=h2h4LineL+h5LineL;
-    h2h5Line: sequence, l=h2h5LineL, refer=entry;
+}elseif(iLine<=4){
+    ! treatment rooms
+    reqHLineL=h2h4LineL+h5LineL;
+    reqHLine: sequence, l=reqHLineL, refer=entry;
 	h2h4Line, at=0;
 	h5Line, at=h2h4LineL;
 	endsequence;
+}else{
+    reqHLineL=H2H3LineL+heLineL;
+    reqHLine: sequence, l=reqHLineL, refer=entry;
+	h2h3Line, at=0;
+	heLine, at=H2H3LineL;
+	endsequence;
 };
-seqedit, sequence=h2h5Line; flatten; endedit;
+seqedit, sequence=reqHLine; flatten; endedit;
 if (iH1==0) {
-    hLineL=h2h5LineL;
+    hLineL=reqHLineL;
     hLine: sequence, l=hLineL, refer=entry;
-	h2h5Line, at=0;
+	reqHLine, at=0;
 	endsequence;
 }else{
-    hLineL=lH1line+h2h5LineL;
+    hLineL=lH1line+reqHLineL;
     hLine: sequence, l=hLineL, refer=entry;
 	H1line, at=0;
-	h2h5Line, at=lH1line;
+	reqHLine, at=lH1line;
 	endsequence;
 };
 seqedit, sequence=hLine; flatten; endedit;
