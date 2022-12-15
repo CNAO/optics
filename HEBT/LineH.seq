@@ -394,36 +394,22 @@ he_031b_bsh, at = 9.2501 ;
 endsequence;
 
 if (iLine==3) {
-    LineHtemp_L=LineH2H4_L;
-    LineHtemp_L: sequence, l=LineHtemp_L, refer=entry;
-	LineH2H4, at=0;
-	endsequence;
+	! Room 2V
+	exec, duplicateSequence(LineH2H4,LineHtemp);
 }elseif(iLine<=4){
-    ! treatment rooms
-    LineHtemp_L=LineH2H4_L+LineH5_L;
-    LineHtemp_L: sequence, l=LineHtemp_L, refer=entry;
-	LineH2H4, at=0;
-	LineH5, at=LineH2H4_L;
-	endsequence;
+    ! all other treatment room beam lines
+	exec, concatenate2Sequences(LineH2H4,LineH5,LineHtemp);
 }else{
-    LineHtemp_L=LineH2H3_L+LineHE_L;
-    LineHtemp_L: sequence, l=LineHtemp_L, refer=entry;
-	LineH2H3, at=0;
-	LineHE, at=LineH2H3_L;
-	endsequence;
+    ! XPR
+	exec, concatenate2Sequences(LineH2H3,LineHE,LineHtemp);
 };
 seqedit, sequence=LineHtemp_L; flatten; endedit;
 if (iH1==0) {
-    LineH_L=LineHtemp_L;
-    LineH: sequence, l=LineH_L, refer=entry;
-	LineHtemp_L, at=0;
-	endsequence;
+	! no need to insert H1
+	exec, duplicateSequence(LineHtemp,LineH);
 }else{
-    LineH_L=LineH1_L+LineHtemp_L;
-    LineH: sequence, l=LineH_L, refer=entry;
-	LineH1, at=0;
-	LineHtemp_L, at=LineH1_L;
-	endsequence;
+	! insert H1
+	exec, concatenate2Sequences(LineH1,LineHtemp,LineH);
 };
 seqedit, sequence=LineH; flatten; endedit;
 
