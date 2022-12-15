@@ -40,8 +40,8 @@ X3_015A_MOB:monitor, L=0;
 ! sequence definition
 ! ===============================================================
 
-x3LineL=4.8003;
-x3Line: sequence, l = x3LineL;
+LineX3_L=4.8003;
+LineX3: sequence, l = LineX3_L;
 x3_002b_bsh, at = 0.1983 ;
 x3_004a_scc, at = 0.6983 ;
 x3_006a_scc, at = 1.4183 ;

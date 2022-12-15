@@ -11,14 +11,14 @@ call, file="synchro_geo.cmdx";
 SEQEDIT, SEQUENCE=MUXL;
 FLATTEN;
 CYCLE, START=SE_010A_ESP_UP;
-EXTRACT, SEQUENCE=MUXL, FROM=SE_010A_ESP_UP, TO=S0_016A_MSP_UP, NEWNAME=H1line;
+EXTRACT, SEQUENCE=MUXL, FROM=SE_010A_ESP_UP, TO=S0_016A_MSP_UP, NEWNAME=LineH1;
 ENDEDIT;
-seqedit, sequence=H1line; flatten; endedit;
+seqedit, sequence=LineH1; flatten; endedit;
 
 ! length of newly extracted sequence
 /*
-exec, setBeam(H1line);
-use,sequence=H1line;
-DUMPSEQU, SEQUENCE=H1line, LEVEL=0;
+exec, setBeam(LineH1);
+use,sequence=LineH1;
+DUMPSEQU, SEQUENCE=LineH1, LEVEL=0;
 */
-lH1line=8.69701004; ! [m]
+LineH1_L=8.69701004; ! [m]

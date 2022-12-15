@@ -148,8 +148,8 @@ V2_031A_MOB: MONITOR, L= 0.0;
 ! sequence definition
 ! ===============================================================
 
-vLineL=33.86116767;
-vLine: sequence, l = vLineL ;
+LineV_L=33.86116767;
+LineV: sequence, l = LineV_L ;
 v1_001a_swv, at = 0.83860000 ;
 v1_003a_ceb, at = 2.20525251 ;
 v1_005a_mbu, at = 3.57190502 ;
@@ -185,9 +185,9 @@ endsequence;
 
 /*
 ! distribute MB kicks
-exec, surroundMBEND(V1_001A_SWV,vLine);
-exec, surroundMBEND(V1_005A_MBU,vLine);
-exec, surroundMBEND(V1_028A_MBD,vLine);
-exec, surroundMBEND(V1_032A_MBD,vLine);
-exec, surroundMBEND(V2_027A_HBM,vLine);
+exec, surroundMBEND(V1_001A_SWV,LineV);
+exec, surroundMBEND(V1_005A_MBU,LineV);
+exec, surroundMBEND(V1_028A_MBD,LineV);
+exec, surroundMBEND(V1_032A_MBD,LineV);
+exec, surroundMBEND(V2_027A_HBM,LineV);
 */

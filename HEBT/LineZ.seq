@@ -120,8 +120,8 @@ Z2_032A_MOB: MONITOR, L= 0.0;
 ! sequence definition
 ! ===============================================================
 
-zLineL=22.09559544;
-zLine: sequence, l = zLineL;
+LineZ_L=22.09559544;
+LineZ: sequence, l = LineZ_L;
 z1_001a_swh, at = 0.64614271 ;
 z1_004a_que, at = 2.56028290 ;
 z1_007b_sfh, at = 4.07864590 ;
@@ -152,6 +152,6 @@ endsequence;
 
 /*
 ! distribute MB kicks
-exec, surroundMBEND(Z1_001A_SWH,zLine);
-exec, surroundMBEND(Z1_009A_EDF,zLine);
+exec, surroundMBEND(Z1_001A_SWH,LineZ);
+exec, surroundMBEND(Z1_009A_EDF,LineZ);
 */

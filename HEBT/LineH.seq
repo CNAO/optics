@@ -291,8 +291,8 @@ HE_032A_DRI:DRIFT,L = 3.0608;
 ! ===============================================================
 
 ! H2-H4
-h2h4LineL=22.53997507;
-h2h4Line: sequence, l=h2h4LineL;
+LineH2H4_L=22.53997507;
+LineH2H4: sequence, l=LineH2H4_L;
 ! offsetting/tilting local ref system, to exit from MSN on axis
 if (iH1<>0) {
 	h2_0010_trsl, at = 0.0;
@@ -336,8 +336,8 @@ h4_018b_sfh, at = 20.81562256;
 endsequence;
 
 ! H5
-h5LineL=6.8959474;
-h5Line: sequence, l=h5LineL;
+LineH5_L=6.8959474;
+LineH5: sequence, l=LineH5_L;
 h5_001b_ceb, at = 2.65864740 ;
 h5_002b_sfh, at = 3.10924740 ;
 h5_005a_que, at = 3.64364740 ;
@@ -348,25 +348,25 @@ h5_018b_sfh, at = 6.23684740 ;
 endsequence;
 
 ! H2-H3 for XPR
-SEQEDIT, SEQUENCE=h2h4Line;
+SEQEDIT, SEQUENCE=LineH2H4;
 FLATTEN;
 INSTALL, ELEMENT=H2_0010_STRT, CLASS=MARKER, AT=0.0;
 INSTALL, ELEMENT=HE_0010_STR,  CLASS=MARKER, AT=H3_001A_CHD->L/2+H3_002A_DRI->L+H3_002B_DRI->L, FROM=H3_001A_CHD;
 FLATTEN;
-EXTRACT, SEQUENCE=h2h4Line, FROM=H2_0010_STRT, TO=HE_0010_STR, NEWNAME=h2h3Line;
+EXTRACT, SEQUENCE=LineH2H4, FROM=H2_0010_STRT, TO=HE_0010_STR, NEWNAME=LineH2H3;
 ENDEDIT;
-seqedit, sequence=h2h3Line; flatten; endedit;
+seqedit, sequence=LineH2H3; flatten; endedit;
 ! length of newly extracted sequence
 /*
-exec, setBeam(h2h3Line);
-use,sequence=h2h3Line;
-DUMPSEQU, SEQUENCE=h2h3Line, LEVEL=0;
+exec, setBeam(LineH2H3);
+use,sequence=LineH2H3;
+DUMPSEQU, SEQUENCE=LineH2H3, LEVEL=0;
 */
-h2h3LineL=8.98005251; ! [m]
+LineH2H3_L=8.98005251; ! [m]
 
 ! HE
-heLineL=12.3109;
-heLine: sequence, l=heLineL;
+LineHE_L=12.3109;
+LineHE: sequence, l=LineHE_L;
 he_002b_bsh, at = 1.9921 ;
 he_004b_bsh, at = 2.1644 ;
 he_007a_ceb, at = 2.65 ;
@@ -394,38 +394,38 @@ he_031b_bsh, at = 9.2501 ;
 endsequence;
 
 if (iLine==3) {
-    reqHLineL=h2h4LineL;
-    reqHLine: sequence, l=reqHLineL, refer=entry;
-	h2h4Line, at=0;
+    LineHtemp_L=LineH2H4_L;
+    LineHtemp_L: sequence, l=LineHtemp_L, refer=entry;
+	LineH2H4, at=0;
 	endsequence;
 }elseif(iLine<=4){
     ! treatment rooms
-    reqHLineL=h2h4LineL+h5LineL;
-    reqHLine: sequence, l=reqHLineL, refer=entry;
-	h2h4Line, at=0;
-	h5Line, at=h2h4LineL;
+    LineHtemp_L=LineH2H4_L+LineH5_L;
+    LineHtemp_L: sequence, l=LineHtemp_L, refer=entry;
+	LineH2H4, at=0;
+	LineH5, at=LineH2H4_L;
 	endsequence;
 }else{
-    reqHLineL=H2H3LineL+heLineL;
-    reqHLine: sequence, l=reqHLineL, refer=entry;
-	h2h3Line, at=0;
-	heLine, at=H2H3LineL;
+    LineHtemp_L=LineH2H3_L+LineHE_L;
+    LineHtemp_L: sequence, l=LineHtemp_L, refer=entry;
+	LineH2H3, at=0;
+	LineHE, at=LineH2H3_L;
 	endsequence;
 };
-seqedit, sequence=reqHLine; flatten; endedit;
+seqedit, sequence=LineHtemp_L; flatten; endedit;
 if (iH1==0) {
-    hLineL=reqHLineL;
-    hLine: sequence, l=hLineL, refer=entry;
-	reqHLine, at=0;
+    LineH_L=LineHtemp_L;
+    LineH: sequence, l=LineH_L, refer=entry;
+	LineHtemp_L, at=0;
 	endsequence;
 }else{
-    hLineL=lH1line+reqHLineL;
-    hLine: sequence, l=hLineL, refer=entry;
-	H1line, at=0;
-	reqHLine, at=lH1line;
+    LineH_L=LineH1_L+LineHtemp_L;
+    LineH: sequence, l=LineH_L, refer=entry;
+	LineH1, at=0;
+	LineHtemp_L, at=LineH1_L;
 	endsequence;
 };
-seqedit, sequence=hLine; flatten; endedit;
+seqedit, sequence=LineH; flatten; endedit;
 
 ! ===============================================================
 ! sequence manipulation
@@ -433,17 +433,17 @@ seqedit, sequence=hLine; flatten; endedit;
 
 /*
 ! distribute kick of chopper 
-exec, surroundKICKER(H3_001A_CHD,hLine);
-exec, surroundKICKER(H3_005A_CHD,hLine);
-exec, surroundKICKER(H3_013A_CHD,hLine);
-exec, surroundKICKER(H3_017A_CHD,hLine);
+exec, surroundKICKER(H3_001A_CHD,LineH);
+exec, surroundKICKER(H3_005A_CHD,LineH);
+exec, surroundKICKER(H3_013A_CHD,LineH);
+exec, surroundKICKER(H3_017A_CHD,LineH);
 */
 /*
 ! distribute other kicks
-exec, surroundMBEND(H2_001A_MSN,hLine);
-exec, surroundMBEND(H2_003A_MSW,hLine);
-exec, surroundMBEND(H2_005A_MSW,hLine);
-exec, surroundMBEND(H3_003A_SW2,hLine);
-exec, surroundMBEND(H3_009A_MBS,hLine);
-exec, surroundMBEND(H3_015A_MBS,hLine);
+exec, surroundMBEND(H2_001A_MSN,LineH);
+exec, surroundMBEND(H2_003A_MSW,LineH);
+exec, surroundMBEND(H2_005A_MSW,LineH);
+exec, surroundMBEND(H3_003A_SW2,LineH);
+exec, surroundMBEND(H3_009A_MBS,LineH);
+exec, surroundMBEND(H3_015A_MBS,LineH);
 */
