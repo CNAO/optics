@@ -9,9 +9,7 @@
 ! ---------------------------------------------------------------
 ! T1
 ! ---------------------------------------------------------------
-T1_001A_SWHPRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 T1_001A_SWH: SBEND, L= 1.2922854114, E1 = 0, E2 = -0.3054326191, ANGLE = -0.3054326191, K1 = 0, K2 = 0, HGAP = 0.032, FINT=0;
-T1_001A_SWHDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 T1_002A_DRI: DRIFT, L= 0.28927;
 T1_003A_DRI: DRIFT, L= 0.653727;
 T1_003B_BSH: DRIFT, L= 0.0;
@@ -35,9 +33,7 @@ T1_008A_DRI: DRIFT, L= 0.1023;
 T1_008B_BSH: DRIFT, L= 0.0;
 T1_008C_DRI: DRIFT, L= 0.23;
 T1_008D_DRI: DRIFT, L= 0.213225014;
-T1_009A_EDFPRIMA: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 T1_009A_EDF: SBEND, L= 0.976, E1 = -0.1090830782, E2 = -0.1090830782, ANGLE = -0.2181661565, K1 = 0, K2 = 0, HGAP = 0.036, FINT=0;
-T1_009A_EDFDOPO: KICKER, L= 0.0, HKICK = 0.000, VKICK = 0.0;
 T1_010A_DRI: DRIFT, L= 0.213225014;
 T1_010B_DRI: DRIFT, L= 0.0052;
 T1_011A_CEB: KICKER, L= 0.52, HKICK := HKICK_T1_011A_CEB, VKICK := VKICK_T1_011A_CEB;
@@ -126,14 +122,10 @@ T2_032A_MOB: MONITOR, L= 0.0;
 
 tLineL=22.09559544;
 tLine: sequence, l = tLineL;
-t1_001a_swhprima, at = 0.00000000 ;
 t1_001a_swh, at = 0.64614271 ;
-t1_001a_swhdopo, at = 1.29228542 ;
 t1_004a_que, at = 2.56028241 ;
 t1_007b_sfh, at = 4.07864541 ;
-t1_009a_edfprima, at = 4.79917043 ;
 t1_009a_edf, at = 5.28717043 ;
-t1_009a_edfdopo, at = 5.77517043 ;
 t1_011a_ceb, at = 6.25359544 ;
 t1_013a_que, at = 6.83859544 ;
 t1_016b_sfh, at = 7.40569544 ;
@@ -151,3 +143,13 @@ t2_026a_scc, at = 16.63559544 ;
 t2_030b_nzl, at = 21.23209544 ;
 t2_032a_mob, at = 22.09559544 ;
 endsequence;
+
+! ===============================================================
+! sequence manipulation
+! ===============================================================
+
+/*
+! distribute MB kicks
+exec, surroundMBEND(T1_001A_SWH,tLine);
+exec, surroundMBEND(T1_009A_EDF,tLine);
+*/
