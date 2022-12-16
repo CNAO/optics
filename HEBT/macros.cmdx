@@ -176,7 +176,7 @@ compute_RM_allCurrents(myMagName,myProperty,myI2K,fileName): macro={
       ! loop throuth LGEN data
       SETVARS, TABLE=LGEN_HEBT_table, ROW=nEnLevel;
       K0MB=K0MB_ref;
-      call, file="load_mag_settings/settings_from_LGEN_table.str";
+      call, file="strengths/settings_from_LGEN_table.str";
       
       ! notify user where we are
       PRINT, TEXT="==========================================================================================";

@@ -52,10 +52,10 @@ makeScanFromTable(fileName,tableName,monName): macro = {
 
       SETVARS, TABLE=table_scan, ROW=n;
       K0MB=K0MB_ref;
-      call, file="load_mag_settings/settings_from_LGEN_table.str";
-!       call, file="load_mag_settings/settings_from_LGEN_table_T1-T2.str";
-!       call, file="load_mag_settings/settings_from_LGEN_table_U1-U2.str";
-!       call, file="load_mag_settings/settings_from_LGEN_table_Z1-Z2.str";
+      call, file="strengths/settings_from_LGEN_table.str";
+!       call, file="strengths/settings_from_LGEN_table_T1-T2.str";
+!       call, file="strengths/settings_from_LGEN_table_U1-U2.str";
+!       call, file="strengths/settings_from_LGEN_table_Z1-Z2.str";
 
       ! notify user where we are
       PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
@@ -88,7 +88,7 @@ lunghezza=table(LGEN_HEBT_table,tablelength);
 n=lunghezza; ! C, 270mm
 SETVARS, TABLE=LGEN_HEBT_table, ROW=n;
 K0MB=K0MB_ref;
-call, file="load_mag_settings/settings_from_LGEN_table.str";
+call, file="strengths/settings_from_LGEN_table.str";
 ! - notify user where we are
 PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
 use,sequence=APICLS009;

@@ -89,7 +89,7 @@ lunghezza=table(LGEN_HEBT_table,tablelength);
 n=46; ! p, 90mm
 SETVARS, TABLE=LGEN_HEBT_table, ROW=n;
 K0MB=K0MB_ref;
-call, file="load_mag_settings/settings_from_LGEN_table.str";
+call, file="strengths/settings_from_LGEN_table.str";
 ! - notify user where we are
 PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
 use,sequence=APICLS009;

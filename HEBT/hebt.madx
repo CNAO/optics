@@ -92,7 +92,7 @@ exec, setBeam(APICLS009);
 ! ==============================================================================
 /*
 ! load desired optics
-call, file="load_mag_settings/kqinit30mmCarb.str";
+call, file="strengths/kqinit30mmCarb.str";
 
 Ek=62.58434; ! [MeV/n] kinetic energy per nucleon
 Bp=30; ! [mm] Bragg peak depth

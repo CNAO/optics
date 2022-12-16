@@ -10,7 +10,7 @@
 ! U1-U2
 ! ==============================================================================
 
-call, file="load_mag_settings/fits_U1-U2.cmdx";
+call, file="strengths/fits_U1-U2.cmdx";
 
 I_U1_008A_QUE = P9_003A_LGEN_A;      !H23
 F_U1_008A_QUE = 1.0;      
