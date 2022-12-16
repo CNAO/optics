@@ -10,7 +10,7 @@
 ! Z1-Z2
 ! ==============================================================================
 
-call, file="fits_Z1-Z2.cmdx";
+call, file="load_mag_settings/fits_Z1-Z2.cmdx";
 
 I_Z1_004A_QUE = PB_004A_LGEN_A;      !H29 
 F_Z1_004A_QUE = 1.0;      

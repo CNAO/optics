@@ -10,7 +10,7 @@
 ! T1-T2
 ! ==============================================================================
 
-call, file="fits_T1-T2.cmdx";
+call, file="load_mag_settings/fits_T1-T2.cmdx";
 
 I_T1_004A_QUE = P8_004A_LGEN_A;      !H36 
 F_T1_004A_QUE = 1.0;      
