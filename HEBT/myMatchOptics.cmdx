@@ -4,16 +4,16 @@
 
 ! - parse LGEN table to get TM values
 exec, parseHEBTtableLGEN();
-lunghezza=table(table_settings,tablelength);
+lunghezza=table(LGEN_HEBT_table,tablelength);
 ! - load proper line
 ! n=1; ! C,  30mm
 ! n=61; ! C, 150mm
 ! n=71; ! C, 170mm
 ! n=81; ! C, 190mm
 n=lunghezza; ! C, 270mm
-SETVARS, TABLE=table_settings, ROW=n;
+SETVARS, TABLE=LGEN_HEBT_table, ROW=n;
 K0MB=K0MB_ref;
-call, file="settings_from_LGEN_table.str";
+call, file="load_mag_settings/settings_from_LGEN_table.str";
 ! - notify user where we are
 PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
 use,sequence=APICLS009;

@@ -20,25 +20,25 @@ Brho=Brho_TM; ! [Tm]
 ! ------------------------------------------------------------------------------
 ! H2-H4
 ! ------------------------------------------------------------------------------
-call, file="settings_from_LGEN_table_H2-H4.str";
+call, file="load_mag_settings/settings_from_LGEN_table_H2-H4.str";
 
 ! ------------------------------------------------------------------------------
 ! H5-V1
 ! ------------------------------------------------------------------------------
-call, file="settings_from_LGEN_table_H5-V1.str";
+call, file="load_mag_settings/settings_from_LGEN_table_H5-V1.str";
 
 ! ------------------------------------------------------------------------------
 ! single ramifications
 ! ------------------------------------------------------------------------------
 
 if (iLine==1) {
-   call, file="settings_from_LGEN_table_T1-T2.str";
+   call, file="load_mag_settings/settings_from_LGEN_table_T1-T2.str";
 }elseif (iLine==2) {
-   call, file="settings_from_LGEN_table_U1-U2.str";
+   call, file="load_mag_settings/settings_from_LGEN_table_U1-U2.str";
 }elseif (iLine==3) {
-   call, file="settings_from_LGEN_table_V1-V2.str";
+   call, file="load_mag_settings/settings_from_LGEN_table_V1-V2.str";
 }elseif (iLine==4) {
-   call, file="settings_from_LGEN_table_Z1-Z2.str";
+   call, file="load_mag_settings/settings_from_LGEN_table_Z1-Z2.str";
 }elseif (iLine==7) {
-   call, file="settings_from_LGEN_table_XPR.str";
+   call, file="load_mag_settings/settings_from_LGEN_table_XPR.str";
 };
