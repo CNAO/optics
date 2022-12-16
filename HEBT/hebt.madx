@@ -46,26 +46,26 @@ call, file=macros.cmdx;
 call, file=../common_defs.madx;
 
 ! load desired HEBT
-call, file="LineH.seq";
+call, file="sequences/LineH.seq";
 if (iLine==1) {
    title, "HEBT CNAO - Line T - Room 3";
-   call, file="LineT.seq";
+   call, file="sequences/LineT.seq";
    exec, concatenate2Sequences(LineH,LineT,apicls009);
 }elseif(iLine==2) {
    title, "HEBT CNAO - Line U - Room 2(H)";
-   call, file="LineU.seq";
+   call, file="sequences/LineU.seq";
    exec, concatenate2Sequences(LineH,LineU,apicls009);
 }elseif(iLine==3) {
    title, "HEBT CNAO - Line V - Room 2(V)";
-   call, file="LineV.seq";
+   call, file="sequences/LineV.seq";
    exec, concatenate2Sequences(LineH,LineV,apicls009);
 }elseif(iLine==4) {
    title, "HEBT CNAO - Line Z - Sala 1";
-   call, file="LineZ.seq";
+   call, file="sequences/LineZ.seq";
    exec, concatenate2Sequences(LineH,LineZ,apicls009);
 }elseif(iLine==7) {
    title, "HEBT CNAO - Line XPR - ISO3";
-   call, file="LineX3.seq";
+   call, file="sequences/LineX3.seq";
    exec, concatenate2Sequences(LineH,LineX3,apicls009);
 }else{
    print, TEXT="Please specify a proper line!";
@@ -73,8 +73,8 @@ if (iLine==1) {
 };
 seqedit, sequence=apicls009; flatten; endedit;
 /*
-save, sequence=apicls009, file=hebt.seq, bare; // only sequence is saved
-save, sequence=apicls009, file=hebt.seq; // both sequence and elements are saved
+save, sequence=apicls009, file="hebt.seq", bare; // only sequence is saved
+save, sequence=apicls009, file="hebt.seq"; // both sequence and elements are saved
 */
 
 ! load initial conditions
