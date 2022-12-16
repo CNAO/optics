@@ -112,15 +112,15 @@ exec, saveStrengths(example,HEBT);
 ! ==============================================================================
 
 ! loop through .tfs file out of the repo with currents
-call, file="loopThroughLGENFile.cmdx";
+call, file="cmdx/loopThroughLGENFile.cmdx";
 
 ! compute response matrices
-! call, file="compute_RM.cmdx";
+! call, file="cmdx/compute_RM.cmdx";
 
 ! compute quad-dip scans
-! call, file="quad-dip-scans.cmdx";
+! call, file="cmdx/quad-dip-scans.cmdx";
 
 ! guess optics
-! call, file="guessOptics.cmdx";
-! call, file="myGuessOptics.cmdx";
-! call, file="myMatchOptics.cmdx";
+! call, file="cmdx/guessOptics.cmdx";
+! call, file="cmdx/myGuessOptics.cmdx";
+! call, file="cmdx/myMatchOptics.cmdx";
