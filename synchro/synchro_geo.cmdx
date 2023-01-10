@@ -8,21 +8,20 @@
 ! call, file="strengths/Magneti.str";
 
 !Azzero gli errori multipolari dei dipoli
-! AM: file does not exist!
-!call, file="lista_multi_zero-v2.txt";
+!call, file="lista_multi_zero-v2.txt"; ! AM: file does not exist!
 
 ! Definisco gli elementi del sincrotrone
-!call, file="cnao-elem-V2.def";
-call, file="cnao-elem-BDI-v3.ele";
+!call, file="cnao-elem-V2.def"; ! AM: file does not exist!
+call, file="sequences/cnao-elem-BDI-v3.ele";
 
 ! AM: overwrite the definition of some elements
-call, file="correct_elem_def.ele";
+call, file="sequences/correct_elem_def.ele";
 
 ! Definisco  l'anello come sequenza
 ! AM: the file should have a .seq extension
-call, file="synchro.seq";
+call, file="sequences/synchro.seq";
 ! Definisco  l'anello come linea
-!call, file="cnao-line.opt";
+!call, file="cnao-line.opt"; ! AM: file does not exist!
 
 ! DEFINISCO I MULTIPOLI
 ! AM: which is the difference between the two?
@@ -34,7 +33,7 @@ call, file="synchro.seq";
 ! call, file="strengths/sest.str";
 
 ! AM: install missing elements
-call, file="install_missing.seq";
+call, file="sequences/install_missing.seq";
 
 ! AM: apertures
-call, file="synchro.aper";
+call, file="sequences/synchro.aper";
