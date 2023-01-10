@@ -5,7 +5,7 @@
 call, file="macros.cmdx";
 
 ! load synchro lattice
-call, file="synchro_geo.cmdx";
+call, file="cmdx/synchro_geo.cmdx";
 
 ! extract H1 line
 SEQEDIT, SEQUENCE=MUXL;

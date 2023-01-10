@@ -32,7 +32,7 @@ call, file="macros.cmdx";
 call, file="../common_defs.madx";
 
 ! load synchro geometry
-call, file="synchro_geo.cmdx";
+call, file="cmdx/synchro_geo.cmdx";
 
 ! Definisco il tipo di fascio (caratteristiche particella e
 !    MADX beam command)
@@ -46,7 +46,7 @@ exec, setBeam(MUXL);
 exec, setRigidity();
 
 ! load optics
-call, file="example.str";
+call, file="strengths/example.str";
 
 ! set injection bumper k from the specified current
 exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];
@@ -69,10 +69,10 @@ exec, save_strengths(myOptics,synchro);
 ! ==============================================================================
 
 ! loop through .txt file out of an excel for generating magnet ramps
-! call, file="loopThroughRampGenFile.cmdx";
+! call, file="cmdx/loopThroughRampGenFile.cmdx";
 
 ! loop through .tfs file out of the repo with currents
-! call, file="loopThroughLGENFile.cmdx";
+! call, file="cmdx/loopThroughLGENFile.cmdx";
 
 ! compute a vertical bump (loop through .tfs file out of the repo with currents)
-! call, file="matchVBump.cmdx";
+! call, file="cmdx/matchVBump.cmdx";

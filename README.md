@@ -1,5 +1,11 @@
 # optics
-Repository storing some optics material - e.g. synchrotron, HEBT, MADX macros, etc...
+Repository storing some optics material.
+The material for each accelerator beam line is stored in a specific folder - e.g. synchro, HEBT (including XPR) and MEBT, for the time being.
+
+When running MADX on a specific accelerator line, please make sure that:
+* you run MADX in the line folder (e.g. you are in `optics/HEBT`);
+* you always start from a main MADX file (e.g. `hebt.madx`).
+If you do not respect these assumptions, then MADX `call` commands may not find the necessary files in the specified paths.
 
 ## MAD-X file extensions
 Extensions are given in alphabetical order
@@ -12,7 +18,7 @@ Extensions are given in alphabetical order
 | `.def`   | some definitions |
 | `.ele`   | definition of single elements |
 | `.madx`  | generic MAD-X script |
-| `.opt`   | optical functions (e.g. starting conditions) |
+| `.opt`   | starting conditions |
 | `.seq`   | definition of sequence |
 | `.str`   | magnet strengths for a specific optics |
 

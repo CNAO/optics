@@ -54,10 +54,10 @@ if ( i_start_cond<0 ) {
   call, file=start-conditions.opt;
 };
 
-! call, file="k_quads.str";
-! call, file="k_Kicks.str";
-call, file="quads.str";
-call, file="corrs.str";
+! call, file="strengths/k_quads.str";
+! call, file="strengths/k_Kicks.str";
+call, file="strengths/quads.str";
+call, file="strengths/corrs.str";
 
 ! ==============================================================================
 ! a simple example
@@ -93,14 +93,14 @@ exec, saveRmatrixTFS(example);
 ! ==============================================================================
 
 ! compute response matrices
-! call, file="compute_RM.cmdx";
+! call, file="cmdx/compute_RM.cmdx";
 
-! call, file="reproduce_MEBT_scans.cmdx";
+! call, file="cmdx/reproduce_MEBT_scans.cmdx";
 
-! call, file="scans_quads.cmdx";
+! call, file="cmdx/scans_quads.cmdx";
 
-! call, file="scans_quads_ReMat.cmdx";
+! call, file="cmdx/scans_quads_ReMat.cmdx";
 
 ! compute quad-dip scans
-call, file="quad-dip-scans.cmdx";
+call, file="cmdx/quad-dip-scans.cmdx";
 
