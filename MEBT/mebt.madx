@@ -93,14 +93,14 @@ exec, saveRmatrixTFS(example);
 ! ==============================================================================
 
 ! compute response matrices
-! call, file="compute_RM.cmdx";
+! call, file="cmdx/compute_RM.cmdx";
 
-! call, file="reproduce_MEBT_scans.cmdx";
+! call, file="cmdx/reproduce_MEBT_scans.cmdx";
 
-! call, file="scans_quads.cmdx";
+! call, file="cmdx/scans_quads.cmdx";
 
-! call, file="scans_quads_ReMat.cmdx";
+! call, file="cmdx/scans_quads_ReMat.cmdx";
 
 ! compute quad-dip scans
-call, file="quad-dip-scans.cmdx";
+call, file="cmdx/quad-dip-scans.cmdx";
 
