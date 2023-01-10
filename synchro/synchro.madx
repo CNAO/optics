@@ -46,7 +46,7 @@ exec, setBeam(MUXL);
 exec, setRigidity();
 
 ! load optics
-call, file="example.str";
+call, file="strengths/example.str";
 
 ! set injection bumper k from the specified current
 exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];

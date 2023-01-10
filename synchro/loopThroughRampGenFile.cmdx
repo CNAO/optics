@@ -16,7 +16,7 @@ n=Nstart;
 WHILE (n <= Nstop ) {
 
 SETVARS, TABLE=RAMPGEN_synchro_table, ROW=n;
-call, file="settings_from_rampGen_table.str";
+call, file="strengths/settings_from_rampGen_table.str";
 K0MB=K0MB_ref;
 
 exec, setRigidity();

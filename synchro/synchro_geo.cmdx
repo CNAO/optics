@@ -5,7 +5,7 @@
 
 ! LEGGO I PARAMETRI DEI VARI MAGNETI
 ! AM: kept call for historical reasons...
-! call, file="Magneti.str";
+! call, file="strengths/Magneti.str";
 
 !Azzero gli errori multipolari dei dipoli
 ! AM: file does not exist!
@@ -26,12 +26,12 @@ call, file="synchro.seq";
 
 ! DEFINISCO I MULTIPOLI
 ! AM: which is the difference between the two?
-!call, file="multipoli.str";
-!call, file="multipoli_2.str";
+!call, file="strengths/multipoli.str";
+!call, file="strengths/multipoli_2.str";
 
 ! ridefinisco i K dei sestupoli
 ! AM: kept call for historical reasons...
-! call, file="sest.str";
+! call, file="strengths/sest.str";
 
 ! AM: install missing elements
 call, file="install_missing.seq";
