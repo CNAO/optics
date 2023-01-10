@@ -54,10 +54,10 @@ if ( i_start_cond<0 ) {
   call, file=start-conditions.opt;
 };
 
-! call, file="k_quads.str";
-! call, file="k_Kicks.str";
-call, file="quads.str";
-call, file="corrs.str";
+! call, file="strengths/k_quads.str";
+! call, file="strengths/k_Kicks.str";
+call, file="strengths/quads.str";
+call, file="strengths/corrs.str";
 
 ! ==============================================================================
 ! a simple example
