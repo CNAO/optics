@@ -35,7 +35,7 @@ WHILE (n <= Nstop ) {
    if (iH1<>0) {
       CHDIR, DIR="../synchro";
 	  SETVARS, TABLE=LGEN_synchro_table, ROW=n;
-      call, file="settings_from_LGEN_table.str";
+      call, file="strengths/settings_from_LGEN_table.str";
 
 	  ! notify user where we are
 	  PRINTF, TEXT="...with H1 line: at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
