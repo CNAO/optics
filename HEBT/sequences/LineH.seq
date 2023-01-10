@@ -46,7 +46,7 @@ if (iH1<>0) {
 if (iH1<>0) {
    ! extract H1 from synchro lattice
    CHDIR, DIR="../synchro";
-   call, file="extract_H1sequence.cmdx";
+   call, file="cmdx/extract_H1sequence.cmdx";
    CHDIR, DIR="../HEBT";
 };
 
