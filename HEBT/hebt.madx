@@ -15,7 +15,7 @@ is_carbon=1;
 ! 0: initial conditions at entrance of ESE
 ! 1: initial conditions at entrance of S0-016A-MSP (synchro seq)
 !    / H2-001A-MSN (HEBT seq)
-start_cond=1;
+start_cond=0;
 
 ! 0: chopper HEBT off
 ! 1: chopper HEBT on
@@ -29,16 +29,16 @@ iChopper=0;
 ! 6: XPR, ISO2
 ! 7: XPR, ISO3 (only available one, for the time being)
 ! 8: XPR, ISO4
-iLine=3;
+iLine=7;
 
 ! consider also H1 line (kicks are available only in case of LGEN currents)
 ! the H1 line is automatically extracted from synchro sequence
 ! 0: do NOT load H1 line
 ! 1: DO load H1 line
-iH1=0;
+iH1=1;
 
 iMacro_I2K_QU=5;  ! 1: linear; 5: fifth order;
-iMacro_I2K_ded=1; ! 0: general one; 1: specific for each magnet (NOT yet available for XPR beam line);
+iMacro_I2K_ded=1; ! 0: general one; 1: specific for each magnet (only QUEs for the time being);
 
 call, file=../macros.cmdx;
 call, file=macros.cmdx;
