@@ -4,49 +4,112 @@ pathToLibrary="..\MatLabTools";
 addpath(genpath(pathToLibrary));
 
 %% user input
-xlsFile="S:\Accelerating-System\Magnets\Magnetic Measurements\Frascati\HEBT\Misure\Quadrupoli\QHEBTSerie_Finale.xls";
+% - mag measurements
+xlsFile="P:\Accelerating-System\Magnets\Magnetic Measurements\Frascati\HEBT\Misure\Quadrupoli\QHEBTSerie_Finale.xls";
 xlsSheetName="IntegField";
 xlsRange="A3:CF11";
 magFamily="QHEBT";
 Lmag=0.449; % [m]
 Rcoil=32E-3; % [m]
+% - mapping
+xlsMappingFile="mappingInstallationSlots.xlsx";
 
-%% parse file
+%% parse files
+% - magnetic measurements
 [Is,Bs]=ParseMagMeasurements(xlsFile,xlsSheetName,xlsRange);
-Bs=Bs/Rcoil;
 nMagnets=size(Bs,2);
 magNames=compose("%s#%02i",magFamily,1:nMagnets);
+%% - mapping
+fprintf("parsing file %s ...\n",xlsMappingFile);
+mapping=readtable(xlsMappingFile);
+fprintf("...done.\n");
 
-%% plot all
-myNames=[ "T1_004A_QUE" "T1_013A_QUE" "T1_019A_QUE" "T2_005A_QUE" "T2_012A_QUE" "T2_018A_QUE" ];
+%% choose the magnets and fit the data
+% myNames=[ "H2_012A_QUE" "H2_016A_QUE" "H2_022A_QUE" "H4_003A_QUE" "H4_007A_QUE" "H4_013A_QUE" ];
+% myNames=[ "H5_005A_QUE" "H5_009A_QUE" "H5_015A_QUE" "V1_010A_QUE" "V1_014A_QUE" "V1_018A_QUE" "V1_022A_QUE" ];
+% myNames=[ "T1_004A_QUE" "T1_013A_QUE" "T1_019A_QUE" "T2_005A_QUE" "T2_012A_QUE" "T2_018A_QUE" ];
 % myNames=[ "U1_008A_QUE" "U1_014A_QUE" "U1_018A_QUE" "U2_006A_QUE" "U2_010A_QUE" "U2_016A_QUE" ];
+myNames=[ "V1_037A_QUE" "V1_041A_QUE" "V1_047A_QUE" "V2_006A_QUE" "V2_010A_QUE" "V2_016A_QUE" ];
 % myNames=[ "Z1_004A_QUE" "Z1_013A_QUE" "Z1_019A_QUE" "Z2_005A_QUE" "Z2_012A_QUE" "Z2_018A_QUE" ];
-% myNames="U1_008A_QUE";
-myChoice=find(Names2IDs(myNames));
-ShowValues(Is(:,myChoice),Bs(:,myChoice),compose("%s - %s",[myNames' magNames(myChoice)'])',"g [T/m]",true);
+% myNames=[ "HE_018A_QUE" "HE_020A_QUE" "HE_023A_QUE" "HE_025A_QUE" ];
+% myNames="Z1_019A_QUE";
+% - parse mapping and get IDs of magnets
+myChoice=Names2IDs(myNames,string(mapping.HEBT_QUE));
+
+% - fit data (converted into T/m)
+pp=missing();
+%   linear fit:
+pp=ExpandMat(pp,FitData(Is(:,myChoice),Bs(:,myChoice)./Rcoil,1)); % linear fit
+pp=ExpandMat(pp,NaN(2,2));                                        % 2nd order polynomial fit
+pp=ExpandMat(pp,NaN(2,2));                                        % 3rd order polynomial fit
+pp=ExpandMat(pp,NaN(2,2));                                        % 4th order polynomial fit
+pp=ExpandMat(pp,FitData(Is(:,myChoice),Bs(:,myChoice)./Rcoil,5)); % 5th order polynomial fit
+
+% - Ref curves
+ppRef=NaN(1,6,5);
+%   linear fitting: K1(I)=0.03258/(0.45*biro) *I_MagName
+iOrder=1; ppRef(1,1:iOrder+1,iOrder)=[ 0.03258/0.45 0.0 ];
+iOrder=5; ppRef(1,1:iOrder+1,iOrder)=[ +1.3348656E-11 -1.1996845e-8 +3.498485e-6 -4.26890e-4 +9.32005e-2 -2.794551e-1 ];
+
+% - show selected data (cross check)
+ShowValues(Is(:,myChoice),Bs(:,myChoice),compose("%s - %s",[myNames' magNames(myChoice)'])',"B [T]",ppRef*Rcoil,pp*Rcoil);
+
+%% show values and fits
+ShowValues(Is(:,myChoice),Bs(:,myChoice)./Rcoil,compose("%s - %s",[myNames' magNames(myChoice)'])',"g [T/m]",ppRef,pp);
 
 %% dump coefficients in file
-SaveFitsToMADX(Is(:,myChoice),Bs(:,myChoice),myNames,"test.cmdx");
+% SaveFitsToMADX(pp,myNames,"fits_H2-H4.cmdx");
+% SaveFitsToMADX(pp,myNames,"fits_H5-V1.cmdx");
+% SaveFitsToMADX(pp,myNames,"fits_U1-U2.cmdx");
+SaveFitsToMADX(pp,myNames,"fits_V1-V2.cmdx");
+% SaveFitsToMADX(pp,myNames,"fits_T1-T2.cmdx");
+% SaveFitsToMADX(pp,myNames,"fits_XPR.cmdx");
+% SaveFitsToMADX(pp,myNames,"test.cmdx");
 
 %% functions
 
-function SaveFitsToMADX(Is,Bs,magNames,fileName)
-    nMagnets=size(Bs,2);
-    linFitRange=1:4;
+function SaveFitsToMADX(pp,magNames,fileName)
+    nMagnets=size(pp,1);
+    nOrders=size(pp,3);
     fileID=fopen(fileName,"w");
     for ii=1:nMagnets
-        % linear fit
-        pLin = polyfit(Is(linFitRange,ii),Bs(linFitRange,ii),1);
-        fprintf(fileID,"! dedicated linear fit for %s\n",magNames(ii));
-        DumpCoeff(fileID,magNames(ii),pLin);
-        % fifth order fit
-        pFif = polyfit(Is(:,ii),Bs(:,ii),5);
-        fprintf(fileID,"! dedicated 5th order polynomial fit for %s\n",magNames(ii));
-        DumpCoeff(fileID,magNames(ii),pFif);
-        % 
+        for iOrder=1:nOrders
+            if ( any(~isnan(pp(ii,1:iOrder+1,iOrder))) )
+                fprintf(fileID,"! dedicated %s fit for magnet %s\n",MyOrderLeg(iOrder),magNames(ii));
+                DumpCoeff(fileID,magNames(ii),pp(ii,1:iOrder+1,iOrder));
+            end
+        end
         fprintf(fileID,"\n");
     end
     fclose(fileID);
+end
+
+function [pp]=FitData(Is,Bs,iOrder)
+    if (~exist("iOrder","var")), iOrder=1; end
+    nMagnets=size(Bs,2);
+    nData=size(Bs,1);
+    if (iOrder==1)
+        rangeFit=1:4;
+    else
+        rangeFit=1:nData;
+    end
+    pp=NaN(nMagnets,iOrder+1);
+    for ii=1:nMagnets
+        pp(ii,:)=polyfit(Is(rangeFit,ii),Bs(rangeFit,ii),iOrder);
+    end
+end
+
+function myLeg=MyOrderLeg(iOrder)
+    switch iOrder
+        case 1
+            myLeg="linear";
+        case 2
+            myLeg="2^{nd} order";
+        case 3
+            myLeg="3^{rd} order";
+        otherwise
+            myLeg=sprintf("%d^{th} order",iOrder);
+    end
 end
 
 function DumpCoeff(fileID,magName,pp)
@@ -60,19 +123,16 @@ function DumpCoeff(fileID,magName,pp)
     end
     
     for jj=1:length(pp)
-        fprintf(fileID,"a%d_%s_%s=% 12.6E;\n",jj-1,myNam,magName,pp(length(pp)-jj+1));
+        fprintf(fileID,"a%d_%s_%s=% 22.16E;\n",jj-1,myNam,magName,pp(length(pp)-jj+1));
     end
 end
 
-function IDs=Names2IDs(names)
-    %% acquiring maps
-    HEBT_QUEs=ParseMapping();
-    %% actually getting IDs
+function IDs=Names2IDs(names,mapList)
     nMagnets=length(names);
     IDs=NaN(nMagnets,1);
     for ii=1:nMagnets
         if ( endsWith(names(ii),"QUE",'IgnoreCase',true) )
-            myID=find(strcmpi(HEBT_QUEs,names(ii)));
+            myID=find(strcmpi(mapList,names(ii)));
             if ( isempty(myID) )
                 error("unable to identify MAGNET named %s!",names(ii));
             else
@@ -84,90 +144,100 @@ function IDs=Names2IDs(names)
     end
 end
 
-function ShowValues(Is,Bs,magNames,yLab,lFit)
+function ShowValues(Is,Bs,magNames,yLab,ppRef,pp)
     if ( ~exist("yLab","var") ), yLab="g [T/m]"; end
-    if ( ~exist("lFit","var") ), lFit=false; end
     nMagnets=size(Bs,2);
-    if ( lFit )
-        for ii=1:nMagnets
-            ShowValuesActual(Is(:,ii),Bs(:,ii),magNames(ii),yLab,lFit);
-        end
-    else
-        ShowValuesActual(Is,Bs,magNames,yLab,lFit);
-    end
-end
-
-function ShowValuesActual(Is,Bs,magNames,yLab,lFit)
-    nMagnets=size(Bs,2);
-    figure();
-    if ( nMagnets>1 )
-        cm=colormap(parula(nMagnets));
-        if (lFit), error("...only one magnet, if you want to fit!"); end
-    else
-        cm=[ 0 0 0 ]; % black
-    end
-    linFitRange=1:4;
     
-    %% reference functions
-    % - K1(I)=0.03258/(0.45*biro) *I_MagName
-    Glin=@(x) 0.03258/0.45*x;
-    Gfifth=@(x) -2.794551e-1         ...
-                +9.32005e-2   *x     ...
-                -4.26890e-4   *x.^2  ...
-                +3.498485e-6  *x.^3  ...
-                -1.1996845e-8 *x.^4  ...
-                +1.3348656E-11*x.^5;
-
-    %% show data
-    for ii=1:nMagnets
-        if (ii>1), hold on; end
-        plot(Is(:,ii),Bs(:,ii),"*","Color",cm(ii,:));
-    end
-    % reference curves:
-    Iref=linspace(min(Is,[],"all"),max(Is,[],"all"),100);
-    hold on; plot(Iref,Glin(Iref),"r-",Iref,Gfifth(Iref),"b-");
-    myLeg=[LabelMe(magNames) "ref (lin)" "ref (5^{th} order)"];
-    % dedicated fits
-    if ( lFit )
-        for ii=1:nMagnets
-            % linear fit
-            pLin = polyfit(Is(linFitRange,ii),Bs(linFitRange,ii),1);
-            yLin = polyval(pLin,Iref);
-            % fifth order fit
-            pFif = polyfit(Is(:,ii),Bs(:,ii),5);
-            yFif = polyval(pFif,Iref);
-            % show plots
-            hold on; plot(Iref,yLin,"m-",Iref,yFif,"c-");
-            myLeg=[myLeg "fit (lin)" "fit (5^{th} order)"];
+    % actually plot
+    figure();
+    if ( exist("ppRef","var") )
+        if ( exist("pp","var") )
+            nMaxOrders=max(size(ppRef,3),size(pp,3));
+        else
+            nMaxOrders=size(ppRef,3);
         end
-    end
-    % general stuff
-    grid(); xlabel("I [A]"); ylabel(yLab); legend(myLeg,"Location","best");
-
-    %% show errors from fits
-    if ( lFit )
+        cm=colormap(gcf,jet(nMaxOrders));
+        % - reference curves (computed only once)
+        Iref=linspace(min(Is,[],"all"),max(Is,[],"all"),100);
+        yRefs=NaN(length(Iref),nMaxOrders);
+        iLeg=0;
+        for iOrder=1:nMaxOrders
+            if ( any(~isnan(ppRef(1,1:iOrder+1,iOrder))) )
+                yRefs(:,iOrder)=polyval(ppRef(1,1:iOrder+1,iOrder),Iref);
+                iLeg=iLeg+1;
+                myLeg(iLeg)=sprintf("ref (%s)",MyOrderLeg(iOrder));
+            end
+        end
+        [nRows,nCols,lDispHor]=GetNrowsNcols(nMagnets*2,2); % display coupled plots
+        % - plot
+        iPlot=0;
         for ii=1:nMagnets
-            figure();
-            % reference fits
-            plot(Is(linFitRange,ii),(Glin(Is(linFitRange,ii))./Bs(linFitRange,ii)-1)*100,"r.-");
-            hold on;
-            plot(Is(:,ii),(Gfifth(Is(:,ii))./Bs(:,ii)-1)*100,"b.-");
-            % linear fit
-            pLin = polyfit(Is(linFitRange,ii),Bs(linFitRange,ii),1);
-            yLin = polyval(pLin,Is(linFitRange,ii));
-            % fifth order fit
-            pFif = polyfit(Is(:,ii),Bs(:,ii),5);
-            yFif = polyval(pFif,Is(:,ii));
-            % show plots
-            plot(Is(linFitRange,ii),(yLin./Bs(linFitRange,ii)-1)*100,"m.-");
-            hold on;
-            plot(Is(:,ii),(yFif./Bs(:,ii)-1)*100,"c.-");
-            myLeg=["ref (lin)" "ref (5^{th} order)" "fit (lin)" "fit (5^{th} order)"];
-            % general stuff
-            grid(); xlabel("I [A]"); ylabel("\Delta [%]"); legend(myLeg,"Location","best");
+            
+            % measured values of magnet
+            Itmp=Is(:,ii); BsTmp=Bs(:,ii);
+            
+            % - absolute values
+            iPlot=iPlot+1;
+            subplot(nRows,nCols,iPlot);
+            %   . measured values
+            plot(Itmp,BsTmp,"k*");
+            %   . ref curves
+            for iOrder=1:nMaxOrders
+                if ( any(~isnan(ppRef(1,1:iOrder+1,iOrder))) )
+                    hold on; plot(Iref,yRefs(:,iOrder),":","Color",cm(iOrder,:));
+                end
+            end
+            %   . fit curves
+            if ( exist("pp","var") )
+                yFits=NaN(length(Iref),nMaxOrders);
+                for iOrder=1:nMaxOrders
+                    if ( any(~isnan(pp(ii,1:iOrder+1,iOrder))) )
+                        yFits(:,iOrder)=polyval(pp(ii,1:iOrder+1,iOrder),Iref);
+                        hold on; plot(Iref,yFits(:,iOrder),"-","Color",cm(iOrder,:));
+                        if (ii==1)
+                            myLeg(end+1)=sprintf("fit (%s)",MyOrderLeg(iOrder));
+                        end
+                    end
+                end
+            end
+            %   . general stuff
+            grid(); xlabel("I [A]"); ylabel(yLab); legend(["data" myLeg],"Location","best");
             title(LabelMe(magNames(ii)));
+            
+            % - deltas
+            iPlot=iPlot+1;
+            subplot(nRows,nCols,iPlot);
+            %   . measured values (to compute deltas)
+            plot(NaN(),NaN(),"k*");
+            %   . ref curves
+            for iOrder=1:nMaxOrders
+                if ( any(~isnan(ppRef(1,1:iOrder+1,iOrder))) )
+                    hold on; plot(Itmp,(polyval(ppRef(1,1:iOrder+1,iOrder),Itmp)./BsTmp-1)*100,".:","Color",cm(iOrder,:));
+                end
+            end
+            %   . fit curves
+            if ( exist("pp","var") )
+                for iOrder=1:nMaxOrders
+                    if ( any(~isnan(pp(ii,1:iOrder+1,iOrder))) )
+                        hold on; plot(Itmp,(polyval(pp(ii,1:iOrder+1,iOrder),Itmp)./BsTmp-1)*100,".-","Color",cm(iOrder,:));
+                    end
+                end
+            end
+            %   . general stuff
+            grid(); xlabel("I [A]"); ylabel("\Delta [%]"); legend(["" myLeg],"Location","best");
+            title(LabelMe(magNames(ii)));
+            % ylim([-2 2]);
+       end
+    else
+        % simply show data
+        cm=colormap(gcf,jet(nMagnets));
+        for ii=1:nMagnets
+            if (ii>1), hold on; end
+            plot(Is(:,ii),Bs(:,ii),"*","Color",cm(ii,:));
         end
+        grid(); xlabel("I [A]"); ylabel(yLab); legend(LabelMe(magNames),"Location","best");
     end
+    
 end
 
 function [Is,Bs]=ParseMagMeasurements(xlsFile,xlsSheetName,xlsRange)
@@ -187,22 +257,4 @@ function [Is,Bs]=ParseMagMeasurements(xlsFile,xlsSheetName,xlsRange)
     
     Is(ismissing(Is))=NaN();
     Bs(ismissing(Bs))=NaN();
-end
-
-function HEBT_QUEs=ParseMapping(xlsFile)
-    if ( ~exist("xlsFile","var") ), xlsFile="mappingInstallationSlots.xlsx"; end
-    fprintf("parsing file %s ...\n",xlsFile);
-    myTab=readcell(xlsFile);
-    
-    fprintf("...assigning parsed data...\n");
-    myHeads=string(myTab(1,:));
-    for iCol=1:length(myHeads)
-        switch upper(myHeads(iCol))
-            case "HEBT_QUE"
-                HEBT_QUEs=string(myTab(2:end,iCol));
-                HEBT_QUEs=HEBT_QUEs(~ismissing(HEBT_QUEs));
-        end
-    end
-    
-    fprintf("...done.\n");
 end
