@@ -27,9 +27,9 @@ iChopper=0;
 ! 4: LineZ, Room 1
 ! 5: XPR, ISO1
 ! 6: XPR, ISO2
-! 7: XPR, ISO3 (only available one, for the time being)
+! 7: XPR, ISO3
 ! 8: XPR, ISO4
-iLine=7;
+iLine=8;
 
 ! consider also H1 line (kicks are available only in case of LGEN currents)
 ! the H1 line is automatically extracted from synchro sequence
@@ -64,10 +64,22 @@ if (iLine==1) {
    title, "HEBT CNAO - Line Z - Sala 1";
    call, file="sequences/LineZ.seq";
    exec, concatenate2Sequences(LineH,LineZ,apicls009);
+}elseif(iLine==5) {
+   title, "HEBT CNAO - Line XPR - ISO1";
+   call, file="sequences/LineX1.seq";
+   exec, concatenate2Sequences(LineH,LineX1,apicls009);
+}elseif(iLine==6) {
+   title, "HEBT CNAO - Line XPR - ISO2";
+   call, file="sequences/LineX2.seq";
+   exec, concatenate2Sequences(LineH,LineX2,apicls009);
 }elseif(iLine==7) {
    title, "HEBT CNAO - Line XPR - ISO3";
    call, file="sequences/LineX3.seq";
    exec, concatenate2Sequences(LineH,LineX3,apicls009);
+}elseif(iLine==8) {
+   title, "HEBT CNAO - Line XPR - ISO4";
+   call, file="sequences/LineX4.seq";
+   exec, concatenate2Sequences(LineH,LineX4,apicls009);
 }else{
    print, TEXT="Please specify a proper line!";
    stop;

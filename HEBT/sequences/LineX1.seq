@@ -1,0 +1,32 @@
+!
+! This is the description of HEBT X2 line (aka ISO 1)
+!
+
+! load macros for XPR geometry
+call, file="cmdx/XPRseqMacros.cmdx";
+
+! ===============================================================
+! element definition
+! ===============================================================
+
+X1_001A_VVH:DRIFT,L = 0.07;
+X1_002A_DRI:DRIFT,L = 0.1283;
+X1_002B_BSH:MARKER;
+X1_003A_DRI:DRIFT,L = 0.231;
+X1_003B_BSH:MARKER;
+X1_004A_DRI:DRIFT,L = 0.075;
+X1_004B_DRI:MARKER;
+X1_005A_DRI:DRIFT,L = 0.65;
+X1_006A_MOB:monitor, L=0;
+
+! ===============================================================
+! sequence definition
+! ===============================================================
+
+LineX1_L=1.1543;
+LineX1: sequence, l = LineX1_L;
+x1_002b_bsh, at = 0.1983;
+x1_003b_bsh, at = 0.4293;
+x1_004b_dri, at = 0.5043;
+x1_006a_mob, at = 1.1543;
+endsequence;

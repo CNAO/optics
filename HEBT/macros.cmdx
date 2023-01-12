@@ -146,10 +146,22 @@ saveOptics(additional): macro={
       exec, saveOpticsTFS(Room1_additional);
       exec, saveGeometryTFS(Room1_additional);
       exec, saveRmatrixTFS(Room1_additional);
+   }elseif (iLine==5) {
+      exec, saveOpticsTFS(XPR_ISO1_additional);
+      exec, saveGeometryTFS(XPR_ISO1_additional);
+      exec, saveRmatrixTFS(XPR_ISO1_additional);
+   }elseif (iLine==6) {
+      exec, saveOpticsTFS(XPR_ISO2_additional);
+      exec, saveGeometryTFS(XPR_ISO2_additional);
+      exec, saveRmatrixTFS(XPR_ISO2_additional);
    }elseif (iLine==7) {
       exec, saveOpticsTFS(XPR_ISO3_additional);
       exec, saveGeometryTFS(XPR_ISO3_additional);
       exec, saveRmatrixTFS(XPR_ISO3_additional);
+   }elseif (iLine==8) {
+      exec, saveOpticsTFS(XPR_ISO4_additional);
+      exec, saveGeometryTFS(XPR_ISO4_additional);
+      exec, saveRmatrixTFS(XPR_ISO4_additional);
    };
 };
 
@@ -162,8 +174,14 @@ saveStrengths(additional,beamLine): macro={
       exec, save_strengths(Room2V_additional,beamLine);
    }elseif (iLine==4) {
       exec, save_strengths(Room1_additional,beamLine);
+   }elseif (iLine==5) {
+      exec, save_strengths(XPR_ISO1_additional,beamLine);
+   }elseif (iLine==6) {
+      exec, save_strengths(XPR_ISO2_additional,beamLine);
    }elseif (iLine==7) {
       exec, save_strengths(XPR_ISO3_additional,beamLine);
+   }elseif (iLine==8) {
+      exec, save_strengths(XPR_ISO4_additional,beamLine);
    };
 };
 

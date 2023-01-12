@@ -1,5 +1,5 @@
 !
-! This is the description of HEBT X3 line (aka ISO 3)
+! This is the description of HEBT X2 line (aka ISO 2)
 !
 
 ! load macros for XPR geometry
@@ -10,12 +10,12 @@ call, file="cmdx/XPRseqMacros.cmdx";
 ! ===============================================================
 
 L_010A_DRI=0.0;
-L_010B_DRI=1.074;
-L_014A_DRI=0.63;
-exec, buildXPReleList(X3);
+L_010B_DRI=0.0;
+L_014A_DRI=0.2;
+exec, buildXPReleList(X2);
 
 ! ===============================================================
 ! sequence definition
 ! ===============================================================
 
-exec, buildXPRsequence(X3);
+exec, buildXPRsequence(X2);

@@ -39,6 +39,6 @@ if (iLine==1) {
    call, file="strengths/settings_from_LGEN_table_V1-V2.str";
 }elseif (iLine==4) {
    call, file="strengths/settings_from_LGEN_table_Z1-Z2.str";
-}elseif (iLine==7) {
+}elseif (iLine<=8) {
    call, file="strengths/settings_from_LGEN_table_XPR.str";
 };
