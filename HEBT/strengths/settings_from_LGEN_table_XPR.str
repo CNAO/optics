@@ -10,6 +10,8 @@
 ! XPR
 ! ==============================================================================
 
+call, file="strengths/fits_XPR.cmdx";
+
 I_HE_018A_QUE = -PX_001A_LGEN_A;    !H?? 
 F_HE_018A_QUE = 1.0;      
 I_HE_020A_QUE = PX_002A_LGEN_A;     !H??
@@ -27,8 +29,10 @@ if ( iMacro_I2K_QU==1 ) {
       exec, I2K_HEBT_QUs_lin(HE_023A_QUE,Brho);
       exec, I2K_HEBT_QUs_lin(HE_025A_QUE,Brho);
    }elseif ( iMacro_I2K_ded==1 ) {
-	  print, TEXT="per-magnet B(I) function not yet available for XPR!";
-	  stop;
+      exec, I2K_QUs_lin(HE_018A_QUE,Brho);
+      exec, I2K_QUs_lin(HE_020A_QUE,Brho);
+      exec, I2K_QUs_lin(HE_023A_QUE,Brho);
+      exec, I2K_QUs_lin(HE_025A_QUE,Brho);
    };
 } elseif ( iMacro_I2K_QU==5 ) {
    ! use macro: fifth order polynomial
@@ -38,6 +42,9 @@ if ( iMacro_I2K_QU==1 ) {
       exec, I2K_HEBT_QUs_fifth(HE_023A_QUE,Brho);
       exec, I2K_HEBT_QUs_fifth(HE_025A_QUE,Brho);
    }elseif ( iMacro_I2K_ded==1 ) {
-	  print, TEXT="per-magnet B(I) function not yet available for XPR!";
+      exec, I2K_QUs_fifth(HE_018A_QUE,Brho);
+      exec, I2K_QUs_fifth(HE_020A_QUE,Brho);
+      exec, I2K_QUs_fifth(HE_023A_QUE,Brho);
+      exec, I2K_QUs_fifth(HE_025A_QUE,Brho);
    };
 };
