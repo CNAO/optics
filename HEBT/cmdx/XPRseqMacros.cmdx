@@ -1,0 +1,56 @@
+!
+! This is a collection of few macros for the geometry of all the XPR lines
+!
+
+! ===============================================================
+! element definition
+! ===============================================================
+
+buildXPReleList(XX): macro = {
+   XX_001A_VVH:DRIFT,L = 0.07;
+   XX_002A_DRI:DRIFT,L = 0.1283;
+   XX_002B_BSH:MARKER;
+   XX_003A_DRI:DRIFT,L = 0.2;
+   XX_004A_SCC:KICKER, L= 0.6, HKICK=0, VKICK=0;
+   XX_005A_DRI:DRIFT,L = 0.12;
+   XX_006A_SCC:KICKER, L= 0.6, HKICK=0, VKICK=0;
+   XX_007A_DRI:DRIFT,L = 0.2;
+   XX_008A_DRI:DRIFT,L = 0.231;
+   XX_008B_BSH:MARKER;
+   XX_009A_DRI:DRIFT,L = 0.39;
+   XX_009B_TMP:MARKER;
+   XX_009C_MIG:MARKER;
+   XX_009E_CHV:MARKER;
+   XX_010A_DRI:DRIFT,L = L_010A_DRI;
+   XX_010B_DRI:DRIFT,L = L_010B_DRI;
+   XX_011A_DRI:DRIFT,L = 0.075;
+   XX_011B_DRI:MARKER;
+   XX_012A_DRI:DRIFT,L = 0.117;
+   XX_013A_DRI:DRIFT,L = 0.1315;
+   XX_013B_NZL:MONITOR,L = 0.;
+   XX_013C_NZF:DRIFT,L = 0.;
+   XX_013D_NZS:DRIFT,L = 0.;
+   XX_013E_DRI:DRIFT,L = 0.2335;
+   XX_014A_DRI:DRIFT,L = L_014A_DRI;
+   XX_015A_MOB:MONITOR, L=0;
+};
+
+! ===============================================================
+! sequence definition
+! ===============================================================
+
+buildXPRsequence(XX): macro = {
+   LineXX_L=3.0963+L_010A_DRI+L_010B_DRI+L_014A_DRI;
+   LineXX: sequence, l = LineXX_L;
+   xx_002b_bsh, at = 0.1983 ;
+   xx_004a_scc, at = 0.6983 ;
+   xx_006a_scc, at = 1.4183 ;
+   xx_008b_bsh, at = 2.1493 ;
+   xx_009b_tmp, at = 2.5393 ;
+   xx_009c_mig, at = 2.5393 ;
+   xx_009e_chv, at = 2.5393 ;
+   xx_011b_dri, at = 2.6143+L_010A_DRI+L_010B_DRI ;
+   xx_013b_nzl, at = 2.8628+L_010A_DRI+L_010B_DRI ;
+   xx_015a_mob, at = 3.0963+L_010A_DRI+L_010B_DRI+L_014A_DRI ;
+   endsequence;
+};

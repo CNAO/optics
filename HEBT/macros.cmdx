@@ -120,11 +120,29 @@ parseHEBTtableLGEN(): macro={
       }else{
          READTABLE, file="LGEN/Carbonio_Sala1_FromRepoNovembre2020.tfs", table=LGEN_HEBT_table;
       };
+   }elseif (iLine==5) {
+      if (is_carbon==0) {
+         READTABLE, file="LGEN/LGEN_X1_P_FG_10Luglio2019.tfs", table=LGEN_HEBT_table;
+      }else{
+         READTABLE, file="LGEN/LGEN_X1_C_FP.tfs", table=LGEN_HEBT_table;
+      };
+   }elseif (iLine==6) {
+      if (is_carbon==0) {
+         READTABLE, file="LGEN/LGEN_X2_P_FG_10Luglio2019.tfs", table=LGEN_HEBT_table;
+      }else{
+         READTABLE, file="LGEN/LGEN_X2_C_FP.tfs", table=LGEN_HEBT_table;
+      };
    }elseif (iLine==7) {
       if (is_carbon==0) {
          READTABLE, file="LGEN/LGEN_X3_P_FG_10Luglio2019.tfs", table=LGEN_HEBT_table;
       }else{
          READTABLE, file="LGEN/LGEN_X3_C_FP_X2fit.tfs", table=LGEN_HEBT_table;
+      };
+   }elseif (iLine==8) {
+      if (is_carbon==0) {
+         READTABLE, file="LGEN/LGEN_X4_P_FG_10Luglio2019.tfs", table=LGEN_HEBT_table;
+      }else{
+         READTABLE, file="LGEN/LGEN_X4_C_FP.tfs", table=LGEN_HEBT_table;
       };
    };
 };
@@ -146,10 +164,22 @@ saveOptics(additional): macro={
       exec, saveOpticsTFS(Room1_additional);
       exec, saveGeometryTFS(Room1_additional);
       exec, saveRmatrixTFS(Room1_additional);
+   }elseif (iLine==5) {
+      exec, saveOpticsTFS(XPR_ISO1_additional);
+      exec, saveGeometryTFS(XPR_ISO1_additional);
+      exec, saveRmatrixTFS(XPR_ISO1_additional);
+   }elseif (iLine==6) {
+      exec, saveOpticsTFS(XPR_ISO2_additional);
+      exec, saveGeometryTFS(XPR_ISO2_additional);
+      exec, saveRmatrixTFS(XPR_ISO2_additional);
    }elseif (iLine==7) {
       exec, saveOpticsTFS(XPR_ISO3_additional);
       exec, saveGeometryTFS(XPR_ISO3_additional);
       exec, saveRmatrixTFS(XPR_ISO3_additional);
+   }elseif (iLine==8) {
+      exec, saveOpticsTFS(XPR_ISO4_additional);
+      exec, saveGeometryTFS(XPR_ISO4_additional);
+      exec, saveRmatrixTFS(XPR_ISO4_additional);
    };
 };
 
@@ -162,8 +192,14 @@ saveStrengths(additional,beamLine): macro={
       exec, save_strengths(Room2V_additional,beamLine);
    }elseif (iLine==4) {
       exec, save_strengths(Room1_additional,beamLine);
+   }elseif (iLine==5) {
+      exec, save_strengths(XPR_ISO1_additional,beamLine);
+   }elseif (iLine==6) {
+      exec, save_strengths(XPR_ISO2_additional,beamLine);
    }elseif (iLine==7) {
       exec, save_strengths(XPR_ISO3_additional,beamLine);
+   }elseif (iLine==8) {
+      exec, save_strengths(XPR_ISO4_additional,beamLine);
    };
 };
 

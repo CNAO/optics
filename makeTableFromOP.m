@@ -1,11 +1,12 @@
 % {}~
-% - include Matlab library
+
+%% include Matlab library
 pathToLibrary="..\MatLabTools";
 addpath(genpath(pathToLibrary));
 
-% user settings
-beamPart="CARBON"; % select beam particle: proton, carbon
-machine="XPRX3"; % select machine: synchro, Line[T-Z]/Sala[3-1], XPRX[1-4]/ISO[1-4]; LEBT and MEBT to come 
+%% user settings
+beamPart="PROTON"; % select beam particle: proton, carbon
+machine="XPRX1"; % select machine: synchro, Line[T-Z]/Sala[3-1], XPRX[1-4]/ISO[1-4]; LEBT and MEBT to come 
 config="TM"; % select configuration: TM, RFKO
 source="LGEN"; % source: RampGen or LGEN
 LGENsCheck=[]; % subset to check, otherwise all - eg [ "P6-006A-LGEN" "P6-007A-LGEN" "P6-008A-LGEN" "P6-009A-LGEN" ];
