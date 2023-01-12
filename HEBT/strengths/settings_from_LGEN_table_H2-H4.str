@@ -10,6 +10,8 @@
 ! H2-H4
 ! ==============================================================================
 
+call, file="strengths/fits_H2-H4.cmdx";
+
 I_H2_012A_QUE = P7_008A_LGEN_A;      !H8
 F_H2_012A_QUE = 1.0;     
 I_H2_016A_QUE = -P7_009A_LGEN_A;     !H9
@@ -26,19 +28,37 @@ F_H4_013A_QUE = 1.0;
 
 if ( iMacro_I2K_QU==1 ) {
    ! use macro: linear
-   exec, I2K_HEBT_QUs_lin(H2_012A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H2_016A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H2_022A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H4_003A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H4_007A_QUE,Brho);
-   exec, I2K_HEBT_QUs_lin(H4_013A_QUE,Brho);
+   if ( iMacro_I2K_ded==0 ) {
+      exec, I2K_HEBT_QUs_lin(H2_012A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(H2_016A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(H2_022A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(H4_003A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(H4_007A_QUE,Brho);
+      exec, I2K_HEBT_QUs_lin(H4_013A_QUE,Brho);
+   }elseif ( iMacro_I2K_ded==1 ) {
+      exec, I2K_QUs_lin(H2_012A_QUE,Brho);
+      exec, I2K_QUs_lin(H2_016A_QUE,Brho);
+      exec, I2K_QUs_lin(H2_022A_QUE,Brho);
+      exec, I2K_QUs_lin(H4_003A_QUE,Brho);
+      exec, I2K_QUs_lin(H4_007A_QUE,Brho);
+      exec, I2K_QUs_lin(H4_013A_QUE,Brho);
+   };
 } elseif ( iMacro_I2K_QU==5 ) {
    ! use macro: fifth order polynomial
-   exec, I2K_HEBT_QUs_fifth(H2_012A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H2_016A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H2_022A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H4_003A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H4_007A_QUE,Brho);
-   exec, I2K_HEBT_QUs_fifth(H4_013A_QUE,Brho);
+   if ( iMacro_I2K_ded==0 ) {
+      exec, I2K_HEBT_QUs_fifth(H2_012A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(H2_016A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(H2_022A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(H4_003A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(H4_007A_QUE,Brho);
+      exec, I2K_HEBT_QUs_fifth(H4_013A_QUE,Brho);
+   }elseif ( iMacro_I2K_ded==1 ) {
+      exec, I2K_QUs_fifth(H2_012A_QUE,Brho);
+      exec, I2K_QUs_fifth(H2_016A_QUE,Brho);
+      exec, I2K_QUs_fifth(H2_022A_QUE,Brho);
+      exec, I2K_QUs_fifth(H4_003A_QUE,Brho);
+      exec, I2K_QUs_fifth(H4_007A_QUE,Brho);
+      exec, I2K_QUs_fifth(H4_013A_QUE,Brho);
+   };
 };
 
