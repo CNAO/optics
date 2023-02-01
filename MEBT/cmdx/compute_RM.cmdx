@@ -4,30 +4,30 @@ Imax=60.;  ! [A]
 ! Imax=-145.;  ! [A]
 Istep=10.;  ! [A]
 
-! define all observations
-writeRMObservations(fileName): macro{
+! write header
+writeRMHeader(fileName,myProperty,unWhat,myEleA,myEleB,myEleC): macro={
+   ! myEleB and myEleC are just placeholders, to respect macro interfaces
    assign, echo=fileName;
-   PRINTF, TEXT="% 19.12E,% 6.1f,% 12.5E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
+   PRINT, TEXT=# Brho[Tm], BP[mm], I[A], myProperty[unWhat], X:myEleA[m], PX:myEleA[], Y:myEleA[m], PY:myEleA[];
+   assign, echo=terminal;
+};
+! write observations
+writeRMObservations(fileName,myEleA,myEleB,myEleC): macro={
+   ! myEleB and myEleC are just placeholders, to respect macro interfaces
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E, % 6.1f, % 12.5E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E,",
            VALUE=Brho, BP, currI, kWrite,
-           table(twiss,M3_044A_ESI,x), table(twiss,M3_044A_ESI,px),
-           table(twiss,M3_044A_ESI,y), table(twiss,M3_044A_ESI,py);
+           table(twiss,myEleA,x), table(twiss,myEleA,px), table(twiss,myEleA,y), table(twiss,myEleA,py);
    assign, echo=terminal;
 };
-! HKICKs
-! a useful header to file written by writeRMObservations(fileName) macro
-writeRMHeader(fileName): macro{
-   assign, echo=fileName;
-   PRINT, TEXT="# Brho[Tm], BP[mm], I[A], HKICK[rad], X:M3_044A_ESI[m], PX:M3_044A_ESI[], Y:M3_044A_ESI[m], PY:M3_044A_ESI[]";
-   assign, echo=terminal;
+! standard RM queries
+compute_RM_MEBT_standard(myCorr1,myCorr2,myObs1,myObs2,myObs3): macro={
+   ! first corrector
+   exec, compute_RM_allCurrents(myCorr1,HKICK,rad,I2K_MEBT_CIBH,myCorr1__HKICK__RM.tfs,myObs1,myObs2,myObs3);
+   exec, compute_RM_allCurrents(myCorr1,VKICK,rad,I2K_MEBT_CIBV,myCorr1__VKICK__RM.tfs,myObs1,myObs2,myObs3);
+   ! second corrector
+   exec, compute_RM_allCurrents(myCorr2,HKICK,rad,I2K_MEBT_CIBH,myCorr2__HKICK__RM.tfs,myObs1,myObs2,myObs3);
+   exec, compute_RM_allCurrents(myCorr2,VKICK,rad,I2K_MEBT_CIBV,myCorr2__VKICK__RM.tfs,myObs1,myObs2,myObs3);
 };
-exec, compute_RM_allCurrents(M3_026A_CIB,HKICK_M3_026A_CIB,IH_M3_026A_CIB,FH_M3_026A_CIB,HKICK,I2K_MEBT_CIBH,M3_026A_CIB__HKICK__RM.tfs);
-exec, compute_RM_allCurrents(M3_030B_CIB,HKICK_M3_030B_CIB,IH_M3_030B_CIB,FH_M3_030B_CIB,HKICK,I2K_MEBT_CIBH,M3_030B_CIB__HKICK__RM.tfs);
-! VKICKs
-! a useful header to file written by writeRMObservations(fileName) macro
-writeRMHeader(fileName): macro{
-   assign, echo=fileName;
-   PRINT, TEXT="# Brho[Tm], BP[mm], I[A], VKICK[rad], X:M3_044A_ESI[m], PX:M3_044A_ESI[], Y:M3_044A_ESI[m], PY:M3_044A_ESI[]";
-   assign, echo=terminal;
-};
-exec, compute_RM_allCurrents(M3_026A_CIB,VKICK_M3_026A_CIB,IV_M3_026A_CIB,FV_M3_026A_CIB,VKICK,I2K_MEBT_CIBV,M3_026A_CIB__VKICK__RM.tfs);
-exec, compute_RM_allCurrents(M3_030B_CIB,VKICK_M3_030B_CIB,IV_M3_030B_CIB,FV_M3_030B_CIB,VKICK,I2K_MEBT_CIBV,M3_030B_CIB__VKICK__RM.tfs);
+
+exec, compute_RM_HEBT_standard(M3_026A_CIB,M3_030B_CIB,M3_044A_ESI,myDummy1,myDummy2);
