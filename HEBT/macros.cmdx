@@ -203,9 +203,10 @@ saveStrengths(additional,beamLine): macro={
    };
 };
 
-compute_RM_allCurrents(myMagName,myProperty,myI2K,fileName): macro={
+compute_RM_allCurrents(myMagName,myProperty,unWhat,myI2K,fileName,myEleA,myEleB,myEleC): macro={
+   
    REMOVEFILE, FILE=fileName;
-   exec, writeRMHeader(fileName);
+   exec, writeRMHeader(fileName,myProperty,unWhat,myEleA,myEleB,myEleC);
    F_myMagName=1.0;
    nEnLevel=NEnLevelstart;
    WHILE (nEnLevel <= NEnLevelstop ) {
@@ -233,10 +234,11 @@ compute_RM_allCurrents(myMagName,myProperty,myI2K,fileName): macro={
          use,sequence=APICLS009;
          select,flag=twiss,clear;
          twiss, beta0=initial;
+		 ! exec, saveOptics(LGEN);
 
          ! save data
          kWrite=myProperty_myMagName;
-         exec, writeRMObservations(fileName);
+         exec, writeRMObservations(fileName,myEleA,myEleB,myEleC);
 
          ! reset kick to original value
          ! value, myMagName->myProperty;
