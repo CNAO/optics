@@ -23,15 +23,15 @@ buildXPReleList(XX): macro = {
    XX_009E_CHV:MARKER;
    XX_010A_DRI:DRIFT,L = L_010A_DRI;
    XX_010B_DRI:DRIFT,L = L_010B_DRI;
-   XX_011A_DRI:DRIFT,L = 0.075;
-   XX_011B_DRI:MARKER;
-   XX_012A_DRI:DRIFT,L = 0.117;
-   XX_013A_DRI:DRIFT,L = 0.1315;
-   XX_013B_NZL:MONITOR,L = 0.;
+   XX_011A_DRI:DRIFT,L = 0.0268;
+   XX_011B_VWN:MARKER;          ! Vacuum Window:
+   XX_012A_DRI:DRIFT,L = 0.1302;
+   XX_013A_DRI:DRIFT,L = 0.1305;
+   XX_013B_NZL:MONITOR,L = 0.;  ! Mid-way between hor-strips and ver-strips
    XX_013C_NZF:DRIFT,L = 0.;
    XX_013D_NZS:DRIFT,L = 0.;
-   XX_013E_DRI:DRIFT,L = 0.2335;
-   XX_014A_DRI:DRIFT,L = L_014A_DRI;
+   XX_013E_DRI:DRIFT,L = 0.2345;
+   XX_014A_DRI:DRIFT,L = 0.63;
    XX_015A_MOB:MONITOR, L=0;
 };
 
@@ -40,7 +40,7 @@ buildXPReleList(XX): macro = {
 ! ===============================================================
 
 buildXPRsequence(XX): macro = {
-   LineXX_L=3.0963+L_010A_DRI+L_010B_DRI+L_014A_DRI;
+   LineXX_L=3.691264+L_010A_DRI+L_010B_DRI;
    LineXX: sequence, l = LineXX_L;
    xx_002b_bsh, at = 0.1983 ;
    xx_004a_scc, at = 0.6983 ;
@@ -49,8 +49,8 @@ buildXPRsequence(XX): macro = {
    xx_009b_tmp, at = 2.5393 ;
    xx_009c_mig, at = 2.5393 ;
    xx_009e_chv, at = 2.5393 ;
-   xx_011b_dri, at = 2.6143+L_010A_DRI+L_010B_DRI ;
-   xx_013b_nzl, at = 2.8628+L_010A_DRI+L_010B_DRI ;
-   xx_015a_mob, at = 3.0963+L_010A_DRI+L_010B_DRI+L_014A_DRI ;
+   xx_011b_vwn, at = 2.566100+L_010A_DRI+L_010B_DRI ;
+   xx_013b_nzl, at = 2.826764+L_010A_DRI+L_010B_DRI ;
+   xx_015a_mob, at = 3.691264+L_010A_DRI+L_010B_DRI ;
    endsequence;
 };
