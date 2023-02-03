@@ -239,7 +239,9 @@ HE_009B_BSH:MARKER;
 HE_010A_DRI:DRIFT,L = 0.071;
 HE_010B_QPP:monitor, L=0;
 HE_010C_DRI:DRIFT,L = 0.124;
+HE_010D_DIN:MARKER;  ! dump upstream face
 HE_010D_DMP:DRIFT,L = 0.2;
+HE_010D_DOU:MARKER;  ! dump downstream face
 HE_010E_DRI:DRIFT,L = 0.055;
 HE_010F_TMP:MARKER;
 HE_010G_PVV:MARKER;
@@ -372,6 +374,8 @@ he_004b_bsh, at = 2.1644 ;
 he_007a_ceb, at = 2.65 ;
 he_009b_bsh, at = 3.1709 ;
 he_010b_qpp, at = 3.2419 ;
+he_010d_din, at = 3.3659 ;
+he_010d_dou, at = 3.5659 ;
 he_010f_tmp, at = 3.6209 ;
 he_010g_pvv, at = 3.6209 ;
 he_011b_bsh, at = 3.7232 ;
