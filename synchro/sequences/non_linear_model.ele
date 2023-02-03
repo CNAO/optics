@@ -1,0 +1,73 @@
+! non-linear model of synchro
+! A.Mereghetti, 2023-02-03
+
+! multipoles at entrance of MBSs:
+TeK0_EN: multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK1_EN: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK2_EN: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeK3_EN: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeK4_EN: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK5_EN: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK6_EN: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeK7_EN: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeK8_EN: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK9_EN: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeKA_EN: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeKB_EN: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeKC_EN: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeKD_EN: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeKE_EN: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeKF_EN: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+! multipoles at exit of MBSs:
+TeK0_EX: multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK1_EX: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK2_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeK3_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeK4_EX: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK5_EX: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK6_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeK7_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeK8_EX: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeK9_EX: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeKA_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeKB_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeKC_EX: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeKD_EX: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
+TeKE_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+TeKF_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
+
+SEQEDIT, sequence=MUXL;
+Install, element=tek0_en, at=-s0_001a_mbs->L/2, from=s0_001a_mbs;
+Install, element=tek0_ex, at= s0_001a_mbs->L/2, from=s0_001a_mbs;
+Install, element=tek1_en, at=-s1_001a_mbs->L/2, from=s1_001a_mbs;
+Install, element=tek1_ex, at= s1_001a_mbs->L/2, from=s1_001a_mbs;
+Install, element=tek2_en, at=-s2_001a_mbs->L/2, from=s2_001a_mbs;
+Install, element=tek2_ex, at= s2_001a_mbs->L/2, from=s2_001a_mbs;
+Install, element=tek3_en, at=-s3_001a_mbs->L/2, from=s3_001a_mbs;
+Install, element=tek3_ex, at= s3_001a_mbs->L/2, from=s3_001a_mbs;
+Install, element=tek4_en, at=-s4_001a_mbs->L/2, from=s4_001a_mbs;
+Install, element=tek4_ex, at= s4_001a_mbs->L/2, from=s4_001a_mbs;
+Install, element=tek5_en, at=-s5_001a_mbs->L/2, from=s5_001a_mbs;
+Install, element=tek5_ex, at= s5_001a_mbs->L/2, from=s5_001a_mbs;
+Install, element=tek6_en, at=-s6_001a_mbs->L/2, from=s6_001a_mbs;
+Install, element=tek6_ex, at= s6_001a_mbs->L/2, from=s6_001a_mbs;
+Install, element=tek7_en, at=-s7_001a_mbs->L/2, from=s7_001a_mbs;
+Install, element=tek7_ex, at= s7_001a_mbs->L/2, from=s7_001a_mbs;
+Install, element=tek8_en, at=-s8_001a_mbs->L/2, from=s8_001a_mbs;
+Install, element=tek8_ex, at= s8_001a_mbs->L/2, from=s8_001a_mbs;
+Install, element=tek9_en, at=-s9_001a_mbs->L/2, from=s9_001a_mbs;
+Install, element=tek9_ex, at= s9_001a_mbs->L/2, from=s9_001a_mbs;
+Install, element=teka_en, at=-sa_001a_mbs->L/2, from=sa_001a_mbs;
+Install, element=teka_ex, at= sa_001a_mbs->L/2, from=sa_001a_mbs;
+Install, element=tekb_en, at=-sb_001a_mbs->L/2, from=sb_001a_mbs;
+Install, element=tekb_ex, at= sb_001a_mbs->L/2, from=sb_001a_mbs;
+Install, element=tekc_en, at=-sc_001a_mbs->L/2, from=sc_001a_mbs;
+Install, element=tekc_ex, at= sc_001a_mbs->L/2, from=sc_001a_mbs;
+Install, element=tekd_en, at=-sd_001a_mbs->L/2, from=sd_001a_mbs;
+Install, element=tekd_ex, at= sd_001a_mbs->L/2, from=sd_001a_mbs;
+Install, element=teke_en, at=-se_001a_mbs->L/2, from=se_001a_mbs;
+Install, element=teke_ex, at= se_001a_mbs->L/2, from=se_001a_mbs;
+Install, element=tekf_en, at=-sf_001a_mbs->L/2, from=sf_001a_mbs;
+Install, element=tekf_ex, at= sf_001a_mbs->L/2, from=sf_001a_mbs;
+Select, flag=seqedit, clear = true;
+ENDEDIT;
