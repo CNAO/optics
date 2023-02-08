@@ -25,7 +25,7 @@ buildXPReleList(XX): macro = {
    XX_010B_DRI:DRIFT,L = L_010B_DRI;
    XX_011A_DRI:DRIFT,L = 0.0268;
    XX_011B_VWN:MARKER;          ! Vacuum Window:
-   XX_012A_DRI:DRIFT,L = 0.1302;
+   XX_012A_DRI:DRIFT,L = 0.130164;
    XX_013A_DRI:DRIFT,L = 0.1305;
    XX_013B_NZL:MONITOR,L = 0.;  ! Mid-way between hor-strips and ver-strips
    XX_013C_NZF:DRIFT,L = 0.;

@@ -9,7 +9,8 @@
 ! ---------------------------------------------------------------
 ! Z1
 ! ---------------------------------------------------------------
-Z1_001A_SWH: SBEND, L= 1.2922854114, E1 = 0, E2 = 0.3054326191, ANGLE = 0.3054326191, K1 = 0, K2 = 0, HGAP = 0.032, FINT=0;
+dd_Z1=0.18665;
+Z1_001A_SWH: SBEND, L= L_SWH, E1 = 0, E2 = Es_SWH, ANGLE = ANGLE_SWH, K1 = 0, K2 = 0, HGAP = 0.032, FINT=0;
 Z1_002A_DRI: DRIFT, L= 0.28927;
 Z1_003A_DRI: DRIFT, L= 0.653727;
 Z1_003B_BSH: DRIFT, L= 0.0;
@@ -32,9 +33,9 @@ Z1_007F_SIP: DRIFT, L= 0.0;
 Z1_008A_DRI: DRIFT, L= 0.1023;
 Z1_008B_BSH: DRIFT, L= 0.0;
 Z1_008C_DRI: DRIFT, L= 0.23;
-Z1_008D_DRI: DRIFT, L= 0.213225014;
-Z1_009A_EDF: SBEND, L= 0.976, E1 = 0.1090830782, E2 = 0.1090830782, ANGLE = 0.2181661565, K1 = 0, K2 = 0, HGAP = 0.036, FINT=0;
-Z1_010A_DRI: DRIFT, L= 0.213225014;
+Z1_008D_DRI: DRIFT, L= dd_Z1-dd_corr_EDF;
+Z1_009A_EDF: SBEND, L= L_EDF, E1 = Es_EDF, E2 = Es_EDF, ANGLE = ANGLE_EDF, K1 = 0, K2 = 0, HGAP = 0.036, FINT=0;
+Z1_010A_DRI: DRIFT, L= dd_Z1-dd_corr_EDF;
 Z1_010B_DRI: DRIFT, L= 0.0052;
 Z1_011A_CEB: KICKER, L= 0.52, HKICK := HKICK_Z1_011A_CEB, VKICK := VKICK_Z1_011A_CEB;
 Z1_012A_DRI: DRIFT, L= 0.1;
@@ -120,30 +121,29 @@ Z2_032A_MOB: MONITOR, L= 0.0;
 ! sequence definition
 ! ===============================================================
 
-LineZ_L=22.09559544;
+LineZ_L=19.880463+L_SWH+(L_EDF_MagLayout+ds_corr_EDF);
+! LineZ_L=22.09559544;
 LineZ: sequence, l = LineZ_L;
-z1_001a_swh, at = 0.64614271 ;
-z1_004a_que, at = 2.56028290 ;
-z1_007b_sfh, at = 4.07864590 ;
-z1_007e_mig, at = 4.25364590 ;
-z1_009a_edf, at = 5.28717043 ;
-z1_011a_ceb, at = 6.25359590 ;
-z1_013a_que, at = 6.83859590 ;
-z1_016b_sfh, at = 7.40569590 ;
-z1_019a_que, at = 7.96859590 ;
-z2_002b_sfh, at = 11.01859590 ;
-z2_005a_que, at = 11.51859590 ;
-z2_008a_ceb, at = 12.14359590 ;
-z2_009b_sfh, at = 12.61859590 ;
-z2_012a_que, at = 13.16859590 ;
-z2_015a_ceb, at = 13.79359590 ;
-z2_018a_que, at = 14.41859590 ;
-z2_021b_sfh, at = 14.97659590 ;
-z2_021g_mig, at = 15.29359590 ;
-z2_023a_scc, at = 15.91559590 ;
-z2_026a_scc, at = 16.63559544 ;
-z2_030b_nzl, at = 21.23209544 ;
-z2_032a_mob, at = 22.09559544 ;
+z1_001a_swh, at = L_SWH/2 ;
+z1_004a_que, at = L_SWH+1.268 ;
+z1_007b_sfh, at = L_SWH+1.268+1.518363 ;
+z1_009a_edf, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)/2 ;
+z1_011a_ceb, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505;
+z1_013a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585;
+z1_016b_sfh, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+0.5671;
+z1_019a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300;
+z2_002b_sfh, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550-0.5;
+z2_005a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550;
+z2_008a_ceb, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625;
+z2_009b_sfh, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025-0.55;
+z2_012a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025;
+z2_015a_ceb, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625;
+z2_018a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625+0.625;
+z2_021b_sfh, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625+0.625+0.580;
+z2_023a_scc, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625+0.625+1.497;
+z2_026a_scc, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625+0.625+1.497+0.72;
+z2_030b_nzl, at = LineZ_L -0.8635; ! 21.23209544 ;
+z2_032a_mob, at = LineZ_L ;
 endsequence;
 
 ! ===============================================================
