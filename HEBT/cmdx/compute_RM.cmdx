@@ -6,130 +6,59 @@ lunghezzaLGEN=table(LGEN_HEBT_table,tablelength);
 Imin=-150.; ! [A]
 Imax=150.;  ! [A]
 ! Imax=-145.;  ! [A]
-Istep=10.;  ! [A]
+Istep=25.;  ! [A]
 
 ! energy loop
-NEnLevelstart=1;
+NEnLevelstart=lunghezzaLGEN;
 NEnLevelstop=lunghezzaLGEN;
 ! NEnLevelstop=1;
 NEnLevelstep=1;
 
 ! end of template - DO NOT DELETE THIS LINE!
 
-if (iLine==1) {
-   ! define all observations
-   writeRMObservations(fileName): macro{
-      assign, echo=fileName;
-      PRINTF, TEXT="% 19.12E % 6.1f % 12.5E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E",
-              VALUE=Brho, BP, currI, kWrite,
-              table(twiss,T2_032A_MOB,x), table(twiss,T2_032A_MOB,y), ! @ISO
-              table(twiss,T2_030B_NZL,x), table(twiss,T2_030B_NZL,y), ! @NZL
-              table(twiss,T2_021B_SFH,x), table(twiss,T2_021B_SFH,y); ! @SFH
-      assign, echo=terminal;
-   };
-   ! first corrector
-   ! a useful header to file written by writeRMObservations(fileName) macro
-   writeRMHeader(fileName): macro{
-      assign, echo=fileName;
-      PRINT, TEXT="# Brho[Tm], BP[mm], I[A], HKICK[rad], X:T2_032A_MOB[m], Y:T2_032A_MOB[m], X:T2_030B_NZL[m], Y:T2_030B_NZL[m], X:T2_021B_SFH[m], Y:T2_021B_SFH[m]";
-      assign, echo=terminal;
-   };
-   exec, compute_RM_allCurrents(T1_011A_CEB,HKICK,I2K_HEBT_CEBH,T1_011A_CEB__HKICK__RM.tfs);
-   exec, compute_RM_allCurrents(T1_011A_CEB,VKICK,I2K_HEBT_CEBV,T1_011A_CEB__VKICK__RM.tfs);
-   ! second corrector
-   ! a useful header to file written by writeRMObservations(fileName) macro
-   writeRMHeader(fileName): macro{
-      assign, echo=fileName;
-      PRINT, TEXT="# Brho[Tm], BP[mm], I[A], VKICK[rad], X:T2_032A_MOB[m], Y:T2_032A_MOB[m], X:T2_030B_NZL[m], Y:T2_030B_NZL[m], X:T2_021B_SFH[m], Y:T2_021B_SFH[m]";
-      assign, echo=terminal;
-   };
-   exec, compute_RM_allCurrents(T2_015A_CEB,HKICK,I2K_HEBT_CEBH,T2_015A_CEB__HKICK__RM.tfs);
-   exec, compute_RM_allCurrents(T2_015A_CEB,VKICK,I2K_HEBT_CEBV,T2_015A_CEB__VKICK__RM.tfs);
-}elseif (iLine==2) {
-   ! define all observations
-   writeRMObservations(fileName): macro{
-      assign, echo=fileName;
-      PRINTF, TEXT="% 19.12E % 6.1f % 12.5E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E",
-              VALUE=Brho, BP, currI, kWrite,
-              table(twiss,U2_029A_MOB,x), table(twiss,U2_029A_MOB,y), ! @ISO
-              table(twiss,U2_027B_NZL,x), table(twiss,U2_027B_NZL,y), ! @NZL
-              table(twiss,U2_019B_SFH,x), table(twiss,U2_019B_SFH,y); ! @SFH
-      assign, echo=terminal;
-   };
-   ! first corrector
-   ! a useful header to file written by writeRMObservations(fileName) macro
-   writeRMHeader(fileName): macro{
-      assign, echo=fileName;
-      PRINT, TEXT="# Brho[Tm], BP[mm], I[A], HKICK[rad], X:U2_029A_MOB[m], Y:U2_029A_MOB[m], X:U2_027B_NZL[m], Y:U2_027B_NZL[m], X:U2_019B_SFH[m], Y:U2_019B_SFH[m]";
-      assign, echo=terminal;
-   };
-   exec, compute_RM_allCurrents(U1_023A_CEB,HKICK,I2K_HEBT_CEBH,U1_023A_CEB__HKICK__RM.tfs);
-   exec, compute_RM_allCurrents(U1_023A_CEB,VKICK,I2K_HEBT_CEBV,U1_023A_CEB__VKICK__RM.tfs);
-   ! second corrector
-   ! a useful header to file written by writeRMObservations(fileName) macro
-   writeRMHeader(fileName): macro{
-      assign, echo=fileName;
-      PRINT, TEXT="# Brho[Tm], BP[mm], I[A], VKICK[rad], X:U2_029A_MOB[m], Y:U2_029A_MOB[m], X:U2_027B_NZL[m], Y:U2_027B_NZL[m], X:U2_019B_SFH[m], Y:U2_019B_SFH[m]";
-      assign, echo=terminal;
-   };
-   exec, compute_RM_allCurrents(U2_013A_CEB,HKICK,I2K_HEBT_CEBH,U2_013A_CEB__HKICK__RM.tfs);
-   exec, compute_RM_allCurrents(U2_013A_CEB,VKICK,I2K_HEBT_CEBV,U2_013A_CEB__VKICK__RM.tfs);
-}elseif (iLine==3) {
-   ! define all observations
-   writeRMObservations(fileName): macro{
-      assign, echo=fileName;
-      PRINTF, TEXT="% 19.12E % 6.1f % 12.5E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E",
-              VALUE=Brho, BP, currI, kWrite,
-              table(twiss,V2_031A_MOB,x), table(twiss,V2_031A_MOB,y), ! @ISO
-              table(twiss,V2_029B_NZL,x), table(twiss,V2_029B_NZL,y), ! @NZL
-              table(twiss,V2_019B_SFH,x), table(twiss,V2_019B_SFH,y); ! @SFH
-      assign, echo=terminal;
-   };
-   ! first corrector
-   ! a useful header to file written by writeRMObservations(fileName) macro
-   writeRMHeader(fileName): macro{
-      assign, echo=fileName;
-      PRINT, TEXT="# Brho[Tm], BP[mm], I[A], HKICK[rad], X:V2_031A_MOB[m], Y:V2_031A_MOB[m], X:V2_029B_NZL[m], Y:V2_029B_NZL[m], X:V2_019B_SFH[m], Y:V2_019B_SFH[m]";
-      assign, echo=terminal;
-   };
-   exec, compute_RM_allCurrents(V1_044A_CEB,HKICK,I2K_HEBT_CEBH,V1_044A_CEB__HKICK__RM.tfs);
-   exec, compute_RM_allCurrents(V1_044A_CEB,VKICK,I2K_HEBT_CEBV,V1_044A_CEB__VKICK__RM.tfs);
-   ! second corrector
-   ! a useful header to file written by writeRMObservations(fileName) macro
-   writeRMHeader(fileName): macro{
-      assign, echo=fileName;
-      PRINT, TEXT="# Brho[Tm], BP[mm], I[A], VKICK[rad], X:V2_031A_MOB[m], Y:V2_031A_MOB[m], X:V2_029B_NZL[m], Y:V2_029B_NZL[m], X:V2_019B_SFH[m], Y:V2_019B_SFH[m]";
-      assign, echo=terminal;
-   };
-   exec, compute_RM_allCurrents(V2_013A_CEB,HKICK,I2K_HEBT_CEBH,V2_013A_CEB__HKICK__RM.tfs);
-   exec, compute_RM_allCurrents(V2_013A_CEB,VKICK,I2K_HEBT_CEBV,V2_013A_CEB__VKICK__RM.tfs);
-}elseif (iLine==4) {
-   ! define all observations
-   writeRMObservations(fileName): macro{
-      assign, echo=fileName;
-      PRINTF, TEXT="% 19.12E % 6.1f % 12.5E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E % 19.12E",
-              VALUE=Brho, BP, currI, kWrite,
-              table(twiss,Z2_032A_MOB,x), table(twiss,Z2_032A_MOB,y), ! @ISO
-              table(twiss,Z2_030B_NZL,x), table(twiss,Z2_030B_NZL,y), ! @NZL
-              table(twiss,Z2_021B_SFH,x), table(twiss,Z2_021B_SFH,y); ! @SFH
-      assign, echo=terminal;
-   };
-   ! first corrector
-   ! a useful header to file written by writeRMObservations(fileName) macro
-   writeRMHeader(fileName): macro{
-      assign, echo=fileName;
-      PRINT, TEXT="# Brho[Tm], BP[mm], I[A], HKICK[rad], X:Z2_032A_MOB[m], Y:Z2_032A_MOB[m], X:Z2_030B_NZL[m], Y:Z2_030B_NZL[m], X:Z2_021B_SFH[m], Y:Z2_021B_SFH[m]";
-      assign, echo=terminal;
-   };
-   exec, compute_RM_allCurrents(Z1_011A_CEB,HKICK,I2K_HEBT_CEBH,Z1_011A_CEB__HKICK__RM.tfs);
-   exec, compute_RM_allCurrents(Z1_011A_CEB,VKICK,I2K_HEBT_CEBV,Z1_011A_CEB__VKICK__RM.tfs);
-   ! second corrector
-   ! a useful header to file written by writeRMObservations(fileName) macro
-   writeRMHeader(fileName): macro{
-      assign, echo=fileName;
-      PRINT, TEXT="# Brho[Tm], BP[mm], I[A], VKICK[rad], X:Z2_032A_MOB[m], Y:Z2_032A_MOB[m], X:Z2_030B_NZL[m], Y:Z2_030B_NZL[m], X:Z2_021B_SFH[m], Y:Z2_021B_SFH[m]";
-      assign, echo=terminal;
-   };
-   exec, compute_RM_allCurrents(Z2_015A_CEB,HKICK,I2K_HEBT_CEBH,Z2_015A_CEB__HKICK__RM.tfs);
-   exec, compute_RM_allCurrents(Z2_015A_CEB,VKICK,I2K_HEBT_CEBV,Z2_015A_CEB__VKICK__RM.tfs);
+! write header
+writeRMHeader(fileName,myProperty,unWhat,myEleA,myEleB,myEleC): macro={
+   assign, echo=fileName;
+   PRINT, TEXT=# Brho[Tm], BP[mm], I[A], myProperty[unWhat], X:myEleA[m], Y:myEleA[m], X:myEleB[m], Y:myEleB[m], X:myEleC[m], Y:myEleC[m];
+   assign, echo=terminal;
 };
+! write observations
+writeRMObservations(fileName,myEleA,myEleB,myEleC): macro={
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E, % 6.1f, % 12.5E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E,",
+           VALUE=Brho, BP, currI, kWrite,
+           table(twiss,myEleA,x), table(twiss,myEleA,y), table(twiss,myEleB,x), table(twiss,myEleB,y), table(twiss,myEleC,x), table(twiss,myEleC,y);
+   assign, echo=terminal;
+};
+! standard RM queries
+compute_RM_HEBT_standard(myCorr1,myCorr2,myObs1,myObs2,myObs3): macro={
+   ! first corrector
+   exec, compute_RM_allCurrents(myCorr1,HKICK,rad,I2K_HEBT_CEBH,myCorr1__HKICK__RM.tfs,myObs1,myObs2,myObs3);
+   exec, compute_RM_allCurrents(myCorr1,VKICK,rad,I2K_HEBT_CEBV,myCorr1__VKICK__RM.tfs,myObs1,myObs2,myObs3);
+   ! second corrector
+   exec, compute_RM_allCurrents(myCorr2,HKICK,rad,I2K_HEBT_CEBH,myCorr2__HKICK__RM.tfs,myObs1,myObs2,myObs3);
+   exec, compute_RM_allCurrents(myCorr2,VKICK,rad,I2K_HEBT_CEBV,myCorr2__VKICK__RM.tfs,myObs1,myObs2,myObs3);
+};
+
+if (iLine==1) {
+   exec, compute_RM_HEBT_standard(T1_011A_CEB,T2_015A_CEB,T2_032A_MOB,T2_030B_NZL,T2_021B_SFH);
+}elseif (iLine==2) {
+   exec, compute_RM_HEBT_standard(U1_023A_CEB,U2_013A_CEB,U2_029A_MOB,U2_027B_NZL,U2_019B_SFH);
+}elseif (iLine==3) {
+   exec, compute_RM_HEBT_standard(V1_044A_CEB,V2_013A_CEB,V2_031A_MOB,V2_029B_NZL,V2_019B_SFH);
+}elseif (iLine==4) {
+   exec, compute_RM_HEBT_standard(Z1_011A_CEB,Z2_015A_CEB,Z2_032A_MOB,Z2_030B_NZL,Z2_021B_SFH);
+}elseif (iLine==5) {
+   exec, compute_RM_HEBT_standard(HE_015A_CEB,HE_027A_CEB,X1_006A_MOB,HE_030B_SFP,HE_012B_SFP);
+}elseif (iLine==6) {
+   exec, compute_RM_HEBT_standard(HE_015A_CEB,HE_027A_CEB,X2_015A_MOB,X2_013B_NZL,HE_030B_SFP);
+}elseif (iLine==7) {
+   ! exec, compute_RM_HEBT_standard(HE_015A_CEB,HE_027A_CEB,X3_015A_MOB,X3_013B_NZL,HE_030B_SFP);
+   exec, compute_RM_allCurrents(HE_007A_CEB,HKICK,rad,I2K_HEBT_CEBH,HE_007A_CEB__HKICK__RM.tfs,HE_010B_QPP,HE_012B_SFP,X3_013B_NZL);
+   exec, compute_RM_allCurrents(HE_007A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_007A_CEB__VKICK__RM.tfs,HE_010B_QPP,HE_012B_SFP,X3_013B_NZL);
+   exec, compute_RM_allCurrents(HE_027A_CEB,HKICK,rad,I2K_HEBT_CEBH,HE_027A_CEB__HKICK__RM.tfs,HE_010B_QPP,HE_030B_SFP,X3_013B_NZL);
+   exec, compute_RM_allCurrents(HE_027A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_027A_CEB__VKICK__RM.tfs,HE_010B_QPP,HE_030B_SFP,X3_013B_NZL);
+}elseif (iLine==8) {
+   exec, compute_RM_HEBT_standard(HE_015A_CEB,HE_027A_CEB,X4_015A_MOB,X4_013B_NZL,HE_030B_SFP);
+};
+   
