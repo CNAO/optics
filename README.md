@@ -7,6 +7,18 @@ When running MADX on a specific accelerator line, please make sure that:
 * you always start from a main MADX file (e.g. `hebt.madx`).
 If you do not respect these assumptions, then MADX `call` commands may not find the necessary files in the specified paths.
 
+## Checks Record 
+The following table lists all the checks that have been performed so far:
+
+| Line | Magnetic Layout | GEO | Diagnostics |
+| ---- | --------------- | --- | ----------- |
+| LEBT | n | n | n |
+| MEBT | n | n | n |
+| synchro | ver 2012-01-02 | n | n |
+| HEBT-H | ver 2012-01-02 | n | n |
+| HEBT-V | n | n | n |
+| XPR | ver 2012-01-02 | 2018-01-16 | n |
+
 ## MAD-X file extensions
 Extensions are given in alphabetical order
 
