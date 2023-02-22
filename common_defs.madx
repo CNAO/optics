@@ -13,11 +13,16 @@ K0MB_ref=K0MB; ! set reference value
 ! from magnetic layout
 rMB_MagLayout=4.231;                                       ! [m]
 LMB_MagLayout=abs(rMB_MagLayout*ANGLEMB);                  ! [m]
+
+! reset to magnetic layout
+! LMB = LMB_MagLayout;    ! magnetic length!!! [m]
+! K0MB = ANGLEMB / LMB;
+! K0MB_ref=K0MB; ! set reference value
+
 ! from current layout
 rMB_MADX=abs(LMB/ANGLEMB);                                 ! [m]
 ! distance to be removed from length of drifts around MBs as in magnetic layout
 dd_corr=abs(rMB_MagLayout-rMB_MADX)*tan(abs(ANGLEMB)/2); ! [m]
-! dd_corr=7.9474897E-03;                                     ! [m]
 ! Delta_s introduced by each magnet
 s_MB_MagLayout=2*dd_corr+rMB_MagLayout*ANGLEMB;            ! [m]
 ds_corr=LMB-s_MB_MagLayout;                                ! [m]

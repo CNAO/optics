@@ -1,11 +1,13 @@
 ! DEFINISCO IL SINCROTRONE (ELEMENTI ED ANELLO)
 
-m1: marker;
+dd_synch=0.2181; ! margin of original drift (on each side of MB) used to allocate magnetic length (e.g. 0.5071-0.109-S0_005A_QUS->L/2)
+
+! ELE2SEQ: START-CRUNCH
 
 ! -------------------------------------------------------------------------------------------------------------------
 S0_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S0_002A_DRI: DRIFT, L= 0.2101525103;
+S0_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S0_003A_FLS: MARKER;
 S0_004A_DRI: DRIFT, L= 0.109;
 S0_005A_QUS: QUADRUPOLE, L= 0.36,  K1:=KF;
@@ -22,6 +24,7 @@ S0_015A_DRI: DRIFT, L= 0.033;
 S0_016A_MSP: DRIFT, L= 0.65;
 S0_017A_DRI: DRIFT, L= 0.935;
 S0_018A_DRI: DRIFT, L= 0.159;
+m1: marker;
 S0_019A_DRI: DRIFT, L= 0.096;
 S0_020A_T45: DRIFT, L= 0.524;
 S0_021A_FLS: MARKER;
@@ -38,12 +41,12 @@ S0_031A_QUS: QUADRUPOLE, L= 0.36,  K1:=KF;
 S0_032A_BS1: MARKER;
 S0_033A_DRI: DRIFT, L= 0.109;
 S0_034A_FLS: MARKER;
-S0_035A_DRI: DRIFT, L= 0.2101525103;
+S0_035A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 S1_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S1_002A_DRI: DRIFT, L= 0.2101525103;
+S1_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S1_003A_FLS: MARKER;
 S1_004A_DRI: DRIFT, L= 0.097;
 S1_005A_CSV: VKICKER, L= 0.252, KICK := VK_S1;
@@ -54,12 +57,12 @@ S1_009A_DRI: DRIFT, L= 0.139;
 S1_010A_FLS: MARKER;
 S1_011A_PUV: VMONITOR, L= 0.3;
 S1_012A_FLS: MARKER;
-S1_013A_DRI: DRIFT, L= 0.2101525103;
+S1_013A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 S2_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S2_002A_DRI: DRIFT, L= 0.2101525103;
+S2_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S2_003A_FLS: MARKER;
 S2_004A_DRI: DRIFT, L= 0.139;
 S2_005A_QUS: QUADRUPOLE, L= 0.36,  K1:=KF;
@@ -82,12 +85,12 @@ S2_021A_QUS: QUADRUPOLE, L= 0.36,  K1:=KR;
 S2_022A_BS1: MARKER;
 S2_023A_DRI: DRIFT, L= 0.139;
 S2_024A_FLS: MARKER;
-S2_025A_DRI: DRIFT, L= 0.2101525103;
+S2_025A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 S3_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S3_002A_DRI: DRIFT, L= 0.2101525103;
+S3_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S3_003A_FLS: MARKER;
 S3_004A_DRI: DRIFT, L= 0.047;
 S3_005A_CSV: VKICKER, L= 0.252, KICK := VK_S3;
@@ -107,12 +110,12 @@ S3_018A_DRI: DRIFT, L= 0.139;
 S3_019A_FLS: MARKER;
 S3_020A_PUV: VMONITOR, L= 0.3;
 S3_021A_FLS: MARKER;
-S3_022A_DRI: DRIFT, L= 0.2101525103;
+S3_022A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 S4_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S4_002A_DRI: DRIFT, L= 0.2101525103;
+S4_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S4_003A_FLS: MARKER;
 S4_004A_DRI: DRIFT, L= 0.139;
 S4_005A_QUS: QUADRUPOLE, L= 0.36,   K1:=KR;
@@ -138,12 +141,12 @@ S4_024A_QUS: QUADRUPOLE, L= 0.36,  K1:=KR;
 S4_025A_BS1: MARKER;
 S4_026A_DRI: DRIFT, L= 0.139;
 S4_027A_FLS: MARKER;
-S4_028A_DRI: DRIFT, L= 0.2101525103;
+S4_028A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 S5_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S5_002A_DRI: DRIFT, L= 0.2101525103;
+S5_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S5_003A_FLS: MARKER;
 S5_004A_DRI: DRIFT, L= 0.097;
 S5_005A_CSV: VKICKER, L= 0.252, KICK := VK_S5;
@@ -158,12 +161,12 @@ S5_013A_DRI: DRIFT, L= 0.084;
 S5_014A_FLS: MARKER;
 S5_015A_PUV: VMONITOR, L= 0.3;
 S5_016A_FLS: MARKER;
-S5_017A_DRI: DRIFT, L= 0.2101525103;
+S5_017A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 S6_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S6_002A_DRI: DRIFT, L= 0.2101525103;
+S6_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S6_003A_FLS: MARKER;
 S6_004A_DRI: DRIFT, L= 0.139;
 S6_005A_QUS: QUADRUPOLE, L= 0.36,  K1:=KR;
@@ -183,12 +186,12 @@ S6_018A_SHH: DRIFT, L= 0.501;
 S6_019A_QUS: QUADRUPOLE, L= 0.36,  K1:=KF;
 S6_020A_SHE: DRIFT, L= 0.139;
 S6_021A_FLS: MARKER;
-S6_022A_DRI: DRIFT, L= 0.2101525103;
+S6_022A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 S7_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S7_002A_DRI: DRIFT, L= 0.2101525103;
+S7_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S7_003A_FLS: MARKER;
 S7_004A_DRI: DRIFT, L= 0.087;
 S7_005A_CSV: VKICKER, L= 0.252, KICK := VK_S7;
@@ -199,12 +202,12 @@ S7_009A_DRI: DRIFT, L= 0.139;
 S7_010A_FLS: MARKER;
 S7_011A_PUV: VMONITOR, L= 0.3;
 S7_012A_FLS: MARKER;
-S7_013A_DRI: DRIFT, L= 0.2101525103;
+S7_013A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 S8_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S8_002A_DRI: DRIFT, L= 0.2101525103;
+S8_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S8_003A_FLS: MARKER;
 S8_004A_DRI: DRIFT, L= 0.109;
 S8_005A_QUS: QUADRUPOLE, L= 0.36,  K1:=KF;
@@ -243,12 +246,12 @@ S8_037A_QUS: QUADRUPOLE, L= 0.36,  K1:=KF;
 S8_038A_BS1: MARKER;
 S8_039A_DRI: DRIFT, L= 0.109;
 S8_040A_FLS: MARKER;
-S8_041A_DRI: DRIFT, L= 0.2101525103;
+S8_041A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 S9_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-S9_002A_DRI: DRIFT, L= 0.2101525103;
+S9_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 S9_003A_FLS: MARKER;
 S9_004A_DRI: DRIFT, L= 0.097;
 S9_005A_CSV: VKICKER, L= 0.252, KICK := VK_S9;
@@ -259,12 +262,12 @@ S9_009A_DRI: DRIFT, L= 0.139;
 S9_010A_FLS: MARKER;
 S9_011A_PUV: VMONITOR, L= 0.3;
 S9_012A_FLS: MARKER;
-S9_013A_DRI: DRIFT, L= 0.2101525103;
+S9_013A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 SA_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-SA_002A_DRI: DRIFT, L= 0.2101525103;
+SA_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 SA_003A_FLS: MARKER;
 SA_004A_DRI: DRIFT, L= 0.139;
 SA_005A_QUS: QUADRUPOLE, L= 0.36,   K1:=KF;
@@ -286,12 +289,12 @@ SA_020A_QUS: QUADRUPOLE, L= 0.36, K1:=KR;
 SA_021A_BS1: MARKER;
 SA_022A_DRI: DRIFT, L= 0.139;
 SA_023A_FLS: MARKER;
-SA_024A_DRI: DRIFT, L= 0.2101525103;
+SA_024A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 SB_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-SB_002A_DRI: DRIFT, L= 0.2101525103;
+SB_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 SB_003A_FLS: MARKER;
 SB_004A_DRI: DRIFT, L= 0.085;
 SB_005A_SCV: DRIFT, L= 0.096;
@@ -306,12 +309,12 @@ SB_013A_SHE: DRIFT, L= 0.139;
 SB_014A_FLS: MARKER;
 SB_015A_PUV: VMONITOR, L= 0.3;
 SB_016A_FLS: MARKER;
-SB_017A_DRI: DRIFT, L= 0.2101525103;
+SB_017A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 SC_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-SC_002A_DRI: DRIFT, L= 0.2101525103;
+SC_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 SC_003A_FLS: MARKER;
 SC_004A_DRI: DRIFT, L= 0.139;
 SC_005A_QUS: QUADRUPOLE, L= 0.36,  K1:=KR;
@@ -338,12 +341,12 @@ SC_025A_QUS: QUADRUPOLE, L= 0.36,  K1:=KR;
 SC_026A_BS1: MARKER;
 SC_027A_DRI: DRIFT, L= 0.139;
 SC_028A_FLS: MARKER;
-SC_029A_DRI: DRIFT, L= 0.2101525103;
+SC_029A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 SD_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-SD_002A_DRI: DRIFT, L= 0.2101525103;
+SD_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 SD_003A_FLS: MARKER;
 SD_004A_DRI: DRIFT, L= 0.097;
 SD_005A_CSV: VKICKER, L= 0.252, KICK := VK_SD;
@@ -361,12 +364,12 @@ SD_016A_DRI: DRIFT, L= 0.084;
 SD_017A_FLS: MARKER;
 SD_018A_PUV: VMONITOR, L= 0.3;
 SD_019A_FLS: MARKER;
-SD_020A_DRI: DRIFT, L= 0.2101525103;
+SD_020A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 SE_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-SE_002A_DRI: DRIFT, L= 0.2101525103;
+SE_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 SE_003A_FLS: MARKER;
 SE_004A_DRI: DRIFT, L= 0.139;
 SE_005A_QUS: QUADRUPOLE, L= 0.36,  K1:=KR;
@@ -386,12 +389,12 @@ SE_018A_QUS: QUADRUPOLE, L= 0.36,  K1:=KF;
 SE_019A_BS1: MARKER;
 SE_020A_DRI: DRIFT, L= 0.139;
 SE_021A_FLS: MARKER;
-SE_022A_DRI: DRIFT, L= 0.2101525103;
+SE_022A_DRI: DRIFT, L= dd_synch-dd_corr;
 
 ! -------------------------------------------------------------------------------------------------------------------
 SF_001A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB, K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
 ! -------------------------------------------------------------------------------------------------------------------
-SF_002A_DRI: DRIFT, L= 0.2101525103;
+SF_002A_DRI: DRIFT, L= dd_synch-dd_corr;
 SF_003A_FLS: MARKER;
 SF_004A_DRI: DRIFT, L= 0.087;
 SF_005A_CSV: VKICKER, L= 0.252, KICK := VK_SF;
@@ -402,4 +405,4 @@ SF_009A_DRI: DRIFT, L= 0.139;
 SF_010A_FLS: MARKER;
 SF_011A_PUV: VMONITOR, L= 0.3;
 SF_012A_FLS: MARKER;
-SF_013A_DRI: DRIFT, L= 0.2101525103;
+SF_013A_DRI: DRIFT, L= dd_synch-dd_corr;
