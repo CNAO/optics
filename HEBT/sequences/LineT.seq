@@ -6,10 +6,13 @@
 ! element definition
 ! ===============================================================
 
+! 
+
 ! ---------------------------------------------------------------
 ! T1
 ! ---------------------------------------------------------------
-T1_001A_SWH: SBEND, L= 1.2922854114, E1 = 0, E2 = -0.3054326191, ANGLE = -0.3054326191, K1 = 0, K2 = 0, HGAP = 0.032, FINT=0;
+dd_T1=0.18665;
+T1_001A_SWH: SBEND, L= L_SWH, E1 = 0, E2 = -Es_SWH, ANGLE = -ANGLE_SWH, K1 = 0, K2 = 0, HGAP = 0.032, FINT=0;
 T1_002A_DRI: DRIFT, L= 0.28927;
 T1_003A_DRI: DRIFT, L= 0.653727;
 T1_003B_BSH: DRIFT, L= 0.0;
@@ -32,9 +35,9 @@ T1_007F_SIP: DRIFT, L= 0.0;
 T1_008A_DRI: DRIFT, L= 0.1023;
 T1_008B_BSH: DRIFT, L= 0.0;
 T1_008C_DRI: DRIFT, L= 0.23;
-T1_008D_DRI: DRIFT, L= 0.213225014;
-T1_009A_EDF: SBEND, L= 0.976, E1 = -0.1090830782, E2 = -0.1090830782, ANGLE = -0.2181661565, K1 = 0, K2 = 0, HGAP = 0.036, FINT=0;
-T1_010A_DRI: DRIFT, L= 0.213225014;
+T1_008D_DRI: DRIFT, L= dd_T1-dd_corr_EDF;
+T1_009A_EDF: SBEND, L= L_EDF, E1 = -Es_EDF, E2 = -Es_EDF, ANGLE = -ANGLE_EDF, K1 = 0, K2 = 0, HGAP = 0.036, FINT=0;
+T1_010A_DRI: DRIFT, L= dd_T1-dd_corr_EDF;
 T1_010B_DRI: DRIFT, L= 0.0052;
 T1_011A_CEB: KICKER, L= 0.52, HKICK := HKICK_T1_011A_CEB, VKICK := VKICK_T1_011A_CEB;
 T1_012A_DRI: DRIFT, L= 0.1;
@@ -120,28 +123,29 @@ T2_032A_MOB: MONITOR, L= 0.0;
 ! sequence definition
 ! ===============================================================
 
-LineT_L=22.09559544;
+LineT_L=19.880463+L_SWH+(L_EDF_MagLayout+ds_corr_EDF);
+! LineT_L=22.09559544;
 LineT: sequence, l = LineT_L;
-t1_001a_swh, at = 0.64614271 ;
-t1_004a_que, at = 2.56028241 ;
-t1_007b_sfh, at = 4.07864541 ;
-t1_009a_edf, at = 5.28717043 ;
-t1_011a_ceb, at = 6.25359544 ;
-t1_013a_que, at = 6.83859544 ;
-t1_016b_sfh, at = 7.40569544 ;
-t1_019a_que, at = 7.96859544 ;
-t2_002b_sfh, at = 11.01859544 ;
-t2_005a_que, at = 11.51859544 ;
-t2_008a_ceb, at = 12.14359544 ;
-t2_009b_sfh, at = 12.61859544 ;
-t2_012a_que, at = 13.16859544 ;
-t2_015a_ceb, at = 13.79359544 ;
-t2_018a_que, at = 14.41859544 ;
-t2_021b_sfh, at = 14.97659544 ;
-t2_023a_scc, at = 15.91559544 ;
-t2_026a_scc, at = 16.63559544 ;
-t2_030b_nzl, at = 21.23209544 ;
-t2_032a_mob, at = 22.09559544 ;
+t1_001a_swh, at = L_SWH/2 ;
+t1_004a_que, at = L_SWH+1.268 ;! 2.56028241 ;
+t1_007b_sfh, at = L_SWH+1.268+1.518363 ;
+t1_009a_edf, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)/2 ;
+t1_011a_ceb, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505;
+t1_013a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585;
+t1_016b_sfh, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+0.5671;
+t1_019a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300;
+t2_002b_sfh, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550-0.5;
+t2_005a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550;
+t2_008a_ceb, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625;
+t2_009b_sfh, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025-0.55;
+t2_012a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025;
+t2_015a_ceb, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625;
+t2_018a_que, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625+0.625;
+t2_021b_sfh, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625+0.625+0.558;
+t2_023a_scc, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625+0.625+1.497;
+t2_026a_scc, at = L_SWH+3.533463+(L_EDF_MagLayout+ds_corr_EDF)  +0.505+0.585+1.1300+3.550+0.625+1.025+0.625+0.625+1.497+0.72;
+t2_030b_nzl, at = LineT_L -0.8635;
+t2_032a_mob, at = LineT_L ;
 endsequence;
 
 ! ===============================================================

@@ -10,12 +10,12 @@ is_open=1;
 
 ! 0: protons
 ! 1: carbon ions
-is_carbon=1;
+is_carbon=0;
 
 ! 0: initial conditions at entrance of ESE
 ! 1: initial conditions at entrance of S0-016A-MSP (synchro seq)
 !    / H2-001A-MSN (HEBT seq)
-start_cond=0;
+start_cond=1;
 
 ! 0: chopper HEBT off
 ! 1: chopper HEBT on
@@ -29,13 +29,13 @@ iChopper=0;
 ! 6: XPR, ISO2
 ! 7: XPR, ISO3
 ! 8: XPR, ISO4
-iLine=8;
+iLine=2;
 
 ! consider also H1 line (kicks are available only in case of LGEN currents)
 ! the H1 line is automatically extracted from synchro sequence
 ! 0: do NOT load H1 line
 ! 1: DO load H1 line
-iH1=1;
+iH1=0;
 
 iMacro_I2K_QU=5;  ! 1: linear; 5: fifth order;
 iMacro_I2K_ded=1; ! 0: general one; 1: specific for each magnet (only QUEs for the time being);
@@ -45,6 +45,7 @@ call, file=macros.cmdx;
 
 ! load common defs
 call, file=../common_defs.madx;
+call, file=common_defs.madx;
 
 ! load desired HEBT
 call, file="sequences/LineH.seq";

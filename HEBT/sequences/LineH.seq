@@ -2,6 +2,8 @@
 ! This is the description of HEBT H line
 !
 
+! chopper infos
+! - angle [rad]
 if ( iChopper==1 ) {
 	AH_CHOPPER=0.0106;
 } else {
@@ -11,6 +13,8 @@ H3_001A_CHD_HKICK= AH_CHOPPER;
 H3_005A_CHD_HKICK=-AH_CHOPPER;
 H3_013A_CHD_HKICK=-AH_CHOPPER;
 H3_017A_CHD_HKICK= AH_CHOPPER;
+! - kicker straight length
+CHD_L=0.35;
 
 ! MSx ARCs and ANGLEs
 H2_001A_MSN_ANGLE=-0.05; H2_001A_MSN_L=0.65; ! deviation angle [rad], arc length [m]
@@ -107,20 +111,21 @@ H2_026B_BSH: MARKER;
 ! ---------------------------------------------------------------
 ! H3
 ! ---------------------------------------------------------------
-H3_001A_CHD: KICKER, L= 0.35, HKICK := H3_001A_CHD_HKICK, VKICK := 0.0;
+dd_H3=0.1898;
+H3_001A_CHD: KICKER, L= CHD_L, HKICK := H3_001A_CHD_HKICK, VKICK := 0.0;
 H3_002A_DRI: DRIFT, L= 0.1389;
-H3_002B_DRI: DRIFT, L= 0.1818525103;
-H3_003A_SW2: SBEND, L=LMB, ANGLE = ANGLEMB, E1 = Es, E2 = Es, K0 := K0MB,  K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
-H3_004A_DRI: DRIFT, L= 0.1818525103;
+H3_002B_DRI: DRIFT, L= dd_H3-dd_corr;
+H3_003A_SW2: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB,  K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
+H3_004A_DRI: DRIFT, L= dd_H3-dd_corr;
 H3_004B_DRI: DRIFT, L= 0.1389;
-H3_005A_CHD: KICKER, L= 0.35, HKICK := H3_005A_CHD_HKICK, VKICK := 0.0;
+H3_005A_CHD: KICKER, L= CHD_L, HKICK := H3_005A_CHD_HKICK, VKICK := 0.0;
 H3_006A_DRI: DRIFT, L= 0.1385;
 H3_006B_BSH: DRIFT, L= 0.0;
 H3_007A_DRI: DRIFT, L= 0.389;
 H3_008A_DRI: DRIFT, L= 0.0;
-H3_008B_DRI: DRIFT, L= 0.1818525103;
-H3_009A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = Es, E2 = Es, K0 := K0MB,  K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
-H3_010A_DRI: DRIFT, L= 0.1818525103;
+H3_008B_DRI: DRIFT, L= dd_H3-dd_corr;
+H3_009A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB,  K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
+H3_010A_DRI: DRIFT, L= dd_H3-dd_corr;
 H3_010B_DRI: DRIFT, L= 0.1023;
 H3_010C_BSH: DRIFT, L= 0.0;
 H3_011A_DRI: DRIFT, L= 0.1075;
@@ -129,20 +134,21 @@ H3_011C_QIM: DRIFT, L= 0.0;
 H3_011D_DRI: DRIFT, L= 0.1775;
 H3_011E_SIP: DRIFT, L= 0.0;
 H3_012A_DPC: DRIFT, L= 0.1402;
-H3_013A_CHD: KICKER, L= 0.35, HKICK := H3_013A_CHD_HKICK, VKICK := 0.0;
+H3_013A_CHD: KICKER, L= CHD_L, HKICK := H3_013A_CHD_HKICK, VKICK := 0.0;
 H3_014A_DRI: DRIFT, L= 0.1389;
 H3_014B_BSH: DRIFT, L= 0.0;
-H3_014C_DRI: DRIFT, L= 0.1818525103;
-H3_015A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = Es, E2 = Es, K0 := K0MB,  K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
-H3_016A_DRI: DRIFT, L= 0.1818525103;
+H3_014C_DRI: DRIFT, L= dd_H3-dd_corr;
+H3_015A_MBS: SBEND, L=LMB,  ANGLE = ANGLEMB, E1 = EsMB, E2 = EsMB, K0 := K0MB,  K1 = 0, K2 = 0,  Fint=0.50, HGAP = 0.036;
+H3_016A_DRI: DRIFT, L= dd_H3-dd_corr;
 H3_016B_DRI: DRIFT, L= 0.1389;
+H3_016B_DRI: DRIFT, L= 0.0;
 H3_016C_BSH: DRIFT, L= 0.0;
-H3_017A_CHD: KICKER, L= 0.35, HKICK := H3_017A_CHD_HKICK, VKICK := 0.0;
+H3_017A_CHD: KICKER, L= CHD_L, HKICK := H3_017A_CHD_HKICK, VKICK := 0.0;
 
 ! ---------------------------------------------------------------
 ! H4
 ! ---------------------------------------------------------------
-H4_001A_DRI: DRIFT, L= 0.1650075;
+H4_001A_DRI: DRIFT, L= 0.165;
 H4_001B_BSH: DRIFT, L= 0.0;
 H4_002A_DRI: DRIFT, L= 0.1;
 H4_003A_QUE: QUADRUPOLE, L= 0.45, K1:= K1_H4_003A_QUE;
@@ -180,12 +186,12 @@ H4_019D_PLH: DRIFT, L= 0.0;
 H4_019E_VVH: DRIFT, L= 0.07;
 H4_019F_DRI: DRIFT, L= 0.1023;
 H4_019G_BSH: DRIFT, L= 0.0;
-H4_019H_DRI: DRIFT, L= 0.1818525103;
+H4_019H_DRI: DRIFT, L= 0.1898;
 
 ! ---------------------------------------------------------------
 ! H5
 ! ---------------------------------------------------------------
-H5_001A_DRI: DRIFT, L= 2.3907+0.0079474;
+H5_001A_DRI: DRIFT, L= 2.3907;
 H5_001B_CEB: KICKER, L= 0.52, HKICK := HKICK_H5_001B_CEB, VKICK := VKICK_H5_001B_CEB;
 H5_001C_DRI: DRIFT, L= 0.0156;
 H5_001D_BSH: DRIFT, L= 0.0;
@@ -239,7 +245,9 @@ HE_009B_BSH:MARKER;
 HE_010A_DRI:DRIFT,L = 0.071;
 HE_010B_QPP:monitor, L=0;
 HE_010C_DRI:DRIFT,L = 0.124;
+HE_010D_DIN:MARKER;  ! dump upstream face
 HE_010D_DMP:DRIFT,L = 0.2;
+HE_010D_DOU:MARKER;  ! dump downstream face
 HE_010E_DRI:DRIFT,L = 0.055;
 HE_010F_TMP:MARKER;
 HE_010G_PVV:MARKER;
@@ -291,78 +299,86 @@ HE_032A_DRI:DRIFT,L = 3.0608;
 ! ===============================================================
 
 ! H2-H4
-LineH2H4_L=22.53997507;
+LineH2_L=H2_001A_MSN_L+0.5+H2_003A_MSW_L+0.5+H2_005A_MSW_L+5.338-(0.5037+H3_001A_CHD->L/2);
+LineH3_L=2*(0.5037+H3_001A_CHD->L/2)+(2*1.396+3*(LMB_MagLayout+ds_corr));
+LineH4_L=5.784-(0.5037+H3_001A_CHD->L/2);
+LineH2H4_L=LineH2_L+LineH3_L+LineH4_L;
+! value,LineH2_L,LineH3_L,LineH4_L,LineH2H4_L,LMB_MagLayout,LMB,rMB_MADX, rMB_MagLayout, dd_corr, ds_corr;
+! stop;
 LineH2H4: sequence, l=LineH2H4_L;
 ! offsetting/tilting local ref system, to exit from MSN on axis
 if (iH1<>0) {
 	h2_0010_trsl, at = 0.0;
 	h2_0010_kink, at = 0.0;
 };
-h2_001a_msn, at = 0.325;
+h2_001a_msn, at = H2_001A_MSN_L/2;
 ! offsetting/tilting local ref system, to exit from MSN on axis
 if (iH1<>0) {
-	h2_001b_kink, at = 0.65;
+	h2_001b_kink, at = H2_001A_MSN_L;
 };
-h2_003a_msw, at = 1.65;
-h2_005a_msw, at = 3.15;
-h2_007a_ceb, at = 4.21;
+h2_003a_msw, at = H2_001A_MSN_L+0.5+H2_003A_MSW_L/2;
+h2_005a_msw, at = H2_001A_MSN_L+0.5+H2_003A_MSW_L+0.5+H2_005A_MSW_L/2;
+h2_007a_ceb, at = H2_001A_MSN_L+0.5+H2_003A_MSW_L+0.5+H2_005A_MSW_L+0.56;
 h2_008d_bsh, at = 4.7262;
 h2_009b_sfh, at = 4.9012;
 h2_009d_sip, at = 5.0762;
-h2_010b_bsh, at = 5.16;
-h2_012a_que, at = 5.485;
-h2_016a_que, at = 6.155;
-h2_019a_ceb, at = 6.78;
-h2_022a_que, at = 7.405;
+h2_010b_bsh, at = 5.1600;
+h2_012a_que, at = H2_001A_MSN_L+0.5+H2_003A_MSW_L+0.5+H2_005A_MSW_L+0.56+1.275;
+h2_016a_que, at = H2_001A_MSN_L+0.5+H2_003A_MSW_L+0.5+H2_005A_MSW_L+0.56+1.275+0.67;
+h2_019a_ceb, at = H2_001A_MSN_L+0.5+H2_003A_MSW_L+0.5+H2_005A_MSW_L+0.56+1.275+0.67+0.625;
+h2_022a_que, at = H2_001A_MSN_L+0.5+H2_003A_MSW_L+0.5+H2_005A_MSW_L+0.56+1.275+0.67+0.625+0.625;
 h2_024b_bsh, at = 7.8208;
 h2_025b_sfh, at = 7.9958;
 h2_025d_sip, at = 8.1708;
 h2_025e_mig, at = 8.1708;
 h2_026b_bsh, at = 8.3093;
-h3_001a_chd, at = 8.4843;
-h3_003a_sw2, at = 9.81865251;
-h3_005a_chd, at = 11.15300502;
-h3_009a_mbs, at = 12.87595753;
-h3_011b_qpm, at = 14.10621004;
-h3_013a_chd, at = 14.59891004;
-h3_015a_mbs, at = 15.93326255;
-h3_017a_chd, at = 17.26761506;
-h4_003a_que, at = 17.93262256;
-h4_007a_que, at = 18.60262256;
-h4_010b_box, at = 19.16762256;
-h4_013a_que, at = 19.73262256;
-h4_016a_ceb, at = 20.35762256;
-h4_018b_sfh, at = 20.81562256;
+h3_001a_chd, at = LineH2_L         +(H3_001A_CHD->L/2                                     );
+h3_003a_sw2, at = LineH2_L         +(H3_001A_CHD->L/2+  0.5037+(LMB_MagLayout+ds_corr)/2  );
+h3_005a_chd, at = LineH2_L         +(H3_001A_CHD->L/2+2*0.5037+ LMB_MagLayout+ds_corr     );
+h3_009a_mbs, at = LineH2_L         +(H3_001A_CHD->L/2+  0.5037+(LMB_MagLayout+ds_corr)*1.5)+1.3960;
+h3_011b_qpm, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2+2*0.5037+ LMB_MagLayout+ds_corr     )-0.4927;
+h3_013a_chd, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2+2*0.5037+ LMB_MagLayout+ds_corr     );
+h3_015a_mbs, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2+  0.5037+(LMB_MagLayout+ds_corr)/2  );
+h3_017a_chd, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2                                     );
+h4_003a_que, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2                                     )+0.665;
+h4_007a_que, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2                                     )+0.665+0.670;
+h4_010b_box, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2                                     )+0.665+0.670+1.130-0.565;
+h4_013a_que, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2                                     )+0.665+0.670+1.130;
+h4_016a_ceb, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2                                     )+0.665+0.670+1.130+0.625;
+h4_018b_sfh, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2                                     )+0.665+0.670+1.130+0.625+0.458;
 endsequence;
 
 ! H5
-LineH5_L=6.8959474;
+LineH5_L=6.888;
 LineH5: sequence, l=LineH5_L;
-h5_001b_ceb, at = 2.65864740 ;
-h5_002b_sfh, at = 3.10924740 ;
-h5_005a_que, at = 3.64364740 ;
-h5_009a_que, at = 4.31364740 ;
-h5_012a_ceb, at = 4.92864740 ;
-h5_015a_que, at = 5.57364740 ;
-h5_018b_sfh, at = 6.23684740 ;
+h5_001b_ceb, at = 2.6507 ;
+h5_002b_sfh, at = 2.6507+0.4506 ;
+h5_005a_que, at = 2.6507+0.9850 ;
+h5_009a_que, at = 2.6507+0.9850+0.670 ;
+h5_012a_ceb, at = 2.6507+0.9850+0.670+0.615 ;
+h5_015a_que, at = 2.6507+0.9850+0.670+0.615+0.645 ;
+h5_018b_sfh, at = 2.6507+0.9850+0.670+0.615+0.645+0.6632 ;
 endsequence;
 
 ! H2-H3 for XPR
-SEQEDIT, SEQUENCE=LineH2H4;
-FLATTEN;
-INSTALL, ELEMENT=H2_0010_STRT, CLASS=MARKER, AT=0.0;
-INSTALL, ELEMENT=HE_0010_STR,  CLASS=MARKER, AT=H3_001A_CHD->L/2+H3_002A_DRI->L+H3_002B_DRI->L, FROM=H3_001A_CHD;
-FLATTEN;
-EXTRACT, SEQUENCE=LineH2H4, FROM=H2_0010_STRT, TO=HE_0010_STR, NEWNAME=LineH2H3;
-ENDEDIT;
-seqedit, sequence=LineH2H3; flatten; endedit;
-! length of newly extracted sequence
+if ( 5<=iLine && iLine<=8 ) {
+   SEQEDIT, SEQUENCE=LineH2H4;
+   FLATTEN;
+   INSTALL, ELEMENT=H2_0010_STRT, CLASS=MARKER, AT=0.0;
+   REMOVE,  ELEMENT=H3_003A_SW2;
+   INSTALL, ELEMENT=HE_0010_STR,  CLASS=MARKER, AT=H3_001A_CHD->L/2+H3_002A_DRI->L+dd_H3, FROM=H3_001A_CHD;
+   FLATTEN;
+   EXTRACT, SEQUENCE=LineH2H4, FROM=H2_0010_STRT, TO=HE_0010_STR, NEWNAME=LineH2H3;
+   ENDEDIT;
+   seqedit, sequence=LineH2H3; flatten; endedit;
+   ! length of newly extracted sequence
 /*
-exec, setBeam(LineH2H3);
-use,sequence=LineH2H3;
-DUMPSEQU, SEQUENCE=LineH2H3, LEVEL=0;
+   exec, setBeam(LineH2H3);
+   use,sequence=LineH2H3;
+   DUMPSEQU, SEQUENCE=LineH2H3, LEVEL=0;
 */
-LineH2H3_L=8.98005251; ! [m]
+   LineH2H3_L=LineH2_L+H3_001A_CHD->L+H3_002A_DRI->L+dd_H3; ! [m]
+};
 
 ! HE
 LineHE_L=12.3109;
@@ -372,6 +388,8 @@ he_004b_bsh, at = 2.1644 ;
 he_007a_ceb, at = 2.65 ;
 he_009b_bsh, at = 3.1709 ;
 he_010b_qpp, at = 3.2419 ;
+he_010d_din, at = 3.3659 ;
+he_010d_dou, at = 3.5659 ;
 he_010f_tmp, at = 3.6209 ;
 he_010g_pvv, at = 3.6209 ;
 he_011b_bsh, at = 3.7232 ;
@@ -385,7 +403,6 @@ he_020a_que, at = 6.25 ;
 he_023a_que, at = 6.95 ;
 he_025a_que, at = 7.65 ;
 he_027a_ceb, at = 8.3565 ;
-he_028a_dri, at = 8.6165 ;
 he_029b_bsh, at = 8.6978 ;
 he_030b_sfp, at = 8.7688 ;
 he_030h_mig, at = 9.1478 ;

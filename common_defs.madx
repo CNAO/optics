@@ -1,6 +1,34 @@
 ! infos about synchro MBS (used also by HEBT)
 ANGLEMB = 0.3926990817;
-LMB = 1.6772;
+LMB = 1.6772;    ! magnetic length!!! [m]
 K0MB = ANGLEMB / LMB;
-Es = ANGLEMB /2. ;
+EsMB = ANGLEMB /2. ;
 K0MB_ref=K0MB; ! set reference value
+
+! --------------------------------------------------------------------------------------------------------------------------
+! compare against magnetic layout (mechanical drawings)
+! D.Bianculli, P:\Accelerating-System\Inventor Data Files\Bianculli\CNAO - Modelli\CNAO - 2012-01-02\01 - Layout magnetico
+! --------------------------------------------------------------------------------------------------------------------------
+
+! from magnetic layout
+rMB_MagLayout=4.231;                                       ! [m]
+LMB_MagLayout=abs(rMB_MagLayout*ANGLEMB);                  ! [m]
+
+! reset to magnetic layout
+! LMB = LMB_MagLayout;    ! magnetic length!!! [m]
+! K0MB = ANGLEMB / LMB;
+! K0MB_ref=K0MB; ! set reference value
+
+! from current layout
+rMB_MADX=abs(LMB/ANGLEMB);                                 ! [m]
+! distance to be removed from length of drifts around MBs as in magnetic layout
+dd_corr=abs(rMB_MagLayout-rMB_MADX)*tan(abs(ANGLEMB)/2); ! [m]
+! Delta_s introduced by each magnet
+s_MB_MagLayout=2*dd_corr+rMB_MagLayout*ANGLEMB;            ! [m]
+ds_corr=LMB-s_MB_MagLayout;                                ! [m]
+!
+! some useful printout
+! value, LMB_MagLayout, LMB;
+! value, rMB_MagLayout, rMB_MADX;
+! value, s_MB_MagLayout, dd_corr, ds_corr;
+! stop;

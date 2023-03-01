@@ -23,6 +23,8 @@ call, file="sequences/synchro.seq";
 ! Definisco  l'anello come linea
 !call, file="cnao-line.opt"; ! AM: file does not exist!
 
+! non linear model
+call, file="sequences/non_linear_model.ele";
 ! DEFINISCO I MULTIPOLI
 ! AM: which is the difference between the two?
 !call, file="strengths/multipoli.str";

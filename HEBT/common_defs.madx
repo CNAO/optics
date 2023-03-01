@@ -1,0 +1,35 @@
+! --------------------------------------------------------------------------------------------------------------------------
+! infos about synchro SWH (used by line T and Z)
+! --------------------------------------------------------------------------------------------------------------------------
+ANGLE_SWH = 0.3054326191;
+r_SWH=4.231;             ! [m]
+L_SWH = ANGLE_SWH*r_SWH; ! physical length!!! [m]
+Es_SWH = ANGLE_SWH /2. ;
+
+! --------------------------------------------------------------------------------------------------------------------------
+! infos about synchro EDF (used by line T and Z)
+! --------------------------------------------------------------------------------------------------------------------------
+ANGLE_EDF = 0.2181661565;
+L_EDF = 0.976;    ! magnetic length!!! [m]
+Es_EDF = ANGLE_EDF /2. ;
+
+! compare against magnetic layout (mechanical drawings)
+! D.Bianculli, P:\Accelerating-System\Inventor Data Files\Bianculli\CNAO - Modelli\CNAO - 2012-01-02\01 - Layout magnetico
+
+! from magnetic layout
+rEDF_MagLayout=4.231;                                           ! [m]
+L_EDF_MagLayout=abs(rEDF_MagLayout*ANGLE_EDF);                  ! [m]
+! from current layout
+rEDF_MADX=abs(L_EDF/ANGLE_EDF);                                 ! [m]
+! distance to be removed from length of drifts around EDFs as in magnetic layout
+dd_corr_EDF=abs(rEDF_MagLayout-rEDF_MADX)*tan(abs(ANGLE_EDF)/2); ! [m]
+! dd_corr_EDF=26.574986E-03;                                      ! [m]
+! Delta_s introduced by each magnet
+s_EDF_MagLayout=2*dd_corr_EDF+rEDF_MagLayout*ANGLE_EDF;         ! [m]
+ds_corr_EDF=L_EDF-s_EDF_MagLayout;                              ! [m]
+!
+! some useful printout
+! value, L_EDF_MagLayout, L_EDF;
+! value, rEDF_MagLayout, rEDF_MADX;
+! value, s_EDF_MagLayout, dd_corr_EDF, ds_corr_EDF;
+! stop;
