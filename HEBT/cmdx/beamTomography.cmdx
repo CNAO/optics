@@ -1,0 +1,171 @@
+! ========================================================================
+! macros
+! ========================================================================
+
+! define all observations
+writeSummary(fileName,MatchWhere): macro{
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E,% 6.1f,% 6.0f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
+         VALUE=Brho, BP, myID, I_H2_012A_QUE, I_H2_016A_QUE, I_H2_022A_QUE, I_HE_018A_QUE, I_HE_020A_QUE, I_HE_023A_QUE, I_HE_025A_QUE,
+         table(twiss,MatchWhere,MUX),table(twiss,MatchWhere,MUY);
+   assign, echo=terminal;
+};
+
+! a useful header to file written by writeObservations(fileName,monName) macro
+writeHeader(fileName,MatchWhere): macro{
+   assign, echo=fileName;
+   PRINT, TEXT=# Brho[Tm], BP[mm], ID[],
+   I_H2_012A_QUE[A], I_H2_016A_QUE[A], I_H2_022A_QUE[m-1], I_HE_018A_QUE[], I_HE_020A_QUE[m], I_HE_023A_QUE[], I_HE_025A_QUE[],
+   MUX:MatchWhere[],MUY:MatchWhere[];
+   assign, echo=terminal;
+};
+
+MatchMe(MatchWhat,MatchWhere,fileName): macro = {
+
+  ! clean files
+  REMOVEFILE, FILE=output/xpr_iso3_ScanMatchWhat_MatchWhere_lgen_geometry.tfs;
+  REMOVEFILE, FILE=output/xpr_iso3_ScanMatchWhat_MatchWhere_lgen_optics.tfs;
+  REMOVEFILE, FILE=output/xpr_iso3_ScanMatchWhat_MatchWhere_lgen_rmatrix.tfs;
+  REMOVEFILE, FILE=fileName;
+  exec, writeHeader(fileName,MatchWhere);
+  myID=0;
+  
+  ! compute optics
+  nOfInterest=1;
+  SETVARS, TABLE=LGEN_HEBT_table, ROW=nOfInterest;
+  K0MB=K0MB_ref;
+  call, file="strengths/settings_from_LGEN_table.str";
+  ! notify user where we are
+  PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VALUE= Ek,Brho,BP,n;
+
+  exec, setBeam(MyLine);
+  use, sequence=MyLine;
+  exec, saveOptics(LGEN);
+  COPYFILE, FILE="xpr_iso3_lgen_geometry.tfs", TO="output/xpr_iso3_lgen_geometry.tfs";
+  COPYFILE, FILE="xpr_iso3_lgen_optics.tfs", TO="output/xpr_iso3_lgen_optics.tfs";
+  COPYFILE, FILE="xpr_iso3_lgen_rmatrix.tfs", TO="output/xpr_iso3_lgen_rmatrix.tfs";
+  REMOVEFILE, FILE="xpr_iso3_lgen_geometry.tfs";
+  REMOVEFILE, FILE="xpr_iso3_lgen_optics.tfs";
+  REMOVEFILE, FILE="xpr_iso3_lgen_rmatrix.tfs";
+  origMUX=table(twiss,MatchWhere,MUX);
+  origMUY=table(twiss,MatchWhere,MUY);
+  origBETX=table(twiss,MatchWhere,BETX);
+  origBETY=table(twiss,MatchWhere,BETY);
+  origALFX=table(twiss,MatchWhere,ALFX);
+  origALFY=table(twiss,MatchWhere,ALFY);
+  ! value, origMuX, origMuY;
+  ! stop;
+  exec, writeSummary(fileName,MatchWhere);
+  I_H2_012A_QUE_MIN=   0.0; I_H2_012A_QUE_MAX=350.0;
+  I_H2_016A_QUE_MIN=-350.0; I_H2_016A_QUE_MAX=  0.0;
+  I_H2_022A_QUE_MIN=   0.0; I_H2_022A_QUE_MAX=350.0;
+  I_HE_018A_QUE_MIN=-350.0; I_HE_018A_QUE_MAX=  0.0;
+  I_HE_020A_QUE_MIN=   0.0; I_HE_020A_QUE_MAX=350.0;
+  I_HE_023A_QUE_MIN=-350.0; I_HE_023A_QUE_MAX=  0.0;
+  I_HE_025A_QUE_MIN=   0.0; I_HE_025A_QUE_MAX=350.0;
+
+  ! match loop
+  WHILE (dmu <= dmuMax ) {
+
+	myID=myID+1;
+
+    ! actually match
+    USE, sequence=MyLine;
+    MATCH, sequence=MyLine, BETA0=initial;
+      CONSTRAINT, sequence=MyLine, range=#S/#E, BETX<120, BETY<120; 
+      ! CONSTRAINT, sequence=MyLine, range=MatchWhere, MatchWhat=origMatchWhat+dmu; 
+	  ! CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, MatchWhat=origMatchWhat+dmu; 
+	  CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, BETY=origBETY, MatchWhat=origMatchWhat+dmu; 
+	  ! CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, ALFX=origALFX, MatchWhat=origMatchWhat+dmu; 
+      ! CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, BETY=origBETY, ALFX=origALFX, ALFY=origALFY, MatchWhat=origMatchWhat+pi/10, MUY=origMuY; 
+	  
+      VARY, NAME=I_H2_012A_QUE, STEP=1E-1, LOWER=I_H2_012A_QUE_MIN, UPPER=I_H2_012A_QUE_MAX;
+      VARY, NAME=I_H2_016A_QUE, STEP=1E-1, LOWER=I_H2_016A_QUE_MIN, UPPER=I_H2_016A_QUE_MAX;
+      VARY, NAME=I_H2_022A_QUE, STEP=1E-1, LOWER=I_H2_022A_QUE_MIN, UPPER=I_H2_022A_QUE_MAX;
+      VARY, NAME=I_HE_018A_QUE, STEP=1E-1, LOWER=I_HE_018A_QUE_MIN, UPPER=I_HE_018A_QUE_MAX;
+      VARY, NAME=I_HE_020A_QUE, STEP=1E-1, LOWER=I_HE_020A_QUE_MIN, UPPER=I_HE_020A_QUE_MAX;
+      VARY, NAME=I_HE_023A_QUE, STEP=1E-1, LOWER=I_HE_023A_QUE_MIN, UPPER=I_HE_023A_QUE_MAX;
+      VARY, NAME=I_HE_025A_QUE, STEP=1E-1, LOWER=I_HE_025A_QUE_MIN, UPPER=I_HE_025A_QUE_MAX;
+	  
+!       VARY, NAME=K1_H2_012A_QUE, STEP=1E-5, LOWER=0.0;
+!       VARY, NAME=K1_H2_016A_QUE, STEP=1E-5, UPPER=0.0;
+!       VARY, NAME=K1_H2_022A_QUE, STEP=1E-5, LOWER=0.0;
+!       VARY, NAME=K1_HE_018A_QUE, STEP=1E-5, UPPER=0.0;
+!       VARY, NAME=K1_HE_020A_QUE, STEP=1E-5, LOWER=0.0;
+!       VARY, NAME=K1_HE_023A_QUE, STEP=1E-5, UPPER=0.0;
+!       VARY, NAME=K1_HE_025A_QUE, STEP=1E-5, LOWER=0.0;
+
+      LMDIF, CALLS=10000, TOLERANCE=1.0E-6;
+      JACOBIAN, CALLS=10000, TOLERANCE=1.0E-6;
+    ENDMATCH;
+  
+    ! show optics
+    use, sequence=MyLine;
+    exec, saveOptics(mod_LGEN);
+    value, origMatchWhat, table(twiss,MatchWhere,MatchWhat);
+    COPYFILE, FILE="xpr_iso3_mod_lgen_geometry.tfs", TO=output/xpr_iso3_ScanMatchWhat_MatchWhere_lgen_geometry.tfs, APPEND=true;
+    COPYFILE, FILE="xpr_iso3_mod_lgen_optics.tfs", TO=output/xpr_iso3_ScanMatchWhat_MatchWhere_lgen_optics.tfs, APPEND=true;
+    COPYFILE, FILE="xpr_iso3_mod_lgen_rmatrix.tfs", TO=output/xpr_iso3_ScanMatchWhat_MatchWhere_lgen_rmatrix.tfs, APPEND=true;
+    REMOVEFILE, FILE="xpr_iso3_mod_lgen_geometry.tfs";
+    REMOVEFILE, FILE="xpr_iso3_mod_lgen_optics.tfs";
+    REMOVEFILE, FILE="xpr_iso3_mod_lgen_rmatrix.tfs";
+	exec, writeSummary(fileName,MatchWhere);
+    
+    ! get ready for new step
+! 	  ! limit current from IminScan to ImaxScan
+!     I_H2_012A_QUE_MIN=I_H2_012A_QUE;
+!     I_H2_016A_QUE_MAX=I_H2_016A_QUE;
+!     I_H2_022A_QUE_MIN=I_H2_022A_QUE;
+!     I_HE_018A_QUE_MAX=I_HE_018A_QUE;
+!     I_HE_020A_QUE_MIN=I_HE_020A_QUE;
+!     I_HE_023A_QUE_MAX=I_HE_023A_QUE;
+!     I_HE_025A_QUE_MIN=I_HE_025A_QUE;
+    dmu=dmu+dmuStp;
+  };
+};
+
+! ========================================================================
+! actual script
+! ========================================================================
+
+! ---------------------------------------------------------------------------
+! extract portion of beam line of interest
+! ---------------------------------------------------------------------------
+exec, insertMarkerUpstreamOf(MYINS,H2_007A_CEB,APICLS009);
+SEQEDIT, SEQUENCE=APICLS009;
+FLATTEN;
+EXTRACT, SEQUENCE=APICLS009, FROM=MYINS, TO=X3_015A_MOB, NEWNAME=MyLine;
+ENDEDIT;
+seqedit, sequence=MyLine; flatten; endedit;
+
+! ---------------------------------------------------------------------------
+! parse LGEN table and load currents
+! ---------------------------------------------------------------------------
+exec, parseHEBTtableLGEN();
+lunghezza=table(LGEN_HEBT_table,tablelength);
+
+! ---------------------------------------------------------------------------
+! starting conditions
+! V.Lante, "XPR optics design"
+! ---------------------------------------------------------------------------
+initial: BETA0,
+    betx = 8.184,
+    alfx =-0.443,
+    bety = 4.526,
+    alfy =-1.985,
+    dx   = 0.0,
+    dpx  = 0.0,
+    dy   = 0.0,
+    dpy  = 0.0;
+
+! ---------------------------------------------------------------------------
+! match
+! ---------------------------------------------------------------------------
+! - MUX
+dmuMin=-0.35; dmuMax= 0.65; dmuStp= 0.05; ! MUX scan [2pi]
+dmu=dmuMin;
+exec, MatchMe(MUX,X3_011B_VWN,"output/summary_X3_011B_VWN_MUX.tfs");
+! - MUY
+dmuMin=-0.45; dmuMax= 0.55; dmuStp= 0.05; ! MUY scan [2pi]
+dmu=dmuMin;
+exec, MatchMe(MUY,X3_011B_VWN,"output/summary_X3_011B_VWN_MUY.tfs");

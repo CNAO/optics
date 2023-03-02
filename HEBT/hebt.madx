@@ -29,7 +29,7 @@ iChopper=0;
 ! 6: XPR, ISO2
 ! 7: XPR, ISO3
 ! 8: XPR, ISO4
-iLine=2;
+iLine=7;
 
 ! consider also H1 line (kicks are available only in case of LGEN currents)
 ! the H1 line is automatically extracted from synchro sequence
@@ -125,7 +125,7 @@ exec, saveStrengths(example,HEBT);
 ! ==============================================================================
 
 ! loop through .tfs file out of the repo with currents
-call, file="cmdx/loopThroughLGENFile.cmdx";
+! call, file="cmdx/loopThroughLGENFile.cmdx";
 
 ! compute response matrices
 ! call, file="cmdx/compute_RM.cmdx";
@@ -137,3 +137,6 @@ call, file="cmdx/loopThroughLGENFile.cmdx";
 ! call, file="cmdx/guessOptics.cmdx";
 ! call, file="cmdx/myGuessOptics.cmdx";
 ! call, file="cmdx/myMatchOptics.cmdx";
+
+! Beam tomography
+call, file="cmdx/beamTomography.cmdx";

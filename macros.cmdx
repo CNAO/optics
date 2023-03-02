@@ -226,13 +226,21 @@ I2K_QUs_fifth(MagName,biro) : macro {
   ! eg. H2_012A_QUE -> I_H2_012A_QUE, K1_H2_012A_QUE, F_H2_012A_QUE
   ! ...as well as coefficients of the polynomial
   ! eg. H2_012A_QUE -> a0_FIF_H2_012A_QUE, a1_FIF_H2_012A_QUE, ... and a5_FIF_H2_012A_QUE
-  K1_MagName = ( a0_FIF_MagName
-                +a1_FIF_MagName*abs(I_MagName)
-                +a2_FIF_MagName*abs(I_MagName)^2
-                +a3_FIF_MagName*abs(I_MagName)^3
-                +a4_FIF_MagName*abs(I_MagName)^4
-                +a5_FIF_MagName*abs(I_MagName)^5) /biro *abs(F_MagName);
-  if (I_MagName<0){ K1_MagName=-K1_MagName; };
+  if (I_MagName<0){
+    K1_MagName:=-( a0_FIF_MagName
+                  +a1_FIF_MagName*abs(I_MagName)
+                  +a2_FIF_MagName*abs(I_MagName)^2
+                  +a3_FIF_MagName*abs(I_MagName)^3
+                  +a4_FIF_MagName*abs(I_MagName)^4
+                  +a5_FIF_MagName*abs(I_MagName)^5) /biro *abs(F_MagName);
+  }else{
+    K1_MagName:=+( a0_FIF_MagName
+                  +a1_FIF_MagName*abs(I_MagName)
+                  +a2_FIF_MagName*abs(I_MagName)^2
+                  +a3_FIF_MagName*abs(I_MagName)^3
+                  +a4_FIF_MagName*abs(I_MagName)^4
+                  +a5_FIF_MagName*abs(I_MagName)^5) /biro *abs(F_MagName);
+  };
 };
 
 ! duplicate an existing sequence
