@@ -112,6 +112,74 @@ saveAPIC(): macro = {
    };
 };
 
+! save a .tfs file with linear optics functions in a specific column order
+! the column order is the same as that of the saveGeometryTFS macro, apart from
+!    the very frist columns
+! the optics functions are computed at a specific element in the context of a current scan
+saveOpticsTFSatEle(fileName,eleName): macro = {
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E,% 6.1f,% 6.0f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
+         VALUE=Brho, BP, myID,
+         table(twiss,eleName,BETX),table(twiss,eleName,ALFX),table(twiss,eleName,BETY),table(twiss,eleName,ALFY),
+         table(twiss,eleName,X),table(twiss,eleName,PX),table(twiss,eleName,Y),table(twiss,eleName,PY),
+         table(twiss,eleName,DX),table(twiss,eleName,DPX),table(twiss,eleName,DY),table(twiss,eleName,DPY),
+         table(twiss,eleName,MUX),table(twiss,eleName,MUY);
+   assign, echo=terminal;
+};
+headOpticsTFSatEle(fileName,eleName): macro = {
+   assign, echo=fileName;
+   PRINT, TEXT=# Brho[Tm], BP[mm], ID[],
+   BETX[m]:eleName, ALFX[]:eleName, BETY[m]:eleName, ALFY[]:eleName,
+   X[m]:eleName, PX[]:eleName, Y[m]:eleName, PY[]:eleName,
+   DX[m]:eleName, DPX[]:eleName, DY[m]:eleName, DPY[]:eleName,
+   MUX[2pi]:eleName, MUY[2pi]:eleName;
+   assign, echo=terminal;
+};
+
+! save a .tfs file with geometry infos (strengths, aperture, etc...) in a specific column order
+! the column order is the same as that of the saveGeometryTFS macro, apart from
+!    the very frist columns
+! the optics functions are computed at a specific element in the context of a current scan
+saveGeometryTFSatEle(fileName,eleName): macro = {
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E,% 6.1f,% 6.0f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,%-19s,%12.4f,%12.4f,%12.4f,%12.4f,% 12.4f,% 12.4f",
+         VALUE=Brho, BP, myID,
+         eleName->KICK,eleName->HKICK,eleName->VKICK,eleName->ANGLE,
+		 eleName->K0*eleName->L,eleName->K1*eleName->L,eleName->K2*eleName->L,
+		 eleName->APERTYPE,eleName->APER_1,eleName->APER_2,eleName->APER_3,eleName->APER_4,eleName->APOFF_1,eleName->APOFF_2;
+   assign, echo=terminal;
+};
+headGeometryTFSatEle(fileName,eleName): macro = {
+   assign, echo=fileName;
+   PRINT, TEXT=# Brho[Tm], BP[mm], ID[],
+   KICK[rad]:eleName, HKICK[rad]:eleName, VKICK[rad]:eleName, ANGLE[rad]:eleName,
+   K0L[rad]:eleName, K1L[rad/m]:eleName, K2L[rad/m2]:eleName,
+   APERTYPE[]:eleName, APER_1[m]:eleName, APER_2[m]:eleName, APER_3[m]:eleName, APER_4[m]:eleName, APOFF_1[m]:eleName, APOFF_2[m]:eleName;
+   assign, echo=terminal;
+};
+
+! save a .tfs file with main elements of R matrix in a specific column order
+! the column order is the same as that of the saveRmatrixTFS macro, apart from
+!    the very frist columns
+! the optics functions are computed at a specific element in the context of a current scan
+saveRmatrixTFSatEle(fileName,eleName): macro = {
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E,% 6.1f,% 6.0f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,%-19s,%12.4f,%12.4f,%12.4f,%12.4f,% 12.4f,% 12.4f",
+         VALUE=Brho, BP, myID,
+         eleName->RE11,eleName->RE12,eleName->RE21,eleName->RE22,eleName->RE16,eleName->RE26,
+         eleName->RE33,eleName->RE34,eleName->RE43,eleName->RE44,eleName->RE36,eleName->RE46,
+         eleName->RE51,eleName->RE52,eleName->RE55,eleName->RE56,eleName->RE66;
+   assign, echo=terminal;
+};
+headRmatrixTFSatEle(fileName,eleName): macro = {
+   assign, echo=fileName;
+   PRINT, TEXT=# Brho[Tm], BP[mm], ID[],
+   RE11[]:eleName, RE12[m]:eleName, RE21[rad]:eleName, RE22[]:eleName, RE16[m]:eleName, RE26[rad]:eleName,
+   RE33[]:eleName, RE34[m]:eleName, RE43[rad]:eleName, RE44[]:eleName, RE36[m]:eleName, RE46[rad]:eleName,
+   RE51[s m-1]:eleName, RE52[s rad-1]:eleName, RE55[]:eleName, RE56[s]:eleName, RE66[m]:eleName;
+   assign, echo=terminal;
+};
+
 ! insert a thin kicker up/dostream of a specific element
 surroundKICKER(MagName,SeqName): macro={
 	MagName->HKICK=0.0; MagName->VKICK=0.0;
