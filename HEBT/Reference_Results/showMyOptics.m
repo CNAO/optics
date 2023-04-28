@@ -2,7 +2,7 @@
 % template analysis script
 
 % %% include Matlab library
-% pathToLibrary="..\..\..\MatLabTools";
+% pathToLibrary="..\..\MatLabTools";
 % addpath(genpath(pathToLibrary));
 % 
 % %%
@@ -63,11 +63,12 @@
 % compare different optics obtained via a scan
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-clear all;
+% clear all;
 
 %% user settings
-whatScan="MUY";
+whatScan="MUX";
 eleScan="X3_011B_VWN";
+beam="P030";
 opticsFileNames=[ ...
     "../output/xpr_iso3_lgen_optics.tfs" ...
     ];
@@ -75,7 +76,7 @@ geometryFileNames=[ ...
     "../output/xpr_iso3_lgen_geometry.tfs" ...
     ];
 
-myTitle=sprintf("%s scan at %s - ISO3 (XPR) - Proton - 30mm",whatScan,LabelMe(eleScan));
+myTitle=sprintf("%s scan at %s - ISO3 (XPR) - %s",whatScan,LabelMe(eleScan),beam);
 splitFiles=[sprintf("../output/xpr_iso3_Scan%s_%s_lgen_optics.tfs",whatScan,eleScan)];
 
 %% split files
@@ -119,13 +120,18 @@ idCol=mapping(find(strcmp(colNames,whatScan)));
 for ii=1:length(opticsFileNames)
     idEle=find(contains(string(optics{ii,mapping(find(strcmp(colNames,"NAME")))}),eleScan));
     if (ii==1)
-        labels(ii)=sprintf("%s=%g (ref)",whatScan,optics{ii,idCol}(idEle));
+        labels(ii)=sprintf("%s=%g (ref)",whatScan,optics{ii,idCol}(idEle)*360);
     else
-        labels(ii)=sprintf("%s=%g",whatScan,optics{ii,idCol}(idEle));
+        labels(ii)=sprintf("%s=%g",whatScan,optics{ii,idCol}(idEle)*360);
     end
 end
 
 %% show the optics
-% CompareOptics(optics,labels,geometries,"CO",myTitle);
-CompareOptics(optics,labels,geometries,"BET",myTitle);
-% CompareOptics(optics,labels,geometries,"D",myTitle);
+if (strcmpi(whatScan,"MUX"))
+    [~,sortedIDs]=sort(Qx); % sort by MUX value
+else
+    [~,sortedIDs]=sort(Qy); % sort by MUY value
+end
+% CompareOptics(optics(sortedIDs,:),labels(sortedIDs),geometries,"CO",myTitle);
+CompareOptics(optics(sortedIDs,:),labels(sortedIDs),geometries,"BET",myTitle);
+% CompareOptics(optics(sortedIDs,:),labels(sortedIDs),geometries,"D",myTitle);
