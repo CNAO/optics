@@ -12,11 +12,11 @@ tmpD=0.0; ! [m]
 
 ! add aperture markers upstream/downstream of a given element
 ! NB: aperType and aper1,aper2,aper3,aper4 and offx,offy should be defined before calling the macro;
-addAperture(eleName,apeType): macro = {
+addAperture(eleName,apeType,mySeq): macro = {
    eleName, APERTYPE=apeType, APERTURE={aper1,aper2,aper3,aper4}, APER_OFFSET={offx,offy};
    eleName_EN: MARKER, APERTYPE=apeType, APERTURE={aper1,aper2,aper3,aper4}, APER_OFFSET={offx,offy};
    eleName_EX: MARKER, APERTYPE=apeType, APERTURE={aper1,aper2,aper3,aper4}, APER_OFFSET={offx,offy};
-   SEQEDIT, sequence=MUXL;
+   SEQEDIT, sequence=mySeq;
    Install, element=eleName_EN, at=-0.5*eleName->L-  tmpD, from=eleName;
    Install, element=CNAO_APE  , at=-0.5*eleName->L-2*tmpD, from=eleName;
    Install, element=CNAO_APE  , at= 0.5*eleName->L+2*tmpD, from=eleName;
