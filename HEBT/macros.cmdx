@@ -5,7 +5,7 @@ aper1=66E-3/2;  ! [m]
 aper2=0.0;      ! [m]
 aper3=0.0;      ! [m]
 aper4=0.0;      ! [m]
-CNAO_APE: MARKER, APERTYPE=CIRCLE, APERTURE={aper1,aper2,aper3,aper4};
+CNAO_APE_HEBT: MARKER, APERTYPE=CIRCLE, APERTURE={aper1,aper2,aper3,aper4};
 
 ! convert current into K, using a fifth order polynomial
 I2K_HEBT_QUs_fifth(MagName,biro): macro {
