@@ -4,215 +4,215 @@
 ! MBS: 145 mm x 64 mm (centred in 0,0)
 aper1=145E-3/2;
 aper2=64E-3/2;
-exec, addAperture(S0_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(S1_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(S2_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(S3_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(S4_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(S5_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(S6_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(S7_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(S8_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(S9_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(SA_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(SB_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(SC_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(SD_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(SE_001A_MBS,RECTANGLE,MUXL);
-exec, addAperture(SF_001A_MBS,RECTANGLE,MUXL);
+exec, addAperture(S0_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S1_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S2_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S3_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S4_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S5_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S6_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S7_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S8_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S9_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SA_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SB_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SC_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SD_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SE_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SF_001A_MBS,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! QUS: 145 mm x 74 mm (centred in 0,0)
 aper1=145E-3/2;
 aper2=74E-3/2;
-exec, addAperture(S0_005A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S0_031A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S1_007A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S2_005A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S2_021A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S3_016A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S4_005A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S4_024A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S5_007A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S6_005A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S7_007A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S8_005A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S8_037A_QUS,RECTANGLE,MUXL);
-exec, addAperture(S9_007A_QUS,RECTANGLE,MUXL);
-exec, addAperture(SA_005A_QUS,RECTANGLE,MUXL);
-exec, addAperture(SA_020A_QUS,RECTANGLE,MUXL);
-exec, addAperture(SC_005A_QUS,RECTANGLE,MUXL);
-exec, addAperture(SC_025A_QUS,RECTANGLE,MUXL);
-exec, addAperture(SD_007A_QUS,RECTANGLE,MUXL);
-exec, addAperture(SE_005A_QUS,RECTANGLE,MUXL);
-exec, addAperture(SE_018A_QUS,RECTANGLE,MUXL);
-exec, addAperture(SF_007A_QUS,RECTANGLE,MUXL);
+exec, addAperture(S0_005A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S0_031A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S1_007A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S2_005A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S2_021A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S3_016A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S4_005A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S4_024A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S5_007A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S6_005A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S7_007A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S8_005A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S8_037A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S9_007A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SA_005A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SA_020A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SC_005A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SC_025A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SD_007A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SE_005A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SE_018A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SF_007A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
 ! exception: 130 mm x 70 mm (centred in 0,0)
 aper1=130E-3/2;
 aper2=70E-3/2;
-exec, addAperture(S6_019A_QUS,RECTANGLE,MUXL);
+exec, addAperture(S6_019A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
 ! exception: 158 mm x 76 mm (centred in 0,0)
 aper1=158E-3/2;
 aper2=76E-3/2;
-exec, addAperture(SB_012A_QUS,RECTANGLE,MUXL);
+exec, addAperture(SB_012A_QUS,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! CSxs: 145 mm x 74 mm (centred in 0,0)
 aper1=145E-3/2;
 aper2=74E-3/2;
-exec, addAperture(S0_029A_CSH,RECTANGLE,MUXL);
-exec, addAperture(S1_005A_CSV,RECTANGLE,MUXL);
-exec, addAperture(S2_008A_CSH,RECTANGLE,MUXL);
-exec, addAperture(S3_005A_CSV,RECTANGLE,MUXL);
-exec, addAperture(S4_008A_CSH,RECTANGLE,MUXL);
-exec, addAperture(S5_005A_CSV,RECTANGLE,MUXL);
-exec, addAperture(S6_014A_CSH,RECTANGLE,MUXL);
-exec, addAperture(S7_005A_CSV,RECTANGLE,MUXL);
-exec, addAperture(S8_008A_CSH,RECTANGLE,MUXL);
-exec, addAperture(S8_035A_CSH,RECTANGLE,MUXL);
-exec, addAperture(S9_005A_CSV,RECTANGLE,MUXL);
-exec, addAperture(SA_008A_CSH,RECTANGLE,MUXL);
-exec, addAperture(SB_007A_CsV,RECTANGLE,MUXL);
-exec, addAperture(SC_008A_CSH,RECTANGLE,MUXL);
-exec, addAperture(SC_021A_CSH,RECTANGLE,MUXL);
-exec, addAperture(SD_005A_CSV,RECTANGLE,MUXL);
-exec, addAperture(SE_016A_CSH,RECTANGLE,MUXL);
-exec, addAperture(SF_005A_CSV,RECTANGLE,MUXL);
+exec, addAperture(S0_029A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S1_005A_CSV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S2_008A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S3_005A_CSV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S4_008A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S5_005A_CSV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S6_014A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S7_005A_CSV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S8_008A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S8_035A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S9_005A_CSV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SA_008A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SB_007A_CsV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SC_008A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SC_021A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SD_005A_CSV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SE_016A_CSH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SF_005A_CSV,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! PUs: 131 mm x 71 mm (centred in 0,0)
 aper1=131E-3/2;
 aper2=71E-3/2;
-exec, addAperture(S0_009A_PUH,RECTANGLE,MUXL);
-exec, addAperture(S0_026A_PUH,RECTANGLE,MUXL);
-exec, addAperture(S1_011A_PUV,RECTANGLE,MUXL);
-exec, addAperture(S2_011A_PUH,RECTANGLE,MUXL);
-exec, addAperture(S3_020A_PUV,RECTANGLE,MUXL);
-exec, addAperture(S4_011A_PUH,RECTANGLE,MUXL);
-exec, addAperture(S5_015A_PUV,RECTANGLE,MUXL);
-exec, addAperture(S6_009A_PUH,RECTANGLE,MUXL);
-exec, addAperture(S7_011A_PUV,RECTANGLE,MUXL);
-exec, addAperture(S8_011A_PUH,RECTANGLE,MUXL);
-exec, addAperture(S8_032A_PUH,RECTANGLE,MUXL);
-exec, addAperture(S9_011A_PUV,RECTANGLE,MUXL);
-exec, addAperture(SA_011A_PUH,RECTANGLE,MUXL);
-exec, addAperture(SB_015A_PUV,RECTANGLE,MUXL);
-exec, addAperture(SC_011A_PUH,RECTANGLE,MUXL);
-exec, addAperture(SC_016A_PUH,RECTANGLE,MUXL);
-exec, addAperture(SD_018A_PUV,RECTANGLE,MUXL);
-exec, addAperture(SE_013A_PUH,RECTANGLE,MUXL);
-exec, addAperture(SF_011A_PUV,RECTANGLE,MUXL);
+exec, addAperture(S0_009A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S0_026A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S1_011A_PUV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S2_011A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S3_020A_PUV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S4_011A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S5_015A_PUV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S6_009A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S7_011A_PUV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S8_011A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S8_032A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S9_011A_PUV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SA_011A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SB_015A_PUV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SC_011A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SC_016A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SD_018A_PUV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SE_013A_PUH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SF_011A_PUV,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! SXxs: 145 mm x 74 mm (centred in 0,0)
 aper1=145E-3/2;
 aper2=74E-3/2;
-exec, addAperture(S2_019A_SXC,RECTANGLE,MUXL);
-exec, addAperture(S5_012A_SXC,RECTANGLE,MUXL);
-exec, addAperture(SA_018A_SXC,RECTANGLE,MUXL);
-exec, addAperture(SD_014A_SXC,RECTANGLE,MUXL);
+exec, addAperture(S2_019A_SXC,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S5_012A_SXC,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SA_018A_SXC,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SD_014A_SXC,RECTANGLE,MUXL,CNAO_APE_SYNC);
 ! exception: 158 mm x 98 mm (centred in 0,0)
 aper1=158E-3/2;
 aper2=98E-3/2;
-exec, addAperture(S8_028A_SXR,RECTANGLE,MUXL);
+exec, addAperture(S8_028A_SXR,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! MSP: 105.7 mm x 74 mm (centred in -23.75,0)
 aper1=105.7E-3/2;
 aper2=74E-3/2;
 offx=-23.75E-3;
-exec, addAperture(S0_016A_MSP,RECTANGLE,MUXL);
+exec, addAperture(S0_016A_MSP,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! ESP: 117.516 mm x 74 mm (centred in 14.611,0)
 aper1=117.516E-3/2;
 aper2=74E-3/2;
 offx=14.611E-3;
-exec, addAperture(S0_023A_ESP,RECTANGLE,MUXL);
+exec, addAperture(S0_023A_ESP,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! ESP: 107.4 mm x 74 mm (centred in -38.3,0)
 aper1=107.4E-3/2;
 aper2=74E-3/2;
 offx=-38.3E-3;
-exec, addAperture(SE_010A_ESP,RECTANGLE,MUXL);
+exec, addAperture(SE_010A_ESP,RECTANGLE,MUXL,CNAO_APE_SYNC);
 offx=0.0; ! reset offset
 
 ! SCxs: 145 mm x 74 mm (centred in 0,0)
 aper1=145E-3/2;
 aper2=74E-3/2;
-exec, addAperture(S8_026A_SCH,RECTANGLE,MUXL);
-exec, addAperture(SB_005A_SCV,RECTANGLE,MUXL);
+exec, addAperture(S8_026A_SCH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SB_005A_SCV,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! DPxs:
 aper1=91.5E-3/2;
 aper2=55E-3/2;
 offx=-13.25E-3;
-exec, addAperture(SC_023A_DPH,RECTANGLE,MUXL);
+exec, addAperture(SC_023A_DPH,RECTANGLE,MUXL,CNAO_APE_SYNC);
 offx=0.0; ! reset offset
 aper1=126.6E-3/2;
 aper2=55.6E-3/2;
-exec, addAperture(S5_010A_DPV,RECTANGLE,MUXL);
+exec, addAperture(S5_010A_DPV,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! single elements:
 aper1=197E-3/2;
 aper2=197E-3/2;
 offx=-0.060607;
-exec, addAperture(S0_020A_T45,RECTANGLE,MUXL);
+exec, addAperture(S0_020A_T45,RECTANGLE,MUXL,CNAO_APE_SYNC);
 offx=0.0; ! reset offset
 
 aper1=145E-3/2;
 aper2=74E-3/2;
-exec, addAperture(S0_020A_T60,RECTANGLE,MUXL);
+exec, addAperture(S0_020A_T60,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=148E-3/2;
 aper2=74E-3/2;
-exec, addAperture(S2_013A_SVA,RECTANGLE,MUXL);
+exec, addAperture(S2_013A_SVA,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=143E-3/2;
 aper2=72E-3/2;
-exec, addAperture(S3_010A_BDS,RECTANGLE,MUXL);
-exec, addAperture(S3_012A_BDI,RECTANGLE,MUXL);
+exec, addAperture(S3_010A_BDS,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S3_012A_BDI,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=127E-3/2;
 aper2=127E-3/2;
-exec, addAperture(S4_015A_BEC,RECTANGLE,MUXL);
+exec, addAperture(S4_015A_BEC,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=143E-3/2;
 aper2=72E-3/2;
-exec, addAperture(S4_020A_QKH,RECTANGLE,MUXL);
-exec, addAperture(S4_022A_QKV,RECTANGLE,MUXL);
-exec, addAperture(S6_012A_ACQ,RECTANGLE,MUXL);
+exec, addAperture(S4_020A_QKH,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S4_022A_QKV,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(S6_012A_ACQ,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=130E-3/2;
 aper2=70E-3/2;
-exec, addAperture(S6_018A_SHH,RECTANGLE,MUXL);
+exec, addAperture(S6_018A_SHH,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=148E-3/2;
 aper2=148E-3/2;
-exec, addAperture(S8_013A_SVA,RECTANGLE,MUXL);
+exec, addAperture(S8_013A_SVA,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=143E-3/2;
 aper2=72E-3/2;
-exec, addAperture(S8_016A_BDE,RECTANGLE,MUXL);
+exec, addAperture(S8_016A_BDE,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=130E-3/2;
 aper2=130E-3/2;
-exec, addAperture(S8_020A_CAV,RECTANGLE,MUXL);
+exec, addAperture(S8_020A_CAV,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=145E-3/2;
 aper2=74E-3/2;
-exec, addAperture(S8_024A_SKQ,RECTANGLE,MUXL);
-exec, addAperture(SA_014A_RGB,RECTANGLE,MUXL);
+exec, addAperture(S8_024A_SKQ,RECTANGLE,MUXL,CNAO_APE_SYNC);
+exec, addAperture(SA_014A_RGB,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=158E-3/2;
 aper2=76E-3/2;
-exec, addAperture(SB_011A_SHV,RECTANGLE,MUXL);
+exec, addAperture(SB_011A_SHV,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=150E-3/2;
 aper2=150E-3/2;
-exec, addAperture(SC_013A_DCT,RECTANGLE,MUXL);
+exec, addAperture(SC_013A_DCT,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=148E-3/2;
 aper2=148E-3/2;
-exec, addAperture(SC_018A_SVA,RECTANGLE,MUXL);
+exec, addAperture(SC_018A_SVA,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 aper1=143E-3/2;
 aper2=72E-3/2;
-exec, addAperture(SD_012A_BDI,RECTANGLE,MUXL);
+exec, addAperture(SD_012A_BDI,RECTANGLE,MUXL,CNAO_APE_SYNC);
 
 ! =========================================================================
 ! insert aperture markers
