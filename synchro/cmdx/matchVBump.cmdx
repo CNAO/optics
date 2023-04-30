@@ -30,19 +30,19 @@ PRINTF, TEXT="at Ek = %g MeV/u - BP = %g mm - row = %.0f ...", VALUE= Ek,BP,n;
 ! set injection bumper k from the specified current
 exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];
 
-use,sequence=MUXL;
+use,sequence=SYNCHRO;
 
 exec, saveOpticsTFS(extraction);
 exec, saveGeometryTFS(extraction);
 exec, save_strengths(myOptics,synchro);
 
 ! match
-USE, sequence=MUXL;
-MATCH, sequence=MUXL;
-  CONSTRAINT, sequence=MUXL, range=S5_010A_DPV, Y=10E-3; 
-!   CONSTRAINT, sequence=MUXL, range=S9_005A_CSV, Y=0.0, PY=0.0; 
-!   CONSTRAINT, sequence=MUXL, range=SB_007A_CSV, Y=0.0, PY=0.0; 
-  CONSTRAINT, sequence=MUXL, range=S7_005A_CSV, Y=0.0, PY=0.0; 
+USE, sequence=SYNCHRO;
+MATCH, sequence=SYNCHRO;
+  CONSTRAINT, sequence=SYNCHRO, range=S5_010A_DPV, Y=10E-3; 
+!   CONSTRAINT, sequence=SYNCHRO, range=S9_005A_CSV, Y=0.0, PY=0.0; 
+!   CONSTRAINT, sequence=SYNCHRO, range=SB_007A_CSV, Y=0.0, PY=0.0; 
+  CONSTRAINT, sequence=SYNCHRO, range=S7_005A_CSV, Y=0.0, PY=0.0; 
   VARY, NAME=VK_S1, STEP=1E-4;
   VARY, NAME=VK_S3, STEP=1E-4;
   VARY, NAME=VK_S7, STEP=1E-4;
@@ -53,7 +53,7 @@ MATCH, sequence=MUXL;
 ENDMATCH;
 k_fin=KD;
 
-use,sequence=MUXL;
+use,sequence=SYNCHRO;
 exec, saveOpticsTFS(extraction_matched);
 exec, saveGeometryTFS(extraction_matched);
 

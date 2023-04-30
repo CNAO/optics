@@ -36,7 +36,7 @@ call, file="cmdx/synchro_geo.cmdx";
 
 ! Definisco il tipo di fascio (caratteristiche particella e
 !    MADX beam command)
-exec, setBeam(MUXL);
+exec, setBeam(SYNCHRO);
 
 ! ==============================================================================
 ! a simple example
@@ -57,7 +57,7 @@ exec, I2K_sextupoles_S8_S1(); ! input: Is_SR[A],Brho[Tm];
 exec, I2K_sextupoles_S9_S0(); ! input: Is_SR[A],Brho[Tm];
 
 ! generate optics files
-use,sequence=MUXL;
+use,sequence=SYNCHRO;
 exec, saveOpticsTFS(extraction);
 exec, saveGeometryTFS(extraction);
 ! save strengths
