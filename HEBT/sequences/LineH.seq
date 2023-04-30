@@ -447,13 +447,12 @@ seqedit, sequence=LineH; flatten; endedit;
 ! ---------------------------------------------------------------
 ! aperture
 ! ---------------------------------------------------------------
-! beginning/end of beam lines
-exec, contourSeqAperture(LineH,CNAO_APE_HEBT);
+
 if(iLine>4){
 	HE_000A_APE: MARKER, APERTYPE=ELLIPSE, APERTURE={55E-3/2,55E-3/2,0.0,0.0};
 	HE_002C_APE: MARKER, APERTYPE=ELLIPSE, APERTURE={55E-3/2,55E-3/2,0.0,0.0};
-	SEQEDIT, sequence=LineH;
 	! drift left by H3_003A_SW2 and BP right downstream
+	SEQEDIT, sequence=LineH;
 	Install, element=H3_003A_SW2_EX, at=1.650,      from=H3_003A_SW2_EN;
 	Install, element=HE_000A_APE   , at=tmpD,       from=H3_003A_SW2_EX;
 	Install, element=HE_002C_APE   , at=0.392,      from=H3_003A_SW2_EX;

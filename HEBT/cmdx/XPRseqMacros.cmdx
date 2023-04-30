@@ -54,3 +54,21 @@ buildXPRsequence(XX): macro = {
    xx_015a_mob, at = 3.691264+L_010A_DRI+L_010B_DRI ;
    endsequence;
 };
+
+! ===============================================================
+! aperture definition
+! ===============================================================
+
+buildXPRaperture(XX): macro = {
+	
+	XX_002B_BSH, APERTYPE=ELLIPSE,   APERTURE={ 66E-3/2, 66E-3/2,0.0,0.0};
+	XX_004A_SCC, APERTYPE=RECTANGLE, APERTURE={100E-3/2,100E-3/2,0.0,0.0};
+	XX_006A_SCC, APERTYPE=RECTANGLE, APERTURE={100E-3/2,100E-3/2,0.0,0.0};
+	XX_008B_BSH, APERTYPE=ELLIPSE,   APERTURE={300E-3/2,300E-3/2,0.0,0.0};
+	XX_011B_VWN, APERTYPE=ELLIPSE,   APERTURE={300E-3/2,300E-3/2,0.0,0.0};
+    XX_SCAN_APE: MARKER, APERTYPE=RECTANGLE, APERTURE={100E-3/2,100E-3/2,0.0,0.0};
+	SEQEDIT, sequence=LineXX;
+	Install, element=XX_SCAN_APE, at= tmpD,      from=XX_002B_BSH;
+	Install, element=XX_SCAN_APE, at=-tmpD,      from=XX_008B_BSH;
+	ENDEDIT;
+};
