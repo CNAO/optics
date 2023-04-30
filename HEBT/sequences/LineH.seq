@@ -298,6 +298,10 @@ HE_032A_DRI:DRIFT,L = 3.0608;
 ! sequence definition
 ! ===============================================================
 
+! ---------------------------------------------------------------
+! basic sequences
+! ---------------------------------------------------------------
+
 ! H2-H4
 LineH2_L=H2_001A_MSN_L+0.5+H2_003A_MSW_L+0.5+H2_005A_MSW_L+5.338-(0.5037+H3_001A_CHD->L/2);
 LineH3_L=2*(0.5037+H3_001A_CHD->L/2)+(2*1.396+3*(LMB_MagLayout+ds_corr));
@@ -360,26 +364,6 @@ h5_015a_que, at = 2.6507+0.9850+0.670+0.615+0.645 ;
 h5_018b_sfh, at = 2.6507+0.9850+0.670+0.615+0.645+0.6632 ;
 endsequence;
 
-! H2-H3 for XPR
-if ( 5<=iLine && iLine<=8 ) {
-   SEQEDIT, SEQUENCE=LineH2H4;
-   FLATTEN;
-   INSTALL, ELEMENT=H2_0010_STRT, CLASS=MARKER, AT=0.0;
-   REMOVE,  ELEMENT=H3_003A_SW2;
-   INSTALL, ELEMENT=HE_0010_STR,  CLASS=MARKER, AT=H3_001A_CHD->L/2+H3_002A_DRI->L+dd_H3, FROM=H3_001A_CHD;
-   FLATTEN;
-   EXTRACT, SEQUENCE=LineH2H4, FROM=H2_0010_STRT, TO=HE_0010_STR, NEWNAME=LineH2H3;
-   ENDEDIT;
-   seqedit, sequence=LineH2H3; flatten; endedit;
-   ! length of newly extracted sequence
-/*
-   exec, setBeam(LineH2H3);
-   use,sequence=LineH2H3;
-   DUMPSEQU, SEQUENCE=LineH2H3, LEVEL=0;
-*/
-   LineH2H3_L=LineH2_L+H3_001A_CHD->L+H3_002A_DRI->L+dd_H3; ! [m]
-};
-
 ! HE
 LineHE_L=12.3109;
 LineHE: sequence, l=LineHE_L;
@@ -410,6 +394,36 @@ he_030i_sip, at = 9.1478 ;
 he_031b_bsh, at = 9.2501 ;
 endsequence;
 
+! ---------------------------------------------------------------
+! aperture model
+! ---------------------------------------------------------------
+
+call, file="sequences/LineH.aper";
+
+! ---------------------------------------------------------------
+! derived sequences
+! ---------------------------------------------------------------
+
+! H2-H3 for XPR
+if ( 5<=iLine && iLine<=8 ) {
+   SEQEDIT, SEQUENCE=LineH2H4;
+   FLATTEN;
+   INSTALL, ELEMENT=H2_0010_STRT, CLASS=MARKER, AT=0.0;
+   REMOVE,  ELEMENT=H3_003A_SW2;
+   INSTALL, ELEMENT=HE_0010_STR,  CLASS=MARKER, AT=H3_001A_CHD->L/2+H3_002A_DRI->L+dd_H3, FROM=H3_001A_CHD;
+   FLATTEN;
+   EXTRACT, SEQUENCE=LineH2H4, FROM=H2_0010_STRT, TO=HE_0010_STR, NEWNAME=LineH2H3;
+   ENDEDIT;
+   seqedit, sequence=LineH2H3; flatten; endedit;
+   ! length of newly extracted sequence
+/*
+   exec, setBeam(LineH2H3);
+   use,sequence=LineH2H3;
+   DUMPSEQU, SEQUENCE=LineH2H3, LEVEL=0;
+*/
+   LineH2H3_L=LineH2_L+H3_001A_CHD->L+H3_002A_DRI->L+dd_H3; ! [m]
+};
+
 if (iLine==3) {
 	! Room 2V
 	exec, duplicateSequence(LineH2H4,LineHtemp);
@@ -420,19 +434,26 @@ if (iLine==3) {
     ! XPR
 	exec, concatenate2Sequences(LineH2H3,LineHE,LineHtemp);
 };
-seqedit, sequence=LineHtemp_L; flatten; endedit;
+seqedit, sequence=LineHtemp; flatten; endedit;
 if (iH1==0) {
 	! no need to insert H1
 	exec, duplicateSequence(LineHtemp,LineH);
 }else{
+	! aperture: beginning/end of beam lines
+	! exec, contourSeqAperture(LineHtemp,CNAO_APE_HEBT);
 	! insert H1
 	exec, concatenate2Sequences(LineH1,LineHtemp,LineH);
 };
 seqedit, sequence=LineH; flatten; endedit;
 
-! ===============================================================
+! ---------------------------------------------------------------
+! aperture: beginning/end of beam lines
+! ---------------------------------------------------------------
+exec, contourSeqAperture(LineH,CNAO_APE_HEBT);
+
+! ---------------------------------------------------------------
 ! sequence manipulation
-! ===============================================================
+! ---------------------------------------------------------------
 
 /*
 ! distribute kick of chopper 

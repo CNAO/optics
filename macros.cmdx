@@ -8,7 +8,7 @@ aper3=0.0; ! [m]
 aper4=0.0; ! [m]
 CNAO_APE: MARKER, APERTYPE=RECTANGLE, APERTURE={aper1,aper2,aper3,aper4};
 ! longitudinal shift of added apertures
-tmpD=0.0; ! [m]
+tmpD=10.0E-06; ! [m]
 
 ! add aperture markers upstream/downstream of a given element
 ! NB: aperType and aper1,aper2,aper3,aper4 and offx,offy should be defined before calling the macro;
@@ -21,6 +21,14 @@ addAperture(eleName,apeType,mySeq,myGenApe): macro = {
    Install, element=myGenApe  , at=-0.5*eleName->L-2*tmpD, from=eleName;
    Install, element=myGenApe  , at= 0.5*eleName->L+2*tmpD, from=eleName;
    Install, element=eleName_EX, at= 0.5*eleName->L+  tmpD, from=eleName;
+   ENDEDIT;
+};
+
+! add aperture markers at beginning/end of lattice sequence
+contourSeqAperture(mySeq,myGenApe): macro = {
+   SEQEDIT, sequence=mySeq;
+   Install, element=myGenApe, at=0.0;
+   Install, element=myGenApe, at=mySeq_L;
    ENDEDIT;
 };
 

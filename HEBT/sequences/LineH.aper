@@ -1,0 +1,63 @@
+! AMereghetti, 2023-04-29
+! apertures of CNAO HEBT H line
+
+! septa: 1000 mm x 100 mm (centred in 0,0)
+aper1=1000E-3;
+aper2=100E-3;
+exec, addAperture(H2_001A_MSN,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H2_003A_MSW,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H2_005A_MSW,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+
+! MBSs: 80 mm x 63 mm (centred in 0,0)
+aper1=80E-3/2;
+aper2=63E-3/2;
+exec, addAperture(H3_003A_SW2,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H3_009A_MBS,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H3_015A_MBS,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+
+! QUEs: CIRCLE, ID=66 mm (centred in 0,0) - as CNAO general HEBT aperture
+aper1=CNAO_APE_HEBT->APER_1;
+aper2=CNAO_APE_HEBT->APER_2;
+exec, addAperture(H2_012A_QUE,CIRCLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H2_016A_QUE,CIRCLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H2_022A_QUE,CIRCLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H4_003A_QUE,CIRCLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H4_007A_QUE,CIRCLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H4_013A_QUE,CIRCLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H5_005A_QUE,CIRCLE,LineH5,CNAO_APE_HEBT);
+exec, addAperture(H5_009A_QUE,CIRCLE,LineH5,CNAO_APE_HEBT);
+exec, addAperture(H5_015A_QUE,CIRCLE,LineH5,CNAO_APE_HEBT);
+exec, addAperture(HE_018A_QUE,CIRCLE,LineHE,CNAO_APE_HEBT);
+exec, addAperture(HE_020A_QUE,CIRCLE,LineHE,CNAO_APE_HEBT);
+exec, addAperture(HE_023A_QUE,CIRCLE,LineHE,CNAO_APE_HEBT);
+exec, addAperture(HE_025A_QUE,CIRCLE,LineHE,CNAO_APE_HEBT);
+
+! CEBs: CIRCLE, ID=66 mm (centred in 0,0) - as CNAO general HEBT aperture
+aper1=CNAO_APE_HEBT->APER_1;
+aper2=CNAO_APE_HEBT->APER_2;
+exec, addAperture(H2_007A_CEB,CIRCLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H2_019A_CEB,CIRCLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H4_016A_CEB,CIRCLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H5_001B_CEB,CIRCLE,LineH5,CNAO_APE_HEBT);
+exec, addAperture(H5_012A_CEB,CIRCLE,LineH5,CNAO_APE_HEBT);
+exec, addAperture(HE_007A_CEB,CIRCLE,LineHE,CNAO_APE_HEBT);
+exec, addAperture(HE_015A_CEB,CIRCLE,LineHE,CNAO_APE_HEBT);
+exec, addAperture(HE_027A_CEB,CIRCLE,LineHE,CNAO_APE_HEBT);
+
+! SFHs: 76 mm x 76 mm (centred in 0,0)
+aper1=76E-3/2;
+aper2=76E-3/2;
+exec, addAperture(H2_009B_SFH,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H2_025B_SFH,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H4_018B_SFH,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H3_011B_QPM,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H5_002B_SFH,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+exec, addAperture(H5_018B_SFH,RECTANGLE,LineH5,CNAO_APE_HEBT);
+exec, addAperture(HE_010B_QPP,RECTANGLE,LineHE,CNAO_APE_HEBT);
+exec, addAperture(HE_012B_SFP,RECTANGLE,LineHE,CNAO_APE_HEBT);
+exec, addAperture(HE_030B_SFP,RECTANGLE,LineHE,CNAO_APE_HEBT);
+
+! beginning/end of beam lines
+exec, contourSeqAperture(LineH2H4,CNAO_APE_HEBT);
+exec, contourSeqAperture(LineH5,CNAO_APE_HEBT);
+exec, contourSeqAperture(LineHE,CNAO_APE_HEBT);
