@@ -164,11 +164,11 @@ headGeometryTFSatEle(fileName,eleName): macro = {
 ! the optics functions are computed at a specific element in the context of a current scan
 saveRmatrixTFSatEle(fileName,eleName): macro = {
    assign, echo=fileName;
-   PRINTF, TEXT="% 19.12E,% 6.1f,% 6.0f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,%-19s,%12.4f,%12.4f,%12.4f,%12.4f,% 12.4f,% 12.4f",
+   PRINTF, TEXT="% 19.12E,% 6.1f,% 6.0f,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E,% 19.12E",
          VALUE=Brho, BP, myID,
-         eleName->RE11,eleName->RE12,eleName->RE21,eleName->RE22,eleName->RE16,eleName->RE26,
-         eleName->RE33,eleName->RE34,eleName->RE43,eleName->RE44,eleName->RE36,eleName->RE46,
-         eleName->RE51,eleName->RE52,eleName->RE55,eleName->RE56,eleName->RE66;
+         table(twiss,eleName,RE11),table(twiss,eleName,RE12),table(twiss,eleName,RE21),table(twiss,eleName,RE22),table(twiss,eleName,RE16),table(twiss,eleName,RE26),
+         table(twiss,eleName,RE33),table(twiss,eleName,RE34),table(twiss,eleName,RE43),table(twiss,eleName,RE44),table(twiss,eleName,RE36),table(twiss,eleName,RE46),
+         table(twiss,eleName,RE51),table(twiss,eleName,RE52),table(twiss,eleName,RE55),table(twiss,eleName,RE56),table(twiss,eleName,RE66);
    assign, echo=terminal;
 };
 headRmatrixTFSatEle(fileName,eleName): macro = {
