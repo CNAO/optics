@@ -15,7 +15,9 @@
 whatScan="MUX";
 otherMu="MUY";
 eleScan="X3_011B_VWN";
-beam="P030";
+beam="P320";
+dmu=10; % [degs]
+i0=1; % take i0-th matched point with same phase advance as nominal as reference value
 % outputFolder="../output_p030_MUX_free_10p0degs";
 outputFolder="../output";
 iFileNameCurrentSummary=sprintf("%s/summary_currents.tfs",outputFolder);
@@ -92,27 +94,43 @@ grid on; xlabel("ID []");
 return;
 
 %% create QA file 
-MyData=NaN(nDataSets+1,3*nPoints);
+[~,iQAsorted]=sort(scannedOptics{iMU}); 
+mu0=scannedOptics{iMU}(zeroPos(1)); % nominal phase advance
+iMU0s_QA=find(mu0-dmu/(360*2)<scannedOptics{iMU}(iQAsorted) & scannedOptics{iMU}(iQAsorted)<mu0+dmu/(360*2));
+if (length(iMU0s_QA)>1)
+    % erase elements from iQAsorted
+    iQAsorted(iMU0s_QA(2:end))=[];
+end
+if (i0==0)
+    % currents at nominal phase advance are those from TM
+    iQAsorted(iMU0s_QA(1))=zeroPos(1);
+else
+    % currents at nominal phase advance are those from i0
+    iMU0s=find(mu0-dmu/(360*2)<scannedOptics{iMU} & scannedOptics{iMU}<mu0+dmu/(360*2) & scannedOptics{iID}~=0);
+    iQAsorted(iMU0s_QA(1))=iMU0s(i0);
+end
+nPointsQA=length(iQAsorted);
+MyData=NaN(nDataSets+1,3*nPointsQA);
 iCol=0; iWritten=0; lWash=false;
-for ii=1:nPoints
+for ii=1:nPointsQA
     % skip repetitions
     if (ii>1)
-        if (all(abs(summaryData(sortedIDs(ii),iMagNames(ib))')==abs(summaryData(sortedIDs(ii-1),iMagNames(ib))')))
+        if (all(abs(summaryData(iQAsorted(ii),iMagNames(ib))')==abs(summaryData(iQAsorted(ii-1),iMagNames(ib))')))
             continue;
-        elseif (scannedOptics{iMU}(sortedIDs(ii))*360<=MyData(end,iWritten))
+        elseif (scannedOptics{iMU}(iQAsorted(ii))*360<=MyData(end,iWritten))
             continue;
         end
     end
     if (iWritten>0)
         % check if washing is needed
-        lWash=any(abs(summaryData(sortedIDs(ii),iMagNames(ib))')<abs(MyData(1:nDataSets,iWritten)));
+        lWash=any(abs(summaryData(iQAsorted(ii),iMagNames(ib))')<abs(MyData(1:nDataSets,iWritten)));
     end
     if (lWash)
         iCol=iCol+1; MyData(1:nDataSets,iCol)=350.0;
         iCol=iCol+1; MyData(1:nDataSets,iCol)=0.0;
     end
-    iCol=iCol+1; MyData(1:nDataSets,iCol)=abs(summaryData(sortedIDs(ii),iMagNames(ib))');
-    MyData(nDataSets+1,iCol)=scannedOptics{iMU}(sortedIDs(ii))*360;
+    iCol=iCol+1; MyData(1:nDataSets,iCol)=abs(summaryData(iQAsorted(ii),iMagNames(ib))');
+    MyData(nDataSets+1,iCol)=scannedOptics{iMU}(iQAsorted(ii))*360;
     iWritten=iCol;
 end
 % wash at the end anyway
