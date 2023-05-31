@@ -10,15 +10,19 @@
 ! XPR
 ! ==============================================================================
 
+! ------------------------------------------------------------------------------
+! QUEs
+! ------------------------------------------------------------------------------
+
 call, file="strengths/fits_XPR.cmdx";
 
-I_HE_018A_QUE = -PX_001A_LGEN_A;    !H?? 
+I_HE_018A_QUE = -PX_001A_LGEN_A;    !X?? 
 F_HE_018A_QUE = 1.0;      
-I_HE_020A_QUE = PX_002A_LGEN_A;     !H??
+I_HE_020A_QUE = PX_002A_LGEN_A;     !X??
 F_HE_020A_QUE = 1.0;    
-I_HE_023A_QUE = -PX_003A_LGEN_A;    !H??
+I_HE_023A_QUE = -PX_003A_LGEN_A;    !X??
 F_HE_023A_QUE = 1.0;     
-I_HE_025A_QUE = PX_004A_LGEN_A;     !H??
+I_HE_025A_QUE = PX_004A_LGEN_A;     !X??
 F_HE_025A_QUE = 1.0;    
 
 if ( iMacro_I2K_QU==1 ) {
@@ -48,3 +52,31 @@ if ( iMacro_I2K_QU==1 ) {
       exec, I2K_QUs_fifth(HE_025A_QUE,Brho);
    };
 };
+
+! ------------------------------------------------------------------------------
+! CEBs
+! ------------------------------------------------------------------------------
+
+I_HE_007A_CEB = PX_010A_LGEN_A;      !X??
+F_HE_007A_CEB = 1.0;     
+exec, I2K_HEBT_CEBH(HE_007A_CEB,Brho);
+
+I_HE_007A_CEB = PX_011A_LGEN_A;      !X??
+F_HE_007A_CEB = 1.0;     
+exec, I2K_HEBT_CEBV(HE_007A_CEB,Brho);
+
+I_HE_015A_CEB = PX_012A_LGEN_A;      !X??
+F_HE_015A_CEB = 1.0;     
+exec, I2K_HEBT_CEBH(HE_015A_CEB,Brho);
+
+I_HE_015A_CEB = PX_013A_LGEN_A;      !X??
+F_HE_015A_CEB = 1.0;     
+exec, I2K_HEBT_CEBV(HE_015A_CEB,Brho);
+
+I_HE_027A_CEB = PX_014A_LGEN_A;      !X??
+F_HE_027A_CEB = 1.0;     
+exec, I2K_HEBT_CEBH(HE_027A_CEB,Brho);
+
+I_HE_027A_CEB = PX_015A_LGEN_A;      !X??
+F_HE_027A_CEB = 1.0;     
+exec, I2K_HEBT_CEBV(HE_027A_CEB,Brho);
