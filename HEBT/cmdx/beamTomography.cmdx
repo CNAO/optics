@@ -21,10 +21,10 @@ writeCurrentsHeader(fileName,MatchWhere): macro{
 MatchMeActualSel(MatchWhat,MatchWhere): macro={
     USE, sequence=MyLine;
     MATCH, sequence=MyLine, BETA0=initial;
-      CONSTRAINT, sequence=MyLine, range=#S/#E, BETX<120, BETY<120; 
+      CONSTRAINT, sequence=MyLine, range=#S/MatchWhere, BETX<8000, BETY<8000; 
       ! CONSTRAINT, sequence=MyLine, range=MatchWhere, MatchWhat=origMatchWhat+dmu; 
 	  ! CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, MatchWhat=origMatchWhat+dmu; 
-	  CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, BETY=origBETY, MatchWhat=origMatchWhat+dmu; 
+	  CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=4*origBETX, BETY=origBETY, MatchWhat=origMatchWhat+dmu; 
 	  ! CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, ALFX=origALFX, MatchWhat=origMatchWhat+dmu; 
       ! CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, BETY=origBETY, ALFX=origALFX, ALFY=origALFY, MatchWhat=origMatchWhat+pi/10, MUY=origMuY; 
 	  
@@ -44,18 +44,18 @@ MatchMeActualSel(MatchWhat,MatchWhere): macro={
 !       VARY, NAME=K1_HE_023A_QUE, STEP=1E-5, UPPER=0.0;
 !       VARY, NAME=K1_HE_025A_QUE, STEP=1E-5, LOWER=0.0;
 
-      LMDIF, CALLS=10000, TOLERANCE=1.0E-6;
-      JACOBIAN, CALLS=1000, TOLERANCE=1.0E-6;
+      LMDIF, CALLS=20000, TOLERANCE=1.0E-6;
+      JACOBIAN, CALLS=2000, TOLERANCE=1.0E-6;
     ENDMATCH;
 };
 
 MatchMeActual(MatchWhat,MatchWhere): macro={
     USE, sequence=MyLine;
     MATCH, sequence=MyLine, BETA0=initial;
-      CONSTRAINT, sequence=MyLine, range=#S/#E, BETX<120, BETY<120; 
+      CONSTRAINT, sequence=MyLine, range=#S/HE_030B_SFP, BETX<50, BETY<800; 
       ! CONSTRAINT, sequence=MyLine, range=MatchWhere, MatchWhat=origMatchWhat+dmu; 
 	  ! CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, MatchWhat=origMatchWhat+dmu; 
-	  CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, BETY=origBETY, MatchWhat=origMatchWhat+dmu; 
+	  CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, BETY=8*origBETY, MatchWhat=origMatchWhat+dmu; 
 	  ! CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, ALFX=origALFX, MatchWhat=origMatchWhat+dmu; 
       ! CONSTRAINT, sequence=MyLine, range=MatchWhere, BETX=origBETX, BETY=origBETY, ALFX=origALFX, ALFY=origALFY, MatchWhat=origMatchWhat+pi/10, MUY=origMuY; 
 	  
@@ -75,8 +75,8 @@ MatchMeActual(MatchWhat,MatchWhere): macro={
 !       VARY, NAME=K1_HE_023A_QUE, STEP=1E-5, UPPER=0.0;
 !       VARY, NAME=K1_HE_025A_QUE, STEP=1E-5, LOWER=0.0;
 
-      LMDIF, CALLS=10000, TOLERANCE=1.0E-6;
-      JACOBIAN, CALLS=1000, TOLERANCE=1.0E-6;
+      LMDIF, CALLS=20000, TOLERANCE=1.0E-6;
+      JACOBIAN, CALLS=2000, TOLERANCE=1.0E-6;
     ENDMATCH;
 };
 
@@ -97,8 +97,8 @@ MatchMe(MatchWhat,MatchWhere,CurrentsFileName): macro = {
   myID=0;
   
   ! compute optics
-  nOfInterest=1; ! p@30mm
-  ! nOfInterest=lunghezza; ! p@320mm
+  ! nOfInterest=1; ! p@30mm
+  nOfInterest=lunghezza; ! p@320mm
   SETVARS, TABLE=LGEN_HEBT_table, ROW=nOfInterest;
   K0MB=K0MB_ref;
   call, file="strengths/settings_from_LGEN_table.str";
@@ -137,7 +137,7 @@ MatchMe(MatchWhat,MatchWhere,CurrentsFileName): macro = {
   WHILE (abs(dmu) <= abs(dmuMax) ) {
 
 	myID=myID+1;
-
+/*
 	if (myID>1) {
 		if ( dmuStp>0 ) {
 			I_H2_012A_QUE_MIN=I_H2_012A_QUE; I_H2_012A_QUE_MAX=350.0;
@@ -157,14 +157,14 @@ MatchMe(MatchWhat,MatchWhere,CurrentsFileName): macro = {
 			I_HE_025A_QUE_MIN=   0.0;        I_HE_025A_QUE_MAX=I_HE_025A_QUE;
 		};
 	};
-
+*/
     ! actually match
 	if (myID>idMaxFullFree) {
 		exec, MatchMeActualSel(MatchWhat,MatchWhere);
 	}else{
 		exec, MatchMeActual(MatchWhat,MatchWhere);
 	};
-
+/*
     ! check quality of matching
 	if (myID>1) {
 		use, sequence=MyLine;
@@ -183,11 +183,16 @@ MatchMe(MatchWhat,MatchWhere,CurrentsFileName): macro = {
 			exec, MatchMeActual(MatchWhat,MatchWhere);
 		};
 	};
-
+*/
     ! show optics
     use, sequence=MyLine;
     exec, saveOptics(mod_LGEN);
     value, origMatchWhat, table(twiss,MatchWhere,MatchWhat);
+	! record actual mu0
+	if (myID==1) {
+		origMUX=table(twiss,MatchWhere,MUX);
+		origMUY=table(twiss,MatchWhere,MUY);
+	};
 	! append optics
     COPYFILE, FILE="xpr_iso3_mod_lgen_geometry.tfs", TO=output/xpr_iso3_ScanMatchWhat_MatchWhere_lgen_geometry.tfs, APPEND=true;
     COPYFILE, FILE="xpr_iso3_mod_lgen_optics.tfs", TO=output/xpr_iso3_ScanMatchWhat_MatchWhere_lgen_optics.tfs, APPEND=true;
@@ -229,8 +234,8 @@ ReproduceMe(obsEle,CurrentsFileName): macro = {
   };
   
   ! load starting optics
-  nOfInterest=1; ! p@30mm
-  ! nOfInterest=lunghezza; ! p@320mm
+  ! nOfInterest=1; ! p@30mm
+  nOfInterest=lunghezza; ! p@320mm
   SETVARS, TABLE=LGEN_HEBT_table, ROW=nOfInterest;
   K0MB=K0MB_ref;
   call, file="strengths/settings_from_LGEN_table.str";
@@ -314,7 +319,7 @@ initial: BETA0,
 ! dmuMin=-0.35; dmuMax= 0.65; dmuStp= 0.05; ! general MUX scan [2pi]
 ! dmuMin=-0.15; dmuMax= 0.6; dmuStp= 0.005; ! detailed MUX scan [2pi]
 /*
-iClean=1; dmuMin=0.0; dmuMax=-91.0; dmuStp=-10.0; ! detailed MUX scan [degs]
+iClean=1; dmuMin=0.0; dmuMax=-91.0; dmuStp=-2.5; ! detailed MUX scan [degs]
 dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
 dmu=dmuMin; 
 idMaxFullFree=0;
@@ -322,7 +327,7 @@ exec, MatchMe(MUX,X3_011B_VWN,summary_currents.tfs);
 stop;
 */
 /*
-iClean=0; dmuMin=0.0; dmuMax=41.0; dmuStp= 10.0; ! detailed MUX scan [degs]
+iClean=0; dmuMin=0.0; dmuMax=41.0; dmuStp= 2.5; ! detailed MUX scan [degs]
 dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
 dmu=dmuMin;
 idMaxFullFree=0;
@@ -330,7 +335,7 @@ exec, MatchMe(MUX,X3_011B_VWN,summary_currents.tfs);
 stop;
 */
 /*
-iClean=0; dmuMin=40.0; dmuMax=81.0; dmuStp= 10.0; ! detailed MUX scan [degs]
+iClean=0; dmuMin=40.0; dmuMax=81.0; dmuStp= 2.5; ! detailed MUX scan [degs]
 dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
 dmu=dmuMin;
 idMaxFullFree=1;
@@ -338,7 +343,7 @@ exec, MatchMe(MUX,X3_011B_VWN,summary_currents.tfs);
 stop;
 */
 /*
-iClean=0; dmuMin=80.0; dmuMax=181.0; dmuStp= 10.0; ! detailed MUX scan [degs]
+iClean=0; dmuMin=80.0; dmuMax=181.0; dmuStp= 2.5; ! detailed MUX scan [degs]
 dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
 dmu=dmuMin;
 idMaxFullFree=1000;
@@ -357,6 +362,25 @@ dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
 dmu=dmuMin;
 idMaxFullFree=1000;
 exec, MatchMe(MUX,X3_011B_VWN,summary_currents.tfs);
+stop;
+*/
+
+
+! ------------------------
+! HE-030B-SFP
+! ------------------------
+/*
+iClean=1; dmuMin=0.0; dmuMax=-91.0; dmuStp=-10.0; ! detailed MUX scan [degs]
+dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
+dmu=dmuMin; 
+idMaxFullFree=1000;
+exec, MatchMe(MUX,HE_030B_SFP,summary_currents.tfs);
+! stop;
+iClean=0; dmuMin=0.0; dmuMax=181.0; dmuStp= 10.0; ! detailed MUX scan [degs]
+dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
+dmu=dmuMin;
+idMaxFullFree=1000;
+exec, MatchMe(MUX,HE_030B_SFP,summary_currents.tfs);
 stop;
 */
 
@@ -381,22 +405,39 @@ stop;
 ! dmu=dmuMin;
 ! exec, MatchMe(MUY,X3_011B_VWN,summary_currents.tfs);
 /*
-iClean=1; dmuMin=0.0; dmuMax=-131.0; dmuStp=-10.0; ! detailed MUY scan [degs]
+iClean=1; dmuMin=0.0; dmuMax=-181.0; dmuStp=-10.0; ! detailed MUY scan [degs]
 dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
 dmu=dmuMin; 
 idMaxFullFree=1000;
 exec, MatchMe(MUY,X3_011B_VWN,summary_currents.tfs);
 ! stop;
-iClean=0; dmuMin=0.0; dmuMax=131.0; dmuStp= 10.0; ! detailed MUY scan [degs]
+iClean=0; dmuMin=0.0; dmuMax=181.0; dmuStp= 10.0; ! detailed MUY scan [degs]
 dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
 dmu=dmuMin; 
 idMaxFullFree=1000;
 exec, MatchMe(MUY,X3_011B_VWN,summary_currents.tfs);
 stop;
 */
-
+! ------------------------
+! HE-030B-SFP
+! ------------------------
+/*
+iClean=1; dmuMin=0.0; dmuMax=-161.0; dmuStp=-10.0; ! detailed MUY scan [degs]
+dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
+dmu=dmuMin; 
+idMaxFullFree=1000;
+exec, MatchMe(MUY,HE_030B_SFP,summary_currents.tfs);
+! stop;
+iClean=0; dmuMin=0.0; dmuMax=91.0; dmuStp= 10.0; ! detailed MUY scan [degs]
+dmuMin=dmuMin/360.; dmuMax=dmuMax/360.; dmuStp=dmuStp/360.; ! [2pi]
+dmu=dmuMin; 
+idMaxFullFree=1000;
+exec, MatchMe(MUY,HE_030B_SFP,summary_currents.tfs);
+stop;
+*/
 ! ---------------------------------------------------------------------------
 ! reproduce optics
 ! ---------------------------------------------------------------------------
 iClean=1; 
 exec, ReproduceMe(X3_011B_VWN,applied_currents.tfs);
+! exec, ReproduceMe(HE_030B_SFP,applied_currents.tfs);
