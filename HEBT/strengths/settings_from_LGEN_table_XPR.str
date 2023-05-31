@@ -57,26 +57,28 @@ if ( iMacro_I2K_QU==1 ) {
 ! CEBs
 ! ------------------------------------------------------------------------------
 
-I_HE_007A_CEB = PX_010A_LGEN_A;      !X??
-F_HE_007A_CEB = 1.0;     
-exec, I2K_HEBT_CEBH(HE_007A_CEB,Brho);
+if (iCEBs<>0) {
+   I_HE_007A_CEB = PX_010A_LGEN_A;      !X??
+   F_HE_007A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBH(HE_007A_CEB,Brho);
 
-I_HE_007A_CEB = PX_011A_LGEN_A;      !X??
-F_HE_007A_CEB = 1.0;     
-exec, I2K_HEBT_CEBV(HE_007A_CEB,Brho);
+   I_HE_007A_CEB = PX_011A_LGEN_A;      !X??
+   F_HE_007A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBV(HE_007A_CEB,Brho);
 
-I_HE_015A_CEB = PX_012A_LGEN_A;      !X??
-F_HE_015A_CEB = 1.0;     
-exec, I2K_HEBT_CEBH(HE_015A_CEB,Brho);
+   I_HE_015A_CEB = PX_012A_LGEN_A;      !X??
+   F_HE_015A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBH(HE_015A_CEB,Brho);
 
-I_HE_015A_CEB = PX_013A_LGEN_A;      !X??
-F_HE_015A_CEB = 1.0;     
-exec, I2K_HEBT_CEBV(HE_015A_CEB,Brho);
+   I_HE_015A_CEB = PX_013A_LGEN_A;      !X??
+   F_HE_015A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBV(HE_015A_CEB,Brho);
 
-I_HE_027A_CEB = PX_014A_LGEN_A;      !X??
-F_HE_027A_CEB = 1.0;     
-exec, I2K_HEBT_CEBH(HE_027A_CEB,Brho);
+   I_HE_027A_CEB = PX_014A_LGEN_A;      !X??
+   F_HE_027A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBH(HE_027A_CEB,Brho);
 
-I_HE_027A_CEB = PX_015A_LGEN_A;      !X??
-F_HE_027A_CEB = 1.0;     
-exec, I2K_HEBT_CEBV(HE_027A_CEB,Brho);
+   I_HE_027A_CEB = PX_015A_LGEN_A;      !X??
+   F_HE_027A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBV(HE_027A_CEB,Brho);
+};

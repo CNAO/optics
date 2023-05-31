@@ -70,18 +70,20 @@ if ( iMacro_I2K_QU==1 ) {
 ! CEBs
 ! ------------------------------------------------------------------------------
 
-I_H2_019A_CEB = P7_101C_LGEN_A;      !H38C
-F_H2_019A_CEB = 1.0;     
-exec, I2K_HEBT_CEBH(H2_019A_CEB,Brho);
+if (iCEBs<>0) {
+   I_H2_019A_CEB = P7_101C_LGEN_A;      !H38C
+   F_H2_019A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBH(H2_019A_CEB,Brho);
 
-I_H2_019A_CEB = P7_101D_LGEN_A;      !H38D
-F_H2_019A_CEB = 1.0;     
-exec, I2K_HEBT_CEBV(H2_019A_CEB,Brho);
+   I_H2_019A_CEB = P7_101D_LGEN_A;      !H38D
+   F_H2_019A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBV(H2_019A_CEB,Brho);
 
-I_H4_016A_CEB = P7_102A_LGEN_A;      !H39A
-F_H4_016A_CEB = 1.0;     
-exec, I2K_HEBT_CEBH(H4_016A_CEB,Brho);
+   I_H4_016A_CEB = P7_102A_LGEN_A;      !H39A
+   F_H4_016A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBH(H4_016A_CEB,Brho);
 
-I_H4_016A_CEB = P7_102B_LGEN_A;      !H39B
-F_H4_016A_CEB = 1.0;     
-exec, I2K_HEBT_CEBV(H4_016A_CEB,Brho);
+   I_H4_016A_CEB = P7_102B_LGEN_A;      !H39B
+   F_H4_016A_CEB = 1.0;     
+   exec, I2K_HEBT_CEBV(H4_016A_CEB,Brho);
+};
