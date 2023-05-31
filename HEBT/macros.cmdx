@@ -1,3 +1,12 @@
+! overwrite general aperture marker outside magnets
+! general aperture outside HEBT MBs: cylindrical, ID=66 mm (centred in 0,0)
+!   wrap this aperture marker around thick elements;
+aper1=66E-3/2;  ! [m]
+aper2=66E-3/2;  ! [m]
+aper3=0.0;      ! [m]
+aper4=0.0;      ! [m]
+CNAO_APE_HEBT: MARKER, APERTYPE=ELLIPSE, APERTURE={aper1,aper2,aper3,aper4};
+
 ! convert current into K, using a fifth order polynomial
 I2K_HEBT_QUs_fifth(MagName,biro): macro {
   ! the macro expects IMagName, KMagName and FMagName to be defined
@@ -206,7 +215,8 @@ saveStrengths(additional,beamLine): macro={
 compute_RM_allCurrents(myMagName,myProperty,unWhat,myI2K,fileName,myEleA,myEleB,myEleC): macro={
    
    REMOVEFILE, FILE=fileName;
-   exec, writeRMHeader(fileName,myProperty,unWhat,myEleA,myEleB,myEleC);
+   exec, writeRMHeader(fileName,myMagName,myProperty,unWhat,myEleA,myEleB,myEleC);
+	
    F_myMagName=1.0;
    nEnLevel=NEnLevelstart;
    WHILE (nEnLevel <= NEnLevelstop ) {
@@ -252,4 +262,19 @@ compute_RM_allCurrents(myMagName,myProperty,unWhat,myI2K,fileName,myEleA,myEleB,
       ! get ready for new point
       nEnLevel = nEnLevel+NEnLevelstep;
    };
+};
+
+! write header
+writeRMHeader(fileName,myMagName,myProperty,unWhat,myEleA,myEleB,myEleC): macro={
+   assign, echo=fileName;
+   PRINT, TEXT=# Brho[Tm], BP[mm], I[A]:myMagName, myProperty[unWhat]:myMagName, X[m]:myEleA, Y[m]:myEleA, X[m]:myEleB, Y[m]:myEleB, X[m]:myEleC, Y[m]:myEleC;
+   assign, echo=terminal;
+};
+! write observations
+writeRMObservations(fileName,myEleA,myEleB,myEleC): macro={
+   assign, echo=fileName;
+   PRINTF, TEXT="% 19.12E, % 6.1f, % 12.5E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E,",
+           VALUE=Brho, BP, currI, kWrite,
+           table(twiss,myEleA,x), table(twiss,myEleA,y), table(twiss,myEleB,x), table(twiss,myEleB,y), table(twiss,myEleC,x), table(twiss,myEleC,y);
+   assign, echo=terminal;
 };

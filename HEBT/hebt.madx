@@ -21,6 +21,10 @@ start_cond=1;
 ! 1: chopper HEBT on
 iChopper=0;
 
+! 0: CEBs off
+! 1: CEBs on
+iCEBs=1;
+
 ! 1: LineT, Room 3
 ! 2: LineU, Room 2H
 ! 3: LineV, Room 2V

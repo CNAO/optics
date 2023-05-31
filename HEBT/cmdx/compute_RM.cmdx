@@ -3,33 +3,17 @@ exec, parseHEBTtableLGEN();
 lunghezzaLGEN=table(LGEN_HEBT_table,tablelength);
 
 ! current loop
-Imin=-150.; ! [A]
-Imax=150.;  ! [A]
-! Imax=-145.;  ! [A]
-Istep=25.;  ! [A]
+Imin=-10.; ! [A]
+Imax=10.;  ! [A]
+Istep=10.;  ! [A]
 
 ! energy loop
-NEnLevelstart=lunghezzaLGEN;
+NEnLevelstart=1;
 NEnLevelstop=lunghezzaLGEN;
-! NEnLevelstop=1;
 NEnLevelstep=1;
 
 ! end of template - DO NOT DELETE THIS LINE!
 
-! write header
-writeRMHeader(fileName,myProperty,unWhat,myEleA,myEleB,myEleC): macro={
-   assign, echo=fileName;
-   PRINT, TEXT=# Brho[Tm], BP[mm], I[A], myProperty[unWhat], X:myEleA[m], Y:myEleA[m], X:myEleB[m], Y:myEleB[m], X:myEleC[m], Y:myEleC[m];
-   assign, echo=terminal;
-};
-! write observations
-writeRMObservations(fileName,myEleA,myEleB,myEleC): macro={
-   assign, echo=fileName;
-   PRINTF, TEXT="% 19.12E, % 6.1f, % 12.5E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E, % 19.12E,",
-           VALUE=Brho, BP, currI, kWrite,
-           table(twiss,myEleA,x), table(twiss,myEleA,y), table(twiss,myEleB,x), table(twiss,myEleB,y), table(twiss,myEleC,x), table(twiss,myEleC,y);
-   assign, echo=terminal;
-};
 ! standard RM queries
 compute_RM_HEBT_standard(myCorr1,myCorr2,myObs1,myObs2,myObs3): macro={
    ! first corrector
@@ -54,10 +38,19 @@ if (iLine==1) {
    exec, compute_RM_HEBT_standard(HE_015A_CEB,HE_027A_CEB,X2_015A_MOB,X2_013B_NZL,HE_030B_SFP);
 }elseif (iLine==7) {
    ! exec, compute_RM_HEBT_standard(HE_015A_CEB,HE_027A_CEB,X3_015A_MOB,X3_013B_NZL,HE_030B_SFP);
-   exec, compute_RM_allCurrents(HE_007A_CEB,HKICK,rad,I2K_HEBT_CEBH,HE_007A_CEB__HKICK__RM.tfs,HE_010B_QPP,HE_012B_SFP,X3_013B_NZL);
-   exec, compute_RM_allCurrents(HE_007A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_007A_CEB__VKICK__RM.tfs,HE_010B_QPP,HE_012B_SFP,X3_013B_NZL);
-   exec, compute_RM_allCurrents(HE_027A_CEB,HKICK,rad,I2K_HEBT_CEBH,HE_027A_CEB__HKICK__RM.tfs,HE_010B_QPP,HE_030B_SFP,X3_013B_NZL);
-   exec, compute_RM_allCurrents(HE_027A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_027A_CEB__VKICK__RM.tfs,HE_010B_QPP,HE_030B_SFP,X3_013B_NZL);
+   ! exec, compute_RM_allCurrents(HE_007A_CEB,HKICK,rad,I2K_HEBT_CEBH,HE_007A_CEB__HKICK__RM.tfs,HE_010B_QPP,HE_012B_SFP,X3_013B_NZL);
+   ! exec, compute_RM_allCurrents(HE_007A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_007A_CEB__VKICK__RM.tfs,HE_010B_QPP,HE_012B_SFP,X3_013B_NZL);
+   ! exec, compute_RM_allCurrents(HE_027A_CEB,HKICK,rad,I2K_HEBT_CEBH,HE_027A_CEB__HKICK__RM.tfs,HE_010B_QPP,HE_030B_SFP,X3_013B_NZL);
+   ! exec, compute_RM_allCurrents(HE_027A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_027A_CEB__VKICK__RM.tfs,HE_010B_QPP,HE_030B_SFP,X3_013B_NZL);
+   !
+   exec, compute_RM_allCurrents(H2_019A_CEB,VKICK,rad,I2K_HEBT_CEBV,H2_019A_CEB__VKICK__RM_01.tfs,H2_025B_SFH,HE_010B_QPP,HE_012B_SFP);
+   exec, compute_RM_allCurrents(H2_019A_CEB,VKICK,rad,I2K_HEBT_CEBV,H2_019A_CEB__VKICK__RM_02.tfs,HE_030B_SFP,X3_013B_NZL,X3_015A_MOB);
+   exec, compute_RM_allCurrents(HE_007A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_007A_CEB__VKICK__RM_01.tfs,H2_025B_SFH,HE_010B_QPP,HE_012B_SFP);
+   exec, compute_RM_allCurrents(HE_007A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_007A_CEB__VKICK__RM_02.tfs,HE_030B_SFP,X3_013B_NZL,X3_015A_MOB);
+   exec, compute_RM_allCurrents(HE_015A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_015A_CEB__VKICK__RM_01.tfs,H2_025B_SFH,HE_010B_QPP,HE_012B_SFP);
+   exec, compute_RM_allCurrents(HE_015A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_015A_CEB__VKICK__RM_02.tfs,HE_030B_SFP,X3_013B_NZL,X3_015A_MOB);
+   exec, compute_RM_allCurrents(HE_027A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_027A_CEB__VKICK__RM_01.tfs,H2_025B_SFH,HE_010B_QPP,HE_012B_SFP);
+   exec, compute_RM_allCurrents(HE_027A_CEB,VKICK,rad,I2K_HEBT_CEBV,HE_027A_CEB__VKICK__RM_02.tfs,HE_030B_SFP,X3_013B_NZL,X3_015A_MOB);
 }elseif (iLine==8) {
    exec, compute_RM_HEBT_standard(HE_015A_CEB,HE_027A_CEB,X4_015A_MOB,X4_013B_NZL,HE_030B_SFP);
 };

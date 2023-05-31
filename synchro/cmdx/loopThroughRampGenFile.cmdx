@@ -33,7 +33,7 @@ exec, I2K_sextupoles_S8_S1(); ! input: Is_SR[A],Brho[Tm];
 exec, I2K_sextupoles_S9_S0(); ! input: Is_SR[A],Brho[Tm];
 
 
-use,sequence=MUXL;
+use,sequence=SYNCHRO;
 
 exec, saveOpticsTFS(extraction);
 exec, saveGeometryTFS(extraction);
@@ -41,10 +41,10 @@ exec, save_strengths(myOptics,synchro);
 
 k_ini=KD;
 delta_Q=5E-4;
-USE, sequence=MUXL;
-MATCH, sequence=MUXL;
+USE, sequence=SYNCHRO;
+MATCH, sequence=SYNCHRO;
 VARY, NAME=KD, STEP=0.000001;
-GLOBAL, SEQUENCE=MUXL, Q1=table(summ,Q1)+delta_Q;
+GLOBAL, SEQUENCE=SYNCHRO, Q1=table(summ,Q1)+delta_Q;
 LMDIF, CALLS=1000, TOLERANCE=1.0E-12;
 !JACOBIAN, CALLS=100, TOLERANCE=1.0E-6;
 ENDMATCH;

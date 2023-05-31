@@ -24,7 +24,7 @@ PRINTF, TEXT="at Ek = %g MeV/u - Brho = %g Tm - BP = %g mm - row = %.0f ...", VA
 ! set injection bumper k from the specified current
 exec, I2K_InjBump(); ! input: Ibumper[A],Brho[Tm];
 
-use,sequence=MUXL;
+use,sequence=SYNCHRO;
 
 exec, saveOpticsTFS(extraction);
 exec, saveGeometryTFS(extraction);

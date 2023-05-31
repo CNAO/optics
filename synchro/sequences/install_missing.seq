@@ -5,7 +5,7 @@ shortenMe=1.0E-4;
 S0_016A_MSP: HKICKER, L= 0.65;
 S0_023A_ESP: HKICKER, L= 0.6;
 SE_010A_ESP: HKICKER, L= 0.8;
-SEQEDIT, sequence=MUXL;
+SEQEDIT, sequence=SYNCHRO;
 Install, element=S0_016A_MSP, at= 0.089+0.5*S0_016A_MSP->L, from=S0_012A_SSM;
 Install, element=S0_023A_ESP, at= 0.130+0.5*S0_023A_ESP->L, from=S0_021A_FLS;
 Install, element=SE_010A_ESP, at= 0.100+0.5*SE_010A_ESP->L, from=SE_008A_FLS;
@@ -14,7 +14,7 @@ ENDEDIT;
 ! AM: insert scrapers:
 S8_026A_SCH: RCOLLIMATOR, L= 0.082;
 SB_005A_SCV: RCOLLIMATOR, L= 0.096;
-SEQEDIT, sequence=MUXL;
+SEQEDIT, sequence=SYNCHRO;
 Install, element=S8_026A_SCH, at= 0.332+0.5*S8_026A_SCH->L, from=S8_022A_FLS;
 Install, element=SB_005A_SCV, at= 0.085+0.5*S8_026A_SCV->L, from=SB_003A_FLS;
 ENDEDIT;
@@ -22,7 +22,7 @@ ENDEDIT;
 ! AM: insert collimators:
 SC_023A_DPH: RCOLLIMATOR, L= 0.1;
 S5_010A_DPV: RCOLLIMATOR, L= 0.1;
-SEQEDIT, sequence=MUXL;
+SEQEDIT, sequence=SYNCHRO;
 Install, element=SC_023A_DPH, at= 0.528+0.5*SC_023A_DPH->L, from=SC_019A_FLS;
 Install, element=S5_010A_DPV, at= 0.095+0.5*S5_010A_DPV->L, from=S5_008A_BS1;
 ENDEDIT;
@@ -39,7 +39,7 @@ SA_014A_RGB: INSTRUMENT, L= 0.6;
 SB_011A_SHV: INSTRUMENT, L= 0.501;
 SC_013A_DCT: INSTRUMENT, L= 1.0;
 SC_018A_SVA: INSTRUMENT, L= 0.210;
-SEQEDIT, sequence=MUXL;
+SEQEDIT, sequence=SYNCHRO;
 Install, element=S0_020A_T45, at=-0.5*S0_020A_T45->L, from=S0_021A_FLS;
 Install, element=S0_028A_T60, at= 0.5*S0_028A_T60->L, from=S0_027A_FLS;
 Install, element=S2_013A_SVA, at= 0.5*S2_013A_SVA->L, from=S2_012A_FLS;
@@ -60,5 +60,5 @@ S8_013A_SVA->L=S8_013A_SVA->L-shortenMe;
 SC_013A_DCT->L=SC_013A_DCT->L-shortenMe;
 
 ! insert marker upstream of extraction magnetic septum
-exec, insertMarkerUpstreamOf(S0_016A_MSP_UP,S0_016A_MSP,MUXL);
-exec, insertMarkerUpstreamOf(SE_010A_ESP_UP,SE_010A_ESP,MUXL);
+exec, insertMarkerUpstreamOf(S0_016A_MSP_UP,S0_016A_MSP,SYNCHRO);
+exec, insertMarkerUpstreamOf(SE_010A_ESP_UP,SE_010A_ESP,SYNCHRO);
