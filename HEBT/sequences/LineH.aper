@@ -58,12 +58,48 @@ aper2=76E-3/2;
 exec, addAperture(H2_009B_SFH,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
 exec, addAperture(H2_025B_SFH,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
 exec, addAperture(H4_018B_SFH,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
-exec, addAperture(H3_011B_QPM,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
 exec, addAperture(H5_002B_SFH,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
 exec, addAperture(H5_018B_SFH,RECTANGLE,LineH5,CNAO_APE_HEBT);
-exec, addAperture(HE_010B_QPP,RECTANGLE,LineHE,CNAO_APE_HEBT);
 exec, addAperture(HE_012B_SFP,RECTANGLE,LineHE,CNAO_APE_HEBT);
 exec, addAperture(HE_030B_SFP,RECTANGLE,LineHE,CNAO_APE_HEBT);
+
+! H3 QPM (pos IN): 45.3 mm x 45.3 mm (centred in -45.3mm/2-8.5mm,0)
+aper1=45.3E-3/2;
+aper2=45.3E-3/2;
+offx=-(45.3/2+8.5)*1E-3;
+exec, addAperture(H3_011B_QPM,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+offx=0.0;
+
+! H3 dump: 80 mm x 80 mm (centred in -80mm/2-8.5mm,0)
+! - aperture as wide as high;
+! - aperture centred such that the right side (beam view, MADX ref sys) coincides with
+!   beam-side edge of actual dump;
+aper1=80E-3/2;
+aper2=80E-3/2;
+offx=-(80./2+8.5)*1E-3;
+H3_011D_DMI, APERTYPE=RECTANGLE, APERTURE={aper1,aper2,aper3,aper4}, APER_OFFSET={offx,offy};
+H3_011D_DMO, APERTYPE=RECTANGLE, APERTURE={aper1,aper2,aper3,aper4}, APER_OFFSET={offx,offy};
+exec, addAperture(H3_011D_DMP,RECTANGLE,LineH2H4,CNAO_APE_HEBT);
+offx=0.0;
+
+! HE QPP (pos IN): 64.4 mm x 64.4 mm (centred in -64.4mm/2+10mm,0)
+aper1=64.4E-3/2;
+aper2=64.4E-3/2;
+offx=(-64.4/2+10)*1E-3;
+exec, addAperture(HE_010B_QPP,RECTANGLE,LineHE,CNAO_APE_HEBT);
+offx=0.0;
+
+! HE dump: 84 mm x 84 mm (centred in 84mm/2+10mm,0)
+! - aperture as wide as high;
+! - aperture centred such that the right side (beam view, MADX ref sys) coincides with
+!   beam-side edge of actual dump;
+aper1=84E-3/2;
+aper2=84E-3/2;
+offx=(-84./2+10)*1E-3;
+HE_010D_DIN, APERTYPE=RECTANGLE, APERTURE={aper1,aper2,aper3,aper4}, APER_OFFSET={offx,offy};
+HE_010D_DOU, APERTYPE=RECTANGLE, APERTURE={aper1,aper2,aper3,aper4}, APER_OFFSET={offx,offy};
+exec, addAperture(HE_010D_DMP,RECTANGLE,LineHE,CNAO_APE_HEBT);
+offx=0.0;
 
 ! beginning/end of beam lines
 ! exec, contourSeqAperture(LineH2H4,CNAO_APE_HEBT);
