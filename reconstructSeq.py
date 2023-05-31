@@ -175,7 +175,7 @@ SLF=(5.9642-2*dd_corr)*2+(1.6742-2*dd_corr)*3+(3.4242-2*dd_corr)*4+(2.3742-2*dd_
 ! value SYNCHRO_L;
 ! stop;
 
-muxl: sequence, l = SYNCHRO_L;
+SYNCHRO: sequence, l = SYNCHRO_L;
 ! AM: insert a convenient marker
 START_SEQ: MARKER, at = 0;
 

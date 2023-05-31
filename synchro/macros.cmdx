@@ -5,7 +5,7 @@ aper1=145E-3/2; ! [m]
 aper2=74E-3/2;  ! [m]
 aper3=0.0;      ! [m]
 aper4=0.0;      ! [m]
-CNAO_APE: MARKER, APERTYPE=RECTANGLE, APERTURE={aper1,aper2,aper3,aper4};
+CNAO_APE_SYNC: MARKER, APERTYPE=RECTANGLE, APERTURE={aper1,aper2,aper3,aper4};
 
 I2K_InjBump(): macro = {
     ! From C.Priano, email to A.Mereghetti, Fri 23/10/2020 09:36

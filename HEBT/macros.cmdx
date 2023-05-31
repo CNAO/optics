@@ -1,3 +1,12 @@
+! overwrite general aperture marker outside magnets
+! general aperture outside HEBT MBs: cylindrical, ID=66 mm (centred in 0,0)
+!   wrap this aperture marker around thick elements;
+aper1=66E-3/2;  ! [m]
+aper2=66E-3/2;  ! [m]
+aper3=0.0;      ! [m]
+aper4=0.0;      ! [m]
+CNAO_APE_HEBT: MARKER, APERTYPE=ELLIPSE, APERTURE={aper1,aper2,aper3,aper4};
+
 ! convert current into K, using a fifth order polynomial
 I2K_HEBT_QUs_fifth(MagName,biro): macro {
   ! the macro expects IMagName, KMagName and FMagName to be defined

@@ -5,7 +5,8 @@
 ! chopper infos
 ! - angle [rad]
 if ( iChopper==1 ) {
-	AH_CHOPPER=0.0106;
+	! chopper chicane is on the inside of curve with a KICKER
+	AH_CHOPPER=-0.0106;
 } else {
 	AH_CHOPPER=0.0;
 };
@@ -131,7 +132,11 @@ H3_010C_BSH: DRIFT, L= 0.0;
 H3_011A_DRI: DRIFT, L= 0.1075;
 H3_011B_QPM: MONITOR, L= 0.0;
 H3_011C_QIM: DRIFT, L= 0.0;
-H3_011D_DRI: DRIFT, L= 0.1775;
+H3_011D_DR1: DRIFT, L= 0.0477;
+H3_011D_DMI: MARKER;   ! dump IN
+H3_011D_DMP: COLLIMATOR, L= 0.1;
+H3_011D_DMO: MARKER;   ! dump OUT
+H3_011D_DR3: DRIFT, L= 0.0298;
 H3_011E_SIP: DRIFT, L= 0.0;
 H3_012A_DPC: DRIFT, L= 0.1402;
 H3_013A_CHD: KICKER, L= CHD_L, HKICK := H3_013A_CHD_HKICK, VKICK := 0.0;
@@ -246,7 +251,7 @@ HE_010A_DRI:DRIFT,L = 0.071;
 HE_010B_QPP:monitor, L=0;
 HE_010C_DRI:DRIFT,L = 0.124;
 HE_010D_DIN:MARKER;  ! dump upstream face
-HE_010D_DMP:DRIFT,L = 0.2;
+HE_010D_DMP:COLLIMATOR,L = 0.2;
 HE_010D_DOU:MARKER;  ! dump downstream face
 HE_010E_DRI:DRIFT,L = 0.055;
 HE_010F_TMP:MARKER;
@@ -298,6 +303,10 @@ HE_032A_DRI:DRIFT,L = 3.0608;
 ! sequence definition
 ! ===============================================================
 
+! ---------------------------------------------------------------
+! basic sequences
+! ---------------------------------------------------------------
+
 ! H2-H4
 LineH2_L=H2_001A_MSN_L+0.5+H2_003A_MSW_L+0.5+H2_005A_MSW_L+5.338-(0.5037+H3_001A_CHD->L/2);
 LineH3_L=2*(0.5037+H3_001A_CHD->L/2)+(2*1.396+3*(LMB_MagLayout+ds_corr));
@@ -337,6 +346,9 @@ h3_003a_sw2, at = LineH2_L         +(H3_001A_CHD->L/2+  0.5037+(LMB_MagLayout+ds
 h3_005a_chd, at = LineH2_L         +(H3_001A_CHD->L/2+2*0.5037+ LMB_MagLayout+ds_corr     );
 h3_009a_mbs, at = LineH2_L         +(H3_001A_CHD->L/2+  0.5037+(LMB_MagLayout+ds_corr)*1.5)+1.3960;
 h3_011b_qpm, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2+2*0.5037+ LMB_MagLayout+ds_corr     )-0.4927;
+h3_011d_dmi, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2+2*0.5037+ LMB_MagLayout+ds_corr     )-0.445; ! dump IN
+h3_011d_dmp, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2+2*0.5037+ LMB_MagLayout+ds_corr     )-0.395; ! dump
+h3_011d_dmo, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2+2*0.5037+ LMB_MagLayout+ds_corr     )-0.345; ! dump OUT
 h3_013a_chd, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2+2*0.5037+ LMB_MagLayout+ds_corr     );
 h3_015a_mbs, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2+  0.5037+(LMB_MagLayout+ds_corr)/2  );
 h3_017a_chd, at = LineH2_L+LineH3_L-(H3_017A_CHD->L/2                                     );
@@ -360,26 +372,6 @@ h5_015a_que, at = 2.6507+0.9850+0.670+0.615+0.645 ;
 h5_018b_sfh, at = 2.6507+0.9850+0.670+0.615+0.645+0.6632 ;
 endsequence;
 
-! H2-H3 for XPR
-if ( 5<=iLine && iLine<=8 ) {
-   SEQEDIT, SEQUENCE=LineH2H4;
-   FLATTEN;
-   INSTALL, ELEMENT=H2_0010_STRT, CLASS=MARKER, AT=0.0;
-   REMOVE,  ELEMENT=H3_003A_SW2;
-   INSTALL, ELEMENT=HE_0010_STR,  CLASS=MARKER, AT=H3_001A_CHD->L/2+H3_002A_DRI->L+dd_H3, FROM=H3_001A_CHD;
-   FLATTEN;
-   EXTRACT, SEQUENCE=LineH2H4, FROM=H2_0010_STRT, TO=HE_0010_STR, NEWNAME=LineH2H3;
-   ENDEDIT;
-   seqedit, sequence=LineH2H3; flatten; endedit;
-   ! length of newly extracted sequence
-/*
-   exec, setBeam(LineH2H3);
-   use,sequence=LineH2H3;
-   DUMPSEQU, SEQUENCE=LineH2H3, LEVEL=0;
-*/
-   LineH2H3_L=LineH2_L+H3_001A_CHD->L+H3_002A_DRI->L+dd_H3; ! [m]
-};
-
 ! HE
 LineHE_L=12.3109;
 LineHE: sequence, l=LineHE_L;
@@ -389,6 +381,7 @@ he_007a_ceb, at = 2.65 ;
 he_009b_bsh, at = 3.1709 ;
 he_010b_qpp, at = 3.2419 ;
 he_010d_din, at = 3.3659 ;
+he_010d_dmp, at = 3.4659 ;
 he_010d_dou, at = 3.5659 ;
 he_010f_tmp, at = 3.6209 ;
 he_010g_pvv, at = 3.6209 ;
@@ -410,6 +403,36 @@ he_030i_sip, at = 9.1478 ;
 he_031b_bsh, at = 9.2501 ;
 endsequence;
 
+! ---------------------------------------------------------------
+! aperture model
+! ---------------------------------------------------------------
+
+call, file="sequences/LineH.aper";
+
+! ---------------------------------------------------------------
+! derived sequences
+! ---------------------------------------------------------------
+
+! H2-H3 for XPR
+if ( 5<=iLine && iLine<=8 ) {
+   SEQEDIT, SEQUENCE=LineH2H4;
+   FLATTEN;
+   INSTALL, ELEMENT=H2_0010_STRT, CLASS=MARKER, AT=0.0;
+   REMOVE,  ELEMENT=H3_003A_SW2;
+   INSTALL, ELEMENT=HE_0010_STR,  CLASS=MARKER, AT=H3_001A_CHD->L/2+H3_002A_DRI->L+dd_H3, FROM=H3_001A_CHD;
+   FLATTEN;
+   EXTRACT, SEQUENCE=LineH2H4, FROM=H2_0010_STRT, TO=HE_0010_STR, NEWNAME=LineH2H3;
+   ENDEDIT;
+   seqedit, sequence=LineH2H3; flatten; endedit;
+   ! length of newly extracted sequence
+/*
+   exec, setBeam(LineH2H3);
+   use,sequence=LineH2H3;
+   DUMPSEQU, SEQUENCE=LineH2H3, LEVEL=0;
+*/
+   LineH2H3_L=LineH2_L+H3_001A_CHD->L+H3_002A_DRI->L+dd_H3; ! [m]
+};
+
 if (iLine==3) {
 	! Room 2V
 	exec, duplicateSequence(LineH2H4,LineHtemp);
@@ -420,7 +443,7 @@ if (iLine==3) {
     ! XPR
 	exec, concatenate2Sequences(LineH2H3,LineHE,LineHtemp);
 };
-seqedit, sequence=LineHtemp_L; flatten; endedit;
+seqedit, sequence=LineHtemp; flatten; endedit;
 if (iH1==0) {
 	! no need to insert H1
 	exec, duplicateSequence(LineHtemp,LineH);
@@ -430,9 +453,28 @@ if (iH1==0) {
 };
 seqedit, sequence=LineH; flatten; endedit;
 
-! ===============================================================
+! ---------------------------------------------------------------
+! aperture
+! ---------------------------------------------------------------
+
+if(iLine>4){
+	HE_000A_APE: MARKER, APERTYPE=ELLIPSE, APERTURE={55E-3/2,55E-3/2,0.0,0.0};
+	HE_002C_APE: MARKER, APERTYPE=ELLIPSE, APERTURE={55E-3/2,55E-3/2,0.0,0.0};
+	HE_004V_APE: MARKER, APERTYPE=ELLIPSE, APERTURE={100E-3/2,100E-3/2,0.0,0.0};
+	! drift left by H3_003A_SW2 and BP right downstream
+	SEQEDIT, sequence=LineH;
+	Install, element=H3_003A_SW2_EX, at=1.530,      from=H3_003A_SW2_EN;
+	Install, element=HE_000A_APE   , at=tmpD,       from=H3_003A_SW2_EX;
+	Install, element=HE_002C_APE   , at=0.392,      from=H3_003A_SW2_EX;
+	Install, element=HE_004V_APE   , at=0.392+tmpD, from=H3_003A_SW2_EX;
+	Install, element=HE_004V_APE   , at=-HE_007A_CEB_EN->L/2-4*tmpD, from=HE_007A_CEB_EN;
+	Install, element=CNAO_APE_HEBT , at=-HE_007A_CEB_EN->L/2-3*tmpD, from=HE_007A_CEB_EN;
+	ENDEDIT;
+};
+
+! ---------------------------------------------------------------
 ! sequence manipulation
-! ===============================================================
+! ---------------------------------------------------------------
 
 /*
 ! distribute kick of chopper 

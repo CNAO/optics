@@ -36,7 +36,7 @@ TeKD_EX: Multipole, KNL:={0,quadn,sestn1,octun}, KSL:={0,quads,sests,octus};
 TeKE_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
 TeKF_EX: Multipole, KNL:={0,quadn,sestn2,octun}, KSL:={0,quads,sests,octus};
 
-SEQEDIT, sequence=MUXL;
+SEQEDIT, sequence=SYNCHRO;
 Install, element=tek0_en, at=-s0_001a_mbs->L/2, from=s0_001a_mbs;
 Install, element=tek0_ex, at= s0_001a_mbs->L/2, from=s0_001a_mbs;
 Install, element=tek1_en, at=-s1_001a_mbs->L/2, from=s1_001a_mbs;

@@ -8,10 +8,10 @@ call, file="macros.cmdx";
 call, file="cmdx/synchro_geo.cmdx";
 
 ! extract H1 line
-SEQEDIT, SEQUENCE=MUXL;
+SEQEDIT, SEQUENCE=SYNCHRO;
 FLATTEN;
 CYCLE, START=SE_010A_ESP_UP;
-EXTRACT, SEQUENCE=MUXL, FROM=SE_010A_ESP_UP, TO=S0_016A_MSP_UP, NEWNAME=LineH1;
+EXTRACT, SEQUENCE=SYNCHRO, FROM=SE_010A_ESP_UP, TO=S0_016A_MSP_UP, NEWNAME=LineH1;
 ENDEDIT;
 seqedit, sequence=LineH1; flatten; endedit;
 
